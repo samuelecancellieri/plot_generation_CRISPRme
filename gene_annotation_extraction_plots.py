@@ -161,7 +161,7 @@ def crisprme_plot_MMvBUL(df, guide, out_folder, max_mm_bul_value, pam_first_nucl
     plt.rcParams['pdf.fonttype'] = 42
     plt.rcParams['ps.fonttype'] = 42
 
-    plt.figure(figsize=(10, 3))
+    # plt.figure(figsize=(10, 3))
     ax1 = plt.subplot(7, 1, (1, 5))
     # ax1.set_position([0.125, 0.4, 0.9, 0.9])
     # print('ax1-position', ax1.get_position())
@@ -382,8 +382,7 @@ def crisprme_plot_CFD(df, guide, out_folder):
     plt.rcParams['pdf.fonttype'] = 42
     plt.rcParams['ps.fonttype'] = 42
 
-    plt.figure(figsize=(10, 3))
-
+    # plt.figure(figsize=(10, 3))
     ax1 = plt.subplot(7, 1, (1, 5))
     # ax1.set_position([0.125, 0.4, 0.9, 0.9])
     # print('ax1-position', ax1.get_position())
