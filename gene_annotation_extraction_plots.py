@@ -1,15 +1,15 @@
 # from adjustText import adjust_text
-import warnings
-import matplotlib.colors as mcolors
-from matplotlib.image import BboxImage
-import matplotlib.lines as mlines
-import matplotlib.patches as mpatches
-import matplotlib.pyplot as plt
-import sys
-import os
-import pandas as pd
-import numpy as np
 import math
+import numpy as np
+import pandas as pd
+import os
+import sys
+import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+import matplotlib.lines as mlines
+from matplotlib.image import BboxImage
+import matplotlib.colors as mcolors
+import warnings
 import matplotlib
 # set matplotlib to not use X11 server
 matplotlib.use('Agg')
@@ -190,7 +190,7 @@ def crisprme_plot_MMvBUL(df, guide, out_folder, max_mm_bul_value, pam_first_nucl
 
     # annotate alternative target if the gene is associated with tumor suppression activity and CDS
     # df_coordinates_TSG = df.loc[(df['Gene_description'].notnull()) & (
-        # df['REF/ALT_origin_(fewest_mm+b)'] != 'ref') & (df['Annotation_GENCODE']).str.contains('CDS')]
+    # df['REF/ALT_origin_(fewest_mm+b)'] != 'ref') & (df['Annotation_GENCODE']).str.contains('CDS')]
 
     # counter = 0
     # for index, row in df_coordinates.iterrows():
@@ -225,7 +225,7 @@ def crisprme_plot_MMvBUL(df, guide, out_folder, max_mm_bul_value, pam_first_nucl
 
     # Boundaries
     ax1.margins(0.05)
-    plt.xticks([1,20,40,60,80,100])
+    plt.xticks([1, 20, 40, 60, 80, 100])
     # plt.xlim(1,100)
     plt.ylim(1, df['Mismatches+bulges_(fewest_mm+b)_REF'].max())
 
@@ -263,7 +263,7 @@ def crisprme_plot_MMvBUL(df, guide, out_folder, max_mm_bul_value, pam_first_nucl
     plt.gca().add_artist(plt.legend(handles=[s1_red, s1_blue], title='Target genome', bbox_to_anchor=(
         0.30, 1.03), loc='lower left', borderaxespad=0, ncol=3))
     # legend for encode annotation
-    plt.gca().add_artist(plt.legend(handles=[green_PLS, cyan_CDS, blue_pELS, red_TSG , gray_dELS, purple_CTCFonly, olive_DNaseH3K4me3],
+    plt.gca().add_artist(plt.legend(handles=[green_PLS, cyan_CDS, blue_pELS, red_TSG, gray_dELS, purple_CTCFonly, olive_DNaseH3K4me3],
                                     loc='lower left', bbox_to_anchor=(0.54, 1.02), title='Annotations', borderaxespad=0, ncol=5))
 
     # ENCODE BARPLOT
@@ -292,7 +292,7 @@ def crisprme_plot_MMvBUL(df, guide, out_folder, max_mm_bul_value, pam_first_nucl
     plt.yticks([])
     # ax2.margins(0.05)
     # plt.xlim(1, 100)
-    plt.ylabel('ALT cCRE',fontsize=6)
+    plt.ylabel('ALT cCRE', fontsize=6)
 
     # CDS AND TSG BARPLOT
     ax3 = plt.subplot(7, 1, 7, sharex=ax1)
@@ -310,7 +310,7 @@ def crisprme_plot_MMvBUL(df, guide, out_folder, max_mm_bul_value, pam_first_nucl
     plt.yticks([])
     # ax3.margins(0.05)
     # plt.xlim(1, 100)
-    plt.ylabel('ALT CDS',fontsize=6)
+    plt.ylabel('ALT CDS', fontsize=6)
 
     # columns to drop from df
     columns_to_drop = list()
@@ -445,7 +445,7 @@ def crisprme_plot_CFD(df, guide, out_folder):
     # Boundaries
     ax1.margins(0.05)
     # plt.xlim(1,100)
-    plt.xticks([1,20,40,60,80,100])
+    plt.xticks([1, 20, 40, 60, 80, 100])
     plt.ylim(0, 1)
 
     # Arrows
@@ -492,7 +492,7 @@ def crisprme_plot_CFD(df, guide, out_folder):
     plt.gca().add_artist(plt.legend(handles=[s1_red, s1_blue], title='Target genome', bbox_to_anchor=(
         0.30, 1.03), loc='lower left', borderaxespad=0, ncol=3))
     # legend for encode annotation
-    plt.gca().add_artist(plt.legend(handles=[green_PLS, cyan_CDS, blue_pELS, red_TSG , gray_dELS, purple_CTCFonly, olive_DNaseH3K4me3],
+    plt.gca().add_artist(plt.legend(handles=[green_PLS, cyan_CDS, blue_pELS, red_TSG, gray_dELS, purple_CTCFonly, olive_DNaseH3K4me3],
                                     loc='lower left', bbox_to_anchor=(0.54, 1.02), title='Annotations', borderaxespad=0, ncol=5))
 
     # ENCODE BARPLOT
@@ -521,7 +521,7 @@ def crisprme_plot_CFD(df, guide, out_folder):
     plt.yticks([])
     # ax2.margins(0.05)
     # plt.xlim(1, 100)
-    plt.ylabel('ALT cCRE',fontsize=6)
+    plt.ylabel('ALT cCRE', fontsize=6)
 
     # CDS AND TSG BARPLOT
     ax3 = plt.subplot(7, 1, 7, sharex=ax1)
@@ -539,7 +539,7 @@ def crisprme_plot_CFD(df, guide, out_folder):
     plt.yticks([])
     # ax3.margins(0.05)
     # plt.xlim(1, 100)
-    plt.ylabel('ALT CDS',fontsize=6)
+    plt.ylabel('ALT CDS', fontsize=6)
 
     # columns to drop
     columns_to_drop = list()
@@ -617,7 +617,6 @@ def extraction_with_CFD(guide, df, out_dir, top_10_list, top_100_list, top_1000_
     # save number of alt targets
     top_10_list.append(str(len(df_top10)))
 
-    
     if on_target_chr:
         # count number of alt sequence with same chr as on_target
         df_top10_temp = df_top10.loc[(
@@ -753,7 +752,7 @@ def extraction_with_total(guide, df, out_dir, max_mm_bul_value, pam_first_nucleo
         on_target_chr = on_target_chr.iloc[0]['Chromosome']
     except:
         on_target_chr = False
-    
+
     # Remove targets with total=0 (any on-target)
     df_single_guide.drop(
         df_single_guide.loc[(df_single_guide["Mismatches+bulges_(fewest_mm+b)"] == 0)].index, inplace=True)
