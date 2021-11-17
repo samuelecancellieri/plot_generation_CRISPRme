@@ -1,21 +1,19 @@
 # from adjustText import adjust_text
 
+import warnings
+import matplotlib.colors as mcolors
+from matplotlib.image import BboxImage
+import matplotlib.lines as mlines
+import matplotlib.patches as mpatches
+import sys
+import os
+import pandas as pd
+import numpy as np
+import math
+import matplotlib.pyplot as plt
 import matplotlib
 # set matplotlib to not use X11 server
 matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import math
-import numpy as np
-import pandas as pd
-import os
-import sys
-import matplotlib.patches as mpatches
-import matplotlib.lines as mlines
-from matplotlib.image import BboxImage
-import matplotlib.colors as mcolors
-import warnings
-import matplotlib
-
 
 
 # ignore all warnings
@@ -161,7 +159,7 @@ def crisprme_plot_MMvBUL(df, guide, out_folder, max_mm_bul_value, pam_first_nucl
     plt.rcParams['pdf.fonttype'] = 42
     plt.rcParams['ps.fonttype'] = 42
 
-    # plt.figure(figsize=(10, 3))
+    plt.figure(figsize=(10, 4))
     ax1 = plt.subplot(7, 1, (1, 5))
     # ax1.set_position([0.125, 0.4, 0.9, 0.9])
     # print('ax1-position', ax1.get_position())
@@ -382,7 +380,7 @@ def crisprme_plot_CFD(df, guide, out_folder):
     plt.rcParams['pdf.fonttype'] = 42
     plt.rcParams['ps.fonttype'] = 42
 
-    # plt.figure(figsize=(10, 3))
+    plt.figure(figsize=(10, 4))
     ax1 = plt.subplot(7, 1, (1, 5))
     # ax1.set_position([0.125, 0.4, 0.9, 0.9])
     # print('ax1-position', ax1.get_position())
