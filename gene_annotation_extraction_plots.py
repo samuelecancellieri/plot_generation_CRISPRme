@@ -1,5 +1,7 @@
 # from adjustText import adjust_text
-
+import matplotlib
+# set matplotlib to not use X11 server
+matplotlib.use('Agg')
 import warnings
 import matplotlib.colors as mcolors
 from matplotlib.image import BboxImage
@@ -11,9 +13,7 @@ import pandas as pd
 import numpy as np
 import math
 import matplotlib.pyplot as plt
-import matplotlib
-# set matplotlib to not use X11 server
-matplotlib.use('Agg')
+
 
 
 # ignore all warnings
