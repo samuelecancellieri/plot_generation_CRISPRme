@@ -13,47 +13,52 @@ from upsetplot import from_memberships
 import warnings
 import matplotlib
 
-#SUPPRESS ALL WARNINGS
+# SUPPRESS ALL WARNINGS
 warnings.filterwarnings("ignore")
-#do not use X11
+# do not use X11
 matplotlib.use('Agg')
 
+
 def generate_distribution_plot_MMBUL(original_df):
-    filtered_df = original_df.loc[(original_df["Mismatches+bulges_(fewest_mm+b)"] <= 4)]
+    filtered_df = original_df.loc[(
+        original_df["Mismatches+bulges_(fewest_mm+b)"] <= 4)]
     filtered_df["Variant_MAF_(fewest_mm+b)"] = filtered_df["Variant_MAF_(fewest_mm+b)"].fillna(-1)
 
     # If multiple AFs (haplotype with multiple SNPs), take min AF
     # Approximation until we have haplotype frequencies
-    filtered_df["AF"] = filtered_df["Variant_MAF_(fewest_mm+b)"].astype(str).str.split(',')
+    filtered_df["AF"] = filtered_df["Variant_MAF_(fewest_mm+b)"].astype(
+        str).str.split(',')
     filtered_df["AF"] = filtered_df["AF"].apply(lambda x: min(x))
     filtered_df["AF"] = pd.to_numeric(filtered_df["AF"])
-    filtered_df.sort_values(['Mismatches+bulges_(fewest_mm+b)'],inplace=True,ascending=False)
+    filtered_df.sort_values(
+        ['Mismatches+bulges_(fewest_mm+b)'], inplace=True, ascending=True)
 
     andamento_ALT_MAF005 = list()
     andamento_ALT_MAF05 = list()
     andamento_ALT_MAF0 = list()
-    altTarget_MAF005=0
-    altTarget_MAF05=0
-    altTarget_MAF0=0
+    altTarget_MAF005 = 0
+    altTarget_MAF05 = 0
+    altTarget_MAF0 = 0
 
-    for index,row in filtered_df.iterrows():
-        if row['AF']>0.005:
-            altTarget_MAF005+=1
-        if row['AF']>0.05:
-            altTarget_MAF05+=1
-        if row['AF']>=0:
-            altTarget_MAF0+=1
+    for index, row in filtered_df.iterrows():
+        if row['AF'] > 0.005:
+            altTarget_MAF005 += 1
+        if row['AF'] > 0.05:
+            altTarget_MAF05 += 1
+        if row['AF'] >= 0:
+            altTarget_MAF0 += 1
         andamento_ALT_MAF005.append(altTarget_MAF005)
         andamento_ALT_MAF05.append(altTarget_MAF05)
         andamento_ALT_MAF0.append(altTarget_MAF0)
 
-    plt.plot(andamento_ALT_MAF0,label='MAF>0')
-    plt.plot(andamento_ALT_MAF005,label='MAF>0.005')
-    plt.plot(andamento_ALT_MAF05,label='MAF>0.05')
+    plt.plot(andamento_ALT_MAF0, label='MAF>0')
+    plt.plot(andamento_ALT_MAF005, label='MAF>0.005')
+    plt.plot(andamento_ALT_MAF05, label='MAF>0.05')
 
     plt.ylabel('ALT Targets')
     plt.xlabel('Targets')
-    plt.title('Distribution of targets with different MAFs filtered with MM+BUL <= 4')
+    plt.title(
+        'Distribution of targets with different MAFs filtered with MM+BUL <= 4')
     plt.legend()
 
     plt.tight_layout()
@@ -61,17 +66,18 @@ def generate_distribution_plot_MMBUL(original_df):
     plt.clf()
     plt.close('all')
 
-    
-def generate_upset_plot_MMBUL(original_df):
-    #MMBUL analysis
-    df_alt = original_df.loc[(original_df['REF/ALT_origin_(fewest_mm+b)'] == 'alt') & (original_df['Mismatches+bulges_(fewest_mm+b)'] <= 4)]
 
-    #create dict
+def generate_upset_plot_MMBUL(original_df):
+    # MMBUL analysis
+    df_alt = original_df.loc[(original_df['REF/ALT_origin_(fewest_mm+b)']
+                              == 'alt') & (original_df['Mismatches+bulges_(fewest_mm+b)'] <= 4)]
+
+    # create dict
     on_target_dict = dict()
     for guide in df_alt["Spacer+PAM"].unique():
         on_target_dict[str(guide)] = 'empty'
 
-    #extract on-target chr
+    # extract on-target chr
     try:
         on_target_chr = original_df.loc[(
             original_df['Mismatches+bulges_(fewest_mm+b)'] == 0)]
@@ -80,31 +86,33 @@ def generate_upset_plot_MMBUL(original_df):
         on_target_dict[str(on_target_guide)] = str(on_target_chr)
     except:
         print('on target not found for guide')
-    #create empty categories col
+    # create empty categories col
     df_alt['Categories'] = 'empty'
 
-    #process df to obtain categories of belonging for each target
+    # process df to obtain categories of belonging for each target
     for index in df_alt.index:
         categories_list = list()
-        if 'CDS' in str(df_alt.loc[index,'Annotation_GENCODE']):
+        if 'CDS' in str(df_alt.loc[index, 'Annotation_GENCODE']):
             categories_list.append('CDS')
-        if 'nan' not in str(df_alt.loc[index,'Annotation_ENCODE']):
+        if 'nan' not in str(df_alt.loc[index, 'Annotation_ENCODE']):
             categories_list.append('ENCODE')
-        if 'nan' not in str(df_alt.loc[index,'Gene_description']) and 'CDS' in str(df_alt.loc[index,'Annotation_GENCODE']):
+        if 'nan' not in str(df_alt.loc[index, 'Gene_description']) and 'CDS' in str(df_alt.loc[index, 'Annotation_GENCODE']):
             categories_list.append('TSG')
-        if str(df_alt.loc[index,'Chromosome']) == on_target_dict[str(df_alt.loc[index,'Spacer+PAM'])]:
+        if str(df_alt.loc[index, 'Chromosome']) == on_target_dict[str(df_alt.loc[index, 'Spacer+PAM'])]:
             categories_list.append('On-Target_Chromosome')
         if len(categories_list):
-            df_alt.loc[index,'Categories'] = ','.join(categories_list)
-    
-    #remove targets with empty categories
-    df_alt = df_alt.loc[(df_alt['Categories']!='empty')]
-    #collect categories per target
-    categories_per_target = from_memberships(df_alt.Categories.str.split(','), data=df_alt)
+            df_alt.loc[index, 'Categories'] = ','.join(categories_list)
+
+    # remove targets with empty categories
+    df_alt = df_alt.loc[(df_alt['Categories'] != 'empty')]
+    # collect categories per target
+    categories_per_target = from_memberships(
+        df_alt.Categories.str.split(','), data=df_alt)
     # print(categories_per_target)
-    #create figure
+    # create figure
     figu = plt.figure()
-    upset_plot = UpSet(categories_per_target, show_counts=True,sort_by='cardinality',sort_categories_by=None)
+    upset_plot = UpSet(categories_per_target, show_counts=True,
+                       sort_by='cardinality', sort_categories_by=None)
     upset_plot.plot(fig=figu)
     plt.title('ALT targets overlapping categories filtered with MM+BUL <= 4')
     # plt.tight_layout()
@@ -112,38 +120,42 @@ def generate_upset_plot_MMBUL(original_df):
     plt.clf()
     plt.close('all')
 
+
 def generate_distribution_plot_CFD(original_df):
-    filtered_df = original_df.loc[(original_df["CFD_score_(highest_CFD)"] >= 0.1)]
+    filtered_df = original_df.loc[(
+        original_df["CFD_score_(highest_CFD)"] >= 0.1)]
     filtered_df["Variant_MAF_(highest_CFD)"] = filtered_df["Variant_MAF_(highest_CFD)"].fillna(-1)
 
     # If multiple AFs (haplotype with multiple SNPs), take min AF
     # Approximation until we have haplotype frequencies
-    filtered_df["AF"] = filtered_df["Variant_MAF_(highest_CFD)"].astype(str).str.split(',')
+    filtered_df["AF"] = filtered_df["Variant_MAF_(highest_CFD)"].astype(
+        str).str.split(',')
     filtered_df["AF"] = filtered_df["AF"].apply(lambda x: min(x))
     filtered_df["AF"] = pd.to_numeric(filtered_df["AF"])
-    filtered_df.sort_values(['CFD_score_(highest_CFD)'],inplace=True,ascending=False)
+    filtered_df.sort_values(['CFD_score_(highest_CFD)'],
+                            inplace=True, ascending=False)
 
     andamento_ALT_MAF005 = list()
     andamento_ALT_MAF05 = list()
     andamento_ALT_MAF0 = list()
-    altTarget_MAF005=0
-    altTarget_MAF05=0
-    altTarget_MAF0=0
+    altTarget_MAF005 = 0
+    altTarget_MAF05 = 0
+    altTarget_MAF0 = 0
 
-    for index,row in filtered_df.iterrows():
-        if row['AF']>0.005:
-            altTarget_MAF005+=1
-        if row['AF']>0.05:
-            altTarget_MAF05+=1
-        if row['AF']>=0:
-            altTarget_MAF0+=1
+    for index, row in filtered_df.iterrows():
+        if row['AF'] > 0.005:
+            altTarget_MAF005 += 1
+        if row['AF'] > 0.05:
+            altTarget_MAF05 += 1
+        if row['AF'] >= 0:
+            altTarget_MAF0 += 1
         andamento_ALT_MAF005.append(altTarget_MAF005)
         andamento_ALT_MAF05.append(altTarget_MAF05)
         andamento_ALT_MAF0.append(altTarget_MAF0)
 
-    plt.plot(andamento_ALT_MAF0,label='MAF>0')
-    plt.plot(andamento_ALT_MAF005,label='MAF>0.005')
-    plt.plot(andamento_ALT_MAF05,label='MAF>0.05')
+    plt.plot(andamento_ALT_MAF0, label='MAF>0')
+    plt.plot(andamento_ALT_MAF005, label='MAF>0.005')
+    plt.plot(andamento_ALT_MAF05, label='MAF>0.05')
 
     plt.ylabel('ALT Targets')
     plt.xlabel('Targets')
@@ -155,16 +167,18 @@ def generate_distribution_plot_CFD(original_df):
     plt.clf()
     plt.close('all')
 
-def generate_upset_plot_CFD(original_df):
-    #CFD analysis
-    df_alt = original_df.loc[(original_df['REF/ALT_origin_(highest_CFD)'] == 'alt') & (original_df["CFD_score_(highest_CFD)"] >= 0.1)]
 
-    #create dict
+def generate_upset_plot_CFD(original_df):
+    # CFD analysis
+    df_alt = original_df.loc[(original_df['REF/ALT_origin_(highest_CFD)']
+                              == 'alt') & (original_df["CFD_score_(highest_CFD)"] >= 0.1)]
+
+    # create dict
     on_target_dict = dict()
     for guide in df_alt["Spacer+PAM"].unique():
         on_target_dict[str(guide)] = 'empty'
 
-    #extract on-target chr
+    # extract on-target chr
     try:
         on_target_chr = original_df.loc[(
             original_df['Mismatches+bulges_(highest_CFD)'] == 0)]
@@ -173,31 +187,33 @@ def generate_upset_plot_CFD(original_df):
         on_target_dict[str(on_target_guide)] = str(on_target_chr)
     except:
         print('on target not found for guide')
-    #create empty categories col
+    # create empty categories col
     df_alt['Categories'] = 'empty'
 
-    #process df to obtain categories of belonging for each target
+    # process df to obtain categories of belonging for each target
     for index in df_alt.index:
         categories_list = list()
-        if 'CDS' in str(df_alt.loc[index,'Annotation_GENCODE']):
+        if 'CDS' in str(df_alt.loc[index, 'Annotation_GENCODE']):
             categories_list.append('CDS')
-        if 'nan' not in str(df_alt.loc[index,'Annotation_ENCODE']):
+        if 'nan' not in str(df_alt.loc[index, 'Annotation_ENCODE']):
             categories_list.append('ENCODE')
-        if 'nan' not in str(df_alt.loc[index,'Gene_description']) and 'CDS' in str(df_alt.loc[index,'Annotation_GENCODE']):
+        if 'nan' not in str(df_alt.loc[index, 'Gene_description']) and 'CDS' in str(df_alt.loc[index, 'Annotation_GENCODE']):
             categories_list.append('TSG')
-        if str(df_alt.loc[index,'Chromosome']) == on_target_dict[str(df_alt.loc[index,'Spacer+PAM'])]:
+        if str(df_alt.loc[index, 'Chromosome']) == on_target_dict[str(df_alt.loc[index, 'Spacer+PAM'])]:
             categories_list.append('On-Target_Chromosome')
         if len(categories_list):
-            df_alt.loc[index,'Categories'] = ','.join(categories_list)
-    
-    #remove targets with empty categories
-    df_alt = df_alt.loc[(df_alt['Categories']!='empty')]
-    #collect categories per target
-    categories_per_target = from_memberships(df_alt.Categories.str.split(','), data=df_alt)
+            df_alt.loc[index, 'Categories'] = ','.join(categories_list)
+
+    # remove targets with empty categories
+    df_alt = df_alt.loc[(df_alt['Categories'] != 'empty')]
+    # collect categories per target
+    categories_per_target = from_memberships(
+        df_alt.Categories.str.split(','), data=df_alt)
     # print(categories_per_target)
-    #create figure
+    # create figure
     figu = plt.figure()
-    upset_plot = UpSet(categories_per_target,show_counts=True,sort_by='cardinality',sort_categories_by=None)
+    upset_plot = UpSet(categories_per_target, show_counts=True,
+                       sort_by='cardinality', sort_categories_by=None)
     upset_plot.plot(fig=figu)
     plt.title('ALT targets overlapping categories filtered with CFD >= 0.1')
     # plt.tight_layout()
@@ -205,17 +221,18 @@ def generate_upset_plot_CFD(original_df):
     plt.clf()
     plt.close('all')
 
+
 inTargets = sys.argv[1]  # read targets
-out_folder = sys.argv[2] #folder for output images
+out_folder = sys.argv[2]  # folder for output images
 
 print('starting generating distribution and upset plots')
-#create dataframe with file
-original_df = pd.read_csv(inTargets,sep="\t", index_col=False,
-                 na_values=['n'])
+# create dataframe with file
+original_df = pd.read_csv(inTargets, sep="\t", index_col=False,
+                          na_values=['n'])
 
-#call to plot generation CFD
+# call to plot generation CFD
 generate_distribution_plot_CFD(original_df)
 generate_upset_plot_CFD(original_df)
-#call to plot generation MM_BUL
+# call to plot generation MM_BUL
 generate_distribution_plot_MMBUL(original_df)
 generate_upset_plot_MMBUL(original_df)
