@@ -8,7 +8,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 # from upsetplot import generate_counts
 from upsetplot import UpSet
-import matplotlib as mpl
+# import matplotlib as mpl
 from upsetplot import from_memberships
 import warnings
 import matplotlib
