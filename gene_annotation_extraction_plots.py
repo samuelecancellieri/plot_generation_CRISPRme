@@ -102,12 +102,15 @@ def crisprme_plot_MMvBUL(df, guide, out_folder, max_mm_bul_value, pam_first_nucl
     df.sort_values(['Mismatches+bulges_(fewest_mm+b)', 'Mismatches+bulges_(fewest_mm+b)_DELTA', 'Variant_MAF_(fewest_mm+b)'],
                    inplace=True, ascending=True)
 
-    # Make index column that numbers the OTs starting from 0 after sorting
+    # Make index column that numbers the OTs starting from 1 after sorting
     df.reset_index(inplace=True)
     index_count = 1
     for index in df.index:
         df.loc[index, 'index'] = index_count
         index_count += 1
+
+    max_mismatches_bulges_alt = df['Mismatches+bulges_(fewest_mm+b)'].max()
+    max_mismatches_bulges_ref = df['Mismatches+bulges_(fewest_mm+b)_REF'].max()
 
     # If prim_AF = 'n', then it's a ref-nominated site, so we enter a fake numerical AF
     # This will cause a warning of invalid sqrt later on, but that's fine to ignore
@@ -163,9 +166,9 @@ def crisprme_plot_MMvBUL(df, guide, out_folder, max_mm_bul_value, pam_first_nucl
     # ax1.set_position([0.125, 0.4, 0.9, 0.9])
     # print('ax1-position', ax1.get_position())
     # Plot data
-    ax1.scatter(x=df['index'], y=df['Mismatches+bulges_(fewest_mm+b)_REF'],
+    ax1.scatter(x=df['index'], y=(df['Mismatches+bulges_(fewest_mm+b)_REF']/max_mismatches_bulges_ref),
                 s=df['ref_AF'], c=transparent_red)
-    ax1.scatter(x=df['index'], y=df['Mismatches+bulges_(fewest_mm+b)'],
+    ax1.scatter(x=df['index'], y=(df['Mismatches+bulges_(fewest_mm+b)']/max_mismatches_bulges_alt),
                 s=df['plot_AF'], c=transparent_blue)
     # Plot data
     # ax = df.plot.scatter(x="index", y="Mismatches+bulges_(fewest_mm+b)_REF",
