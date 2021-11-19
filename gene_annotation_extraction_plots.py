@@ -104,8 +104,6 @@ def crisprme_plot_MMvBUL(df, guide, out_folder, max_mm_bul_value, pam_first_nucl
         df.loc[index, 'Mismatches+bulges_(fewest_mm+b)_REF_NORM'] = df.loc[index,
                                                                            'Mismatches+bulges_(fewest_mm+b)_REF'] / df['Mismatches+bulges_(fewest_mm+b)_REF'].max()
 
-    print(df['Mismatches+bulges_(fewest_mm+b)_REF_NORM'])
-
     # sort the df
     df.sort_values(['Mismatches+bulges_(fewest_mm+b)', 'Mismatches+bulges_(fewest_mm+b)_DELTA', 'Variant_MAF_(fewest_mm+b)'],
                    inplace=True, ascending=True)
@@ -171,9 +169,9 @@ def crisprme_plot_MMvBUL(df, guide, out_folder, max_mm_bul_value, pam_first_nucl
     # ax1.set_position([0.125, 0.4, 0.9, 0.9])
     # print('ax1-position', ax1.get_position())
     # Plot data
-    ax1.scatter(x=df['index'], y=df['Mismatches+bulges_(fewest_mm+b)_ALT_NORM'],
-                s=df['ref_AF'], c=transparent_red)
     ax1.scatter(x=df['index'], y=df['Mismatches+bulges_(fewest_mm+b)_REF_NORM'],
+                s=df['ref_AF'], c=transparent_red)
+    ax1.scatter(x=df['index'], y=df['Mismatches+bulges_(fewest_mm+b)_ALT_NORM'],
                 s=df['plot_AF'], c=transparent_blue)
     # Plot data
     # ax = df.plot.scatter(x="index", y="Mismatches+bulges_(fewest_mm+b)_REF",
@@ -238,10 +236,10 @@ def crisprme_plot_MMvBUL(df, guide, out_folder, max_mm_bul_value, pam_first_nucl
     # plt.ylim(1, df['Mismatches+bulges_(fewest_mm+b)_REF'].max())
 
     # Arrows
-    for x, y, z in zip(df["index"], df["Mismatches+bulges_(fewest_mm+b)_REF_NORM"], df["Mismatches+bulges_(fewest_mm+b)_ALT_NORM"]-df["Mismatches+bulges_(fewest_mm+b)_REF_NORM"]):
-        if z != 0:
-            plt.arrow(x, y+0.02, 0, z-0.04, color='gray', zorder=0,
-                      alpha=0.5, head_width=0.5, head_length=0.02)
+    # for x, y, z in zip(df["index"], df["Mismatches+bulges_(fewest_mm+b)_REF_NORM"], df["Mismatches+bulges_(fewest_mm+b)_ALT_NORM"]-df["Mismatches+bulges_(fewest_mm+b)_REF_NORM"]):
+    #     if z != 0:
+    #         plt.arrow(x, y+0.02, 0, z-0.04, color='gray', zorder=0,
+    #                   alpha=0.5, head_width=0.5, head_length=0.02)
 
     s1 = mlines.Line2D([], [], marker='o', label='1', linestyle='None',
                        markersize=math.sqrt(math.sqrt((1+0.001)*1000)), color='black')
