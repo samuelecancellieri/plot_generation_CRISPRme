@@ -12,12 +12,11 @@ import pandas as pd
 import numpy as np
 import math
 
-# set matplotlib to not use X11 server
-matplotlib.use('Agg')
-
-
 # ignore all warnings
 warnings.filterwarnings("ignore")
+
+# set matplotlib to not use X11 server
+matplotlib.use('Agg')
 
 
 iupac_code_set = {
