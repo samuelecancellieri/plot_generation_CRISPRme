@@ -57,6 +57,8 @@ def crisprme_plot_MMvBUL(df, guide, out_folder, max_mm_bul_value, pam_first_nucl
     # new col to store the scoring value for non-SpCas9 targets
     df['Mismatches+bulges_(fewest_mm+b)_REF'] = 0
     df['Mismatches+bulges_(fewest_mm+b)_DELTA'] = 0
+    df['Mismatches+bulges_(fewest_mm+b)_REF_NORM'] = 0
+    df['Mismatches+bulges_(fewest_mm+b)_ALT_NORM'] = 0
 
     # if col is alt calculate score for ref and alt, if ref calculate only ref
     for index in df.index:
@@ -97,6 +99,12 @@ def crisprme_plot_MMvBUL(df, guide, out_folder, max_mm_bul_value, pam_first_nucl
                                                                           'Mismatches+bulges_(fewest_mm+b)']
         df.loc[index, 'Mismatches+bulges_(fewest_mm+b)_DELTA'] = int(df.loc[index,
                                                                             'Mismatches+bulges_(fewest_mm+b)_REF']) - int(df.loc[index, 'Mismatches+bulges_(fewest_mm+b)'])
+        df.loc[index, 'Mismatches+bulges_(fewest_mm+b)_ALT_NORM'] = df.loc[index,
+                                                                           'Mismatches+bulges_(fewest_mm+b)'] / df['Mismatches+bulges_(fewest_mm+b)'].max()
+        df.loc[index, 'Mismatches+bulges_(fewest_mm+b)_REF_NORM'] = df.loc[index,
+                                                                           'Mismatches+bulges_(fewest_mm+b)_REF'] / df['Mismatches+bulges_(fewest_mm+b)_REF'].max()
+
+    print(df['Mismatches+bulges_(fewest_mm+b)_REF_NORM'])
 
     # sort the df
     df.sort_values(['Mismatches+bulges_(fewest_mm+b)', 'Mismatches+bulges_(fewest_mm+b)_DELTA', 'Variant_MAF_(fewest_mm+b)'],
@@ -108,11 +116,6 @@ def crisprme_plot_MMvBUL(df, guide, out_folder, max_mm_bul_value, pam_first_nucl
     for index in df.index:
         df.loc[index, 'index'] = index_count
         index_count += 1
-
-    df['Mismatches+bulges_(fewest_mm+b)_ALT_NORM'] = df['Mismatches+bulges_(fewest_mm+b)'] / \
-        df['Mismatches+bulges_(fewest_mm+b)'].max()
-    df['Mismatches+bulges_(fewest_mm+b)_REF_NORM'] = df['Mismatches+bulges_(fewest_mm+b)_REF'] / \
-        df['Mismatches+bulges_(fewest_mm+b)_REF'].max()
 
     # If prim_AF = 'n', then it's a ref-nominated site, so we enter a fake numerical AF
     # This will cause a warning of invalid sqrt later on, but that's fine to ignore
