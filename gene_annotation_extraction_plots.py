@@ -239,10 +239,10 @@ def crisprme_plot_MMvBUL(df, guide, out_folder, max_mm_bul_value, pam_first_nucl
     # plt.ylim(1, df['Mismatches+bulges_(fewest_mm+b)_REF'].max())
 
     # Arrows
-    # for x, y, z in zip(df["index"], df["Mismatches+bulges_(fewest_mm+b)_REF_NORM"], df["Mismatches+bulges_(fewest_mm+b)_ALT_NORM"]-df["Mismatches+bulges_(fewest_mm+b)_REF_NORM"]):
-    #     if z != 0:
-    #         plt.arrow(x, y+0.02, 0, z-0.04, color='gray', zorder=0,
-    #                   alpha=0.5, head_width=0.5, head_length=0.02)
+    for x, y, z in zip(df["index"], df["Mismatches+bulges_(fewest_mm+b)_ALT_NORM"], df["Mismatches+bulges_(fewest_mm+b)_REF_NORM"]-df["Mismatches+bulges_(fewest_mm+b)_ALT_NORM"]):
+        if z != 0:
+            plt.arrow(x, y+0.02, 0, z-0.04, color='gray', zorder=0,
+                      alpha=0.5, head_width=0.5, head_length=0.02)
 
     s1 = mlines.Line2D([], [], marker='o', label='1', linestyle='None',
                        markersize=math.sqrt(math.sqrt((1+0.001)*1000)), color='black')
