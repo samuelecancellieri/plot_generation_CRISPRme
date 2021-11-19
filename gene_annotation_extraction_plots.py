@@ -230,7 +230,7 @@ def crisprme_plot_MMvBUL(df, guide, out_folder, max_mm_bul_value, pam_first_nucl
     # adjust_text(plotted_text)
 
     # plt.xlabel("Candidate off-target site")
-    plt.ylabel("Mismatches + Bulges Count")
+    plt.ylabel("Mismatches + Bulges Normalized")
 
     # Boundaries
     ax1.margins(0.05)
