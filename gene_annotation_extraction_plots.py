@@ -101,11 +101,11 @@ def crisprme_plot_MMvBUL(df, guide, out_folder, max_mm_bul_value, pam_first_nucl
                                                                             'Mismatches+bulges_(fewest_mm+b)_REF']) - int(df.loc[index, 'Mismatches+bulges_(fewest_mm+b)'])
 
     df['Mismatches+bulges_(fewest_mm+b)_REF_NORM'] = df['Mismatches+bulges_(fewest_mm+b)_REF'] / \
-        df['Mismatches+bulges_(fewest_mm+b)'].max()
-    df.loc[df['Mismatches+bulges_(fewest_mm+b)_REF_NORM']
-           > 1, 'Mismatches+bulges_(fewest_mm+b)_REF_NORM'] = 1
+        df['Mismatches+bulges_(fewest_mm+b)_REF'].max()
+    # df.loc[df['Mismatches+bulges_(fewest_mm+b)_REF_NORM']
+    #        > 1, 'Mismatches+bulges_(fewest_mm+b)_REF_NORM'] = 1
     df['Mismatches+bulges_(fewest_mm+b)_ALT_NORM'] = df['Mismatches+bulges_(fewest_mm+b)'] / \
-        df['Mismatches+bulges_(fewest_mm+b)'].max()
+        df['Mismatches+bulges_(fewest_mm+b)_REF'].max()
 
     # sort the df
     df.sort_values(['Mismatches+bulges_(fewest_mm+b)', 'Mismatches+bulges_(fewest_mm+b)_DELTA', 'Variant_MAF_(fewest_mm+b)'],
