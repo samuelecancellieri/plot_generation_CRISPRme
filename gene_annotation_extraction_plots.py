@@ -109,8 +109,10 @@ def crisprme_plot_MMvBUL(df, guide, out_folder, max_mm_bul_value, pam_first_nucl
         df.loc[index, 'index'] = index_count
         index_count += 1
 
-    max_mismatches_bulges_alt = df['Mismatches+bulges_(fewest_mm+b)'].max()
-    max_mismatches_bulges_ref = df['Mismatches+bulges_(fewest_mm+b)_REF'].max()
+    df['Mismatches+bulges_(fewest_mm+b)_ALT_NORM'] = df['Mismatches+bulges_(fewest_mm+b)'] / \
+        df['Mismatches+bulges_(fewest_mm+b)'].max()
+    df['Mismatches+bulges_(fewest_mm+b)_REF_NORM'] = df['Mismatches+bulges_(fewest_mm+b)_REF'] / \
+        df['Mismatches+bulges_(fewest_mm+b)_REF'].max()
 
     # If prim_AF = 'n', then it's a ref-nominated site, so we enter a fake numerical AF
     # This will cause a warning of invalid sqrt later on, but that's fine to ignore
@@ -166,9 +168,9 @@ def crisprme_plot_MMvBUL(df, guide, out_folder, max_mm_bul_value, pam_first_nucl
     # ax1.set_position([0.125, 0.4, 0.9, 0.9])
     # print('ax1-position', ax1.get_position())
     # Plot data
-    ax1.scatter(x=df['index'], y=(df['Mismatches+bulges_(fewest_mm+b)_REF']/max_mismatches_bulges_ref),
+    ax1.scatter(x=df['index'], y=df['Mismatches+bulges_(fewest_mm+b)_ALT_NORM'],
                 s=df['ref_AF'], c=transparent_red)
-    ax1.scatter(x=df['index'], y=(df['Mismatches+bulges_(fewest_mm+b)']/max_mismatches_bulges_alt),
+    ax1.scatter(x=df['index'], y=df['Mismatches+bulges_(fewest_mm+b)_REF_NORM'],
                 s=df['plot_AF'], c=transparent_blue)
     # Plot data
     # ax = df.plot.scatter(x="index", y="Mismatches+bulges_(fewest_mm+b)_REF",
@@ -230,10 +232,10 @@ def crisprme_plot_MMvBUL(df, guide, out_folder, max_mm_bul_value, pam_first_nucl
     ax1.margins(0.05)
     plt.xticks([1, 20, 40, 60, 80, 100])
     # plt.xlim(1,100)
-    plt.ylim(1, df['Mismatches+bulges_(fewest_mm+b)_REF'].max())
+    # plt.ylim(1, df['Mismatches+bulges_(fewest_mm+b)_REF'].max())
 
     # Arrows
-    for x, y, z in zip(df["index"], df["Mismatches+bulges_(fewest_mm+b)_REF"], df["Mismatches+bulges_(fewest_mm+b)"]-df["Mismatches+bulges_(fewest_mm+b)_REF"]):
+    for x, y, z in zip(df["index"], df["Mismatches+bulges_(fewest_mm+b)_REF_NORM"], df["Mismatches+bulges_(fewest_mm+b)_ALT_NORM"]-df["Mismatches+bulges_(fewest_mm+b)_REF_NORM"]):
         if z != 0:
             plt.arrow(x, y+0.02, 0, z-0.04, color='gray', zorder=0,
                       alpha=0.5, head_width=0.5, head_length=0.02)
