@@ -131,28 +131,26 @@ def generate_heatmap_CFD(original_df):
         'CFD_score_(highest_CFD)', 'Variant_MAF_(highest_CFD)']]
     df_heatmap = df_heatmap.loc[(df_heatmap["CFD_score_(highest_CFD)"] >= 0.1)]
 
+    # MAF conversion and filtering
     df_heatmap["Variant_MAF_(highest_CFD)"] = df_heatmap["Variant_MAF_(highest_CFD)"].fillna(-1)
-    df_heatmap = df_heatmap.loc[(df_heatmap['Variant_MAF_(highest_CFD)']) >= 0]
     df_heatmap["Variant_MAF_(highest_CFD)"] = df_heatmap["Variant_MAF_(highest_CFD)"].astype(
         str).str.split(',')
     df_heatmap["Variant_MAF_(highest_CFD)"] = df_heatmap["Variant_MAF_(highest_CFD)"].apply(
         lambda x: min(x))
     df_heatmap["Variant_MAF_(highest_CFD)"] = pd.to_numeric(
         df_heatmap["Variant_MAF_(highest_CFD)"], downcast="float")
-    # df_heatmap['Variant_MAF_(highest_CFD)'] = np.log10(
-    #     df_heatmap['Variant_MAF_(highest_CFD)'])
+    df_heatmap = df_heatmap.loc[(df_heatmap['Variant_MAF_(highest_CFD)']) >= 0]
+    # conversion to count of decimal zeros
+    df_heatmap["Variant_MAF_(highest_CFD)"] = df_heatmap["Variant_MAF_(highest_CFD)"].apply(
+        lambda x: num_of_decimal_zeros(x))
 
+    # CFD score rounding to 1 decimal
     df_heatmap['CFD_score_(highest_CFD)'] = df_heatmap['CFD_score_(highest_CFD)'].astype(
         float)
     df_heatmap['CFD_score_(highest_CFD)'] = df_heatmap.round(
         {'CFD_score_(highest_CFD)': 1})
 
-    # df_heatmap['MAF_aggregate'] = 0
-
     print(df_heatmap)
-
-    df_heatmap["Variant_MAF_(highest_CFD)"] = df_heatmap["Variant_MAF_(highest_CFD)"].apply(
-        lambda x: num_of_decimal_zeros(x))
 
     df_table = df_heatmap.groupby(
         ["Variant_MAF_(highest_CFD)", "CFD_score_(highest_CFD)"]).size().reset_index(name="Value")
@@ -160,10 +158,6 @@ def generate_heatmap_CFD(original_df):
                            'CFD_score_(highest_CFD)', 'Value')
 
     print(table)
-    # table = df_heatmap.pivot_table(
-    #     index='Variant_MAF_(highest_CFD)', columns='CFD_score_(highest_CFD)', aggfunc='sum')
-    # print(table)
-    # print(table)
 
     figu = plt.figure()
     plt_heatmap = sns.heatmap(table)
