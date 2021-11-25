@@ -141,21 +141,16 @@ def generate_heatmap_CFD(original_df):
     df_heatmap['Variant_MAF_(highest_CFD)'] = np.log10(
         df_heatmap['Variant_MAF_(highest_CFD)'])
 
-    df_heatmap['CFD_score_(highest_CFD)'] = df_heatmap['CFD_score_(highest_CFD)'].astype(
-        float)
-    df_heatmap['CFD_score_(highest_CFD)'].apply(lambda x: round(x, 1))
+    # df_heatmap['CFD_score_(highest_CFD)'] = df_heatmap['CFD_score_(highest_CFD)'].astype(
+    #     float)
+    # df_heatmap['CFD_score_(highest_CFD)'].apply(lambda x: round(x, 1))
 
     # df_heatmap['CFD_aggregate'] = 1
     # df_heatmap['MAF_aggregate'] = 0
 
-    # for index, row in df_heatmap.iterrows():
-    #     cfd = str(row['CFD_score_(highest_CFD)'])
-    #     maf = float(row['Variant_MAF_(highest_CFD)'])
-    #     cfd_first_decimal = cfd.split('.')[1][0]
-    #     if cfd_first_decimal == '0':
-    #         continue
-    #     row['CFD_aggregate'] = float('0.'+cfd_first_decimal)
-    #     row['MAF_aggregate'] = int(num_of_zeros(maf))
+    for index, row in df_heatmap.iterrows():
+        cfd = str(row['CFD_score_(highest_CFD)'][:3])
+        row['CFD_score_(highest_CFD)'] = float(cfd)
 
     # df_heatmap.drop(['Variant_MAF_(highest_CFD)',
     #                 'CFD_score_(highest_CFD)'], axis=1, inplace=True)
@@ -172,13 +167,13 @@ def generate_heatmap_CFD(original_df):
     # print(table)
     # print(table)
 
-    # figu = plt.figure()
-    # plt_heatmap = sns.heatmap(table)
+    figu = plt.figure()
+    plt_heatmap = sns.heatmap(df_table)
 
-    # plt.tight_layout()
-    # plt.savefig(out_folder+'heatmap_CFD.png')
-    # plt.clf()
-    # plt.close('all')
+    plt.tight_layout()
+    plt.savefig(out_folder+'heatmap_CFD.png')
+    plt.clf()
+    plt.close('all')
 
 
 def generate_distribution_plot_CFD(original_df):
