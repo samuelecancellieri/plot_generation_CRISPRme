@@ -141,8 +141,8 @@ def generate_heatmap_CFD(original_df):
     df_heatmap['Variant_MAF_(highest_CFD)'] = np.log10(
         df_heatmap['Variant_MAF_(highest_CFD)'])
 
-    # df_heatmap['CFD_score_(highest_CFD)'] = df_heatmap['CFD_score_(highest_CFD)'].astype(
-    #     float)
+    df_heatmap['CFD_score_(highest_CFD)'] = df_heatmap['CFD_score_(highest_CFD)'].astype(
+        float)
     df_heatmap.round({'CFD_score_(highest_CFD)': 1})
 
     # df_heatmap['CFD_aggregate'] = 1
@@ -158,8 +158,8 @@ def generate_heatmap_CFD(original_df):
     # df_heatmap.pivot()
     print(df_heatmap)
 
-    df_table = df_heatmap.pivot_table(
-        index=['CFD_score_(highest_CFD)', 'Variant_MAF_(highest_CFD)'], aggfunc='size')
+    df_table = df_heatmap.groupby(
+        ["Variant_MAF_(highest_CFD)", "CFD_score_(highest_CFD)"]).size().reset_index(name="Value")
 
     print(df_table)
     # table = df_heatmap.pivot_table(
