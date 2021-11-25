@@ -144,6 +144,8 @@ def generate_heatmap_CFD(original_df):
     df_heatmap["Variant_MAF_(highest_CFD)"] = df_heatmap["Variant_MAF_(highest_CFD)"].apply(
         lambda x: num_of_decimal_zeros(x))
 
+    print('decimali', num_of_decimal_zeros(0.0034508))
+
     # CFD score rounding to 1 decimal
     df_heatmap['CFD_score_(highest_CFD)'] = df_heatmap['CFD_score_(highest_CFD)'].astype(
         float)
@@ -154,8 +156,8 @@ def generate_heatmap_CFD(original_df):
 
     df_table = df_heatmap.groupby(
         ["Variant_MAF_(highest_CFD)", "CFD_score_(highest_CFD)"]).size().reset_index(name="Value")
-    table = df_table.pivot('Variant_MAF_(highest_CFD)',
-                           'CFD_score_(highest_CFD)', 'Value')
+    table = df_table.pivot('CFD_score_(highest_CFD)',
+                           'Variant_MAF_(highest_CFD)', 'Value')
 
     print(table)
 
