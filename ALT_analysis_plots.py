@@ -138,7 +138,7 @@ def generate_upset_plot_MMBUL(original_df):
 def generate_heatmap_CFD(original_df):
     df_heatmap = original_df[[
         'CFD_score_(highest_CFD)', 'Variant_MAF_(highest_CFD)']]
-    df_heatmap = df_heatmap.loc[(df_heatmap["CFD_score_(highest_CFD)"] >= 0.1)]
+    # df_heatmap = df_heatmap.loc[(df_heatmap["CFD_score_(highest_CFD)"] >= 0.1)]
 
     # MAF conversion and filtering
     df_heatmap["Variant_MAF_(highest_CFD)"] = df_heatmap["Variant_MAF_(highest_CFD)"].fillna(-1)
