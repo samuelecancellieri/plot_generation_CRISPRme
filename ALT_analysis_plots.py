@@ -20,6 +20,8 @@ matplotlib.use('Agg')
 
 
 def num_of_decimal_zeros(float_number):
+    if float_number == 0:
+        return 6  # 0.000001
     decimals = str(float_number).split('.')[1]
     count_zeros = 0
     for decimal in decimals:
@@ -27,7 +29,8 @@ def num_of_decimal_zeros(float_number):
             count_zeros += 1
         else:
             break
-    return count_zeros
+    # add 1 to respect the exp representation (10^-1 will have count_zeros=0, but should be 1)
+    return count_zeros+1
 
 
 def generate_distribution_plot_MMBUL(original_df):
