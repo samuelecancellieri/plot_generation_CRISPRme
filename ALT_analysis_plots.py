@@ -148,7 +148,7 @@ def generate_heatmap_CFD(original_df):
         cfd_first_decimal = cfd.split('.')[1][0]
         if cfd_first_decimal == '0':
             continue
-        row['CFD_aggregate'] = int('0.'+cfd_first_decimal)
+        row['CFD_aggregate'] = float('0.'+cfd_first_decimal)
         row['MAF_aggregate'] = int(num_of_zeros(maf))
 
     df_heatmap.drop(['Variant_MAF_(highest_CFD)',
