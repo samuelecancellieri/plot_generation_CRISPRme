@@ -141,10 +141,10 @@ def generate_heatmap_CFD(original_df):
         df_heatmap["Variant_MAF_(highest_CFD)"], downcast="float")
     df_heatmap = df_heatmap.loc[(df_heatmap['Variant_MAF_(highest_CFD)']) >= 0]
     # conversion to count of decimal zeros
+    for index, row in df_heatmap.iterrows():
+        print(row['Variant_MAF_(highest_CFD)'])
     df_heatmap["Variant_MAF_(highest_CFD)"] = df_heatmap["Variant_MAF_(highest_CFD)"].apply(
         lambda x: num_of_decimal_zeros(x))
-
-    print('decimali', num_of_decimal_zeros(0.0034508))
 
     # CFD score rounding to 1 decimal
     df_heatmap['CFD_score_(highest_CFD)'] = df_heatmap['CFD_score_(highest_CFD)'].astype(
