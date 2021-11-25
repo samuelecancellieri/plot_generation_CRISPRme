@@ -143,14 +143,14 @@ def generate_heatmap_CFD(original_df):
 
     # df_heatmap['CFD_score_(highest_CFD)'] = df_heatmap['CFD_score_(highest_CFD)'].astype(
     #     float)
-    # df_heatmap['CFD_score_(highest_CFD)'].apply(lambda x: round(x, 1))
+    df_heatmap.round({'CFD_score_(highest_CFD)': 1}, inplace=True)
 
     # df_heatmap['CFD_aggregate'] = 1
     # df_heatmap['MAF_aggregate'] = 0
 
-    for index, row in df_heatmap.iterrows():
-        cfd = str(row['CFD_score_(highest_CFD)'])[:3]
-        row['CFD_score_(highest_CFD)'] = float(cfd)
+    # for index, row in df_heatmap.iterrows():
+    #     cfd = str(row['CFD_score_(highest_CFD)'])[:3]
+    #     row['CFD_score_(highest_CFD)'] = float(cfd)
 
     # df_heatmap.drop(['Variant_MAF_(highest_CFD)',
     #                 'CFD_score_(highest_CFD)'], axis=1, inplace=True)
