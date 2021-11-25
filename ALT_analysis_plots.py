@@ -147,8 +147,8 @@ def generate_heatmap_CFD(original_df):
     # CFD score rounding to 1 decimal
     df_heatmap['CFD_score_(highest_CFD)'] = df_heatmap['CFD_score_(highest_CFD)'].astype(
         float)
-    df_heatmap['CFD_score_(highest_CFD)'] = df_heatmap.round(
-        {'CFD_score_(highest_CFD)': 1})
+    df_heatmap['CFD_score_(highest_CFD)'] = df_heatmap['CFD_score_(highest_CFD)'].apply(
+        lambda x: round(x, 1))
 
     print(df_heatmap)
 
