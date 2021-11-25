@@ -166,8 +166,9 @@ def generate_heatmap_CFD(original_df):
     print(table)
 
     figu = plt.figure()
-    plt_heatmap = sns.heatmap(table)
-
+    plt_heatmap = sns.heatmap(table, annot=True)
+    plt_heatmap.invert_yaxis()
+    plt_heatmap.invert_xaxis()
     plt.tight_layout()
     plt.savefig(out_folder+'heatmap_CFD.png')
     plt.clf()
