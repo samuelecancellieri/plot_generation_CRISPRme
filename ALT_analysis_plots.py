@@ -143,7 +143,7 @@ def generate_heatmap_CFD(original_df):
 
     # df_heatmap['CFD_score_(highest_CFD)'] = df_heatmap['CFD_score_(highest_CFD)'].astype(
     #     float)
-    df_heatmap.round({'CFD_score_(highest_CFD)': 1}, inplace=True)
+    df_heatmap.round({'CFD_score_(highest_CFD)': 1})
 
     # df_heatmap['CFD_aggregate'] = 1
     # df_heatmap['MAF_aggregate'] = 0
