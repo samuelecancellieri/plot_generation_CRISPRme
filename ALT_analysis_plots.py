@@ -137,30 +137,32 @@ def generate_heatmap_CFD(original_df):
     # df_heatmap['AF'] = np.log10(df_heatmap['AF'])
     # df_heatmap.drop(['Variant_MAF_(highest_CFD)'], axis=1, inplace=True)
 
-    dict_heatmap = dict()
-    dict_heatmap['10^-6_10^-5'] = 0
-    dict_heatmap['10^-5_10^-4'] = 0
-    dict_heatmap['10^-4_10^-3'] = 0
-    dict_heatmap['10^-3_10^-2'] = 0
-    dict_heatmap['10^-2_10^-1'] = 0
-    dict_heatmap['10^-1_10^0'] = 0
+    # dict_heatmap = dict()
+    # dict_heatmap['10^-6_10^-5'] = 0
+    # dict_heatmap['10^-5_10^-4'] = 0
+    # dict_heatmap['10^-4_10^-3'] = 0
+    # dict_heatmap['10^-3_10^-2'] = 0
+    # dict_heatmap['10^-2_10^-1'] = 0
+    # dict_heatmap['10^-1_10^0'] = 0
 
-    for row, index in df_heatmap.iterrows:
-        if row['Variant_MAF_(highest_CFD)'] in range(0.000001, 0.00001):
-            dict_heatmap['10^-6_10^-5'] += 1
-        if row['Variant_MAF_(highest_CFD)'] in range(0.00001, 0.0001):
-            dict_heatmap['10^-5_10^-4'] += 1
-        if row['Variant_MAF_(highest_CFD)'] in range(0.0001, 0.001):
-            dict_heatmap['10^-4_10^-3'] += 1
-        if row['Variant_MAF_(highest_CFD)'] in range(0.001, 0.01):
-            dict_heatmap['10^-3_10^-2'] += 1
-        if row['Variant_MAF_(highest_CFD)'] in range(0.01, 0.1):
-            dict_heatmap['10^-2_10^-1'] += 1
-        if row['Variant_MAF_(highest_CFD)'] in range(0.1, 1):
-            dict_heatmap['10^-1_10^0'] += 1
+    # for row, index in df_heatmap.iterrows:
+    #     if row['Variant_MAF_(highest_CFD)'] in range(0.000001, 0.00001):
+    #         dict_heatmap['10^-6_10^-5'] += 1
+    #     if row['Variant_MAF_(highest_CFD)'] in range(0.00001, 0.0001):
+    #         dict_heatmap['10^-5_10^-4'] += 1
+    #     if row['Variant_MAF_(highest_CFD)'] in range(0.0001, 0.001):
+    #         dict_heatmap['10^-4_10^-3'] += 1
+    #     if row['Variant_MAF_(highest_CFD)'] in range(0.001, 0.01):
+    #         dict_heatmap['10^-3_10^-2'] += 1
+    #     if row['Variant_MAF_(highest_CFD)'] in range(0.01, 0.1):
+    #         dict_heatmap['10^-2_10^-1'] += 1
+    #     if row['Variant_MAF_(highest_CFD)'] in range(0.1, 1):
+    #         dict_heatmap['10^-1_10^0'] += 1
 
-    df_heatmap = pd.DataFrame.from_dict(dict_heatmap)
-    print(df_heatmap)
+    # df_heatmap = pd.DataFrame.from_dict(dict_heatmap)
+    table = df_heatmap.pivot('Variant_MAF_(highest_CFD)',
+                             'CFD_score_(highest_CFD)', 'Value')
+    # print(df_heatmap)
 
     figu = plt.figure()
     plt_heatmap = sns.heatmap(df_heatmap)
