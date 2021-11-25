@@ -121,6 +121,23 @@ def generate_upset_plot_MMBUL(original_df):
     plt.close('all')
 
 
+def generate_heatmap_CFD(original_df):
+    df_heatmap = original_df[[
+        'CFD_score_(highest_CFD)', 'Variant_MAF_(highest_CFD)']]
+    df_heatmap = df_heatmap.loc[(
+        df_heatmap["CFD_score_(highest_CFD)"] >= 0.1)]
+    df_heatmap['Variant_MAF_(highest_CFD)'] = np.log10(
+        df_heatmap['Variant_MAF_(highest_CFD)'])
+
+    figu = plt.figure()
+    plt_heatmap = sns.heatmap(df_heatmap)
+
+    plt.tight_layout()
+    plt.savefig(out_folder+'heatmap_CFD.png')
+    plt.clf()
+    plt.close('all')
+
+
 def generate_distribution_plot_CFD(original_df):
     filtered_df = original_df.loc[(
         original_df["CFD_score_(highest_CFD)"] >= 0.1)]
@@ -233,6 +250,7 @@ original_df = pd.read_csv(inTargets, sep="\t", index_col=False,
 # call to plot generation CFD
 generate_distribution_plot_CFD(original_df)
 generate_upset_plot_CFD(original_df)
+generate_heatmap_CFD(original_df)
 # call to plot generation MM_BUL
 generate_distribution_plot_MMBUL(original_df)
 generate_upset_plot_MMBUL(original_df)
