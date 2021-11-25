@@ -142,7 +142,7 @@ def generate_heatmap_CFD(original_df):
     df_heatmap['CFD_aggregate'] = 0
     df_heatmap['MAF_aggregate'] = 0
 
-    for row, index in df_heatmap.iterrows():
+    for index, row in df_heatmap.iterrows():
         cfd = str(row['CFD_score_(highest_CFD)'])
         maf = float(row['Variant_MAF_(highest_CFD)'])
         cfd_first_decimal = cfd.split('.')[1][0]
