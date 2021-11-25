@@ -137,30 +137,33 @@ def generate_heatmap_CFD(original_df):
     df_heatmap["Variant_MAF_(highest_CFD)"] = df_heatmap["Variant_MAF_(highest_CFD)"].apply(
         lambda x: min(x))
     df_heatmap["Variant_MAF_(highest_CFD)"] = pd.to_numeric(
-        df_heatmap["Variant_MAF_(highest_CFD)"])
+        df_heatmap["Variant_MAF_(highest_CFD)"], downcast="float")
+    df_heatmap['Variant_MAF_(highest_CFD)'] = np.log10(
+        df_heatmap['Variant_MAF_(highest_CFD)'])
 
-    df_heatmap['CFD_aggregate'] = 1
-    df_heatmap['MAF_aggregate'] = 0
+    # df_heatmap['CFD_aggregate'] = 1
+    # df_heatmap['MAF_aggregate'] = 0
 
-    for index, row in df_heatmap.iterrows():
-        cfd = str(row['CFD_score_(highest_CFD)'])
-        maf = float(row['Variant_MAF_(highest_CFD)'])
-        cfd_first_decimal = cfd.split('.')[1][0]
-        if cfd_first_decimal == '0':
-            continue
-        row['CFD_aggregate'] = float('0.'+cfd_first_decimal)
-        row['MAF_aggregate'] = int(num_of_zeros(maf))
+    # for index, row in df_heatmap.iterrows():
+    #     cfd = str(row['CFD_score_(highest_CFD)'])
+    #     maf = float(row['Variant_MAF_(highest_CFD)'])
+    #     cfd_first_decimal = cfd.split('.')[1][0]
+    #     if cfd_first_decimal == '0':
+    #         continue
+    #     row['CFD_aggregate'] = float('0.'+cfd_first_decimal)
+    #     row['MAF_aggregate'] = int(num_of_zeros(maf))
 
-    df_heatmap.drop(['Variant_MAF_(highest_CFD)',
-                    'CFD_score_(highest_CFD)'], axis=1, inplace=True)
+    # df_heatmap.drop(['Variant_MAF_(highest_CFD)',
+    #                 'CFD_score_(highest_CFD)'], axis=1, inplace=True)
     # df_heatmap = pd.DataFrame.from_dict(dict_heatmap)
     # df_heatmap.pivot()
-    # table = df_heatmap.pivot('Variant_MAF_(highest_CFD)','CFD_score_(highest_CFD)')
-    print(df_heatmap)
+    table = df_heatmap.pivot_table(
+        index='Variant_MAF_(highest_CFD)', columns='CFD_score_(highest_CFD)', aggfunc='sum')
+    print(table)
     # print(table)
 
     figu = plt.figure()
-    plt_heatmap = sns.heatmap(df_heatmap)
+    plt_heatmap = sns.heatmap(table)
 
     plt.tight_layout()
     plt.savefig(out_folder+'heatmap_CFD.png')
