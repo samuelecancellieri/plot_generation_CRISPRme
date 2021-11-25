@@ -19,9 +19,15 @@ warnings.filterwarnings("ignore")
 matplotlib.use('Agg')
 
 
-def num_of_decimal_zeros(n):
-    s = '{:.16f}'.format(n).split('.')[1]
-    return len(s) - len(s.lstrip('0'))
+def num_of_decimal_zeros(float_number):
+    decimals = str(float_number).split('.')[1]
+    count_zeros = 0
+    for decimal in decimals:
+        if decimal == '0':
+            count_zeros += 1
+        else:
+            break
+    return count_zeros
 
 
 def generate_distribution_plot_MMBUL(original_df):
@@ -141,9 +147,6 @@ def generate_heatmap_CFD(original_df):
         df_heatmap["Variant_MAF_(highest_CFD)"], downcast="float")
     df_heatmap = df_heatmap.loc[(df_heatmap['Variant_MAF_(highest_CFD)']) >= 0]
     # conversion to count of decimal zeros
-    df_heatmap.sort_values(['Variant_MAF_(highest_CFD)'], inplace=True)
-    for index, row in df_heatmap.iterrows():
-        print(row['Variant_MAF_(highest_CFD)'])
     df_heatmap["Variant_MAF_(highest_CFD)"] = df_heatmap["Variant_MAF_(highest_CFD)"].apply(
         lambda x: num_of_decimal_zeros(x))
 
