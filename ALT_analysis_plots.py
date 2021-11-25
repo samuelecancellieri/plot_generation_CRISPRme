@@ -128,13 +128,15 @@ def generate_heatmap_CFD(original_df):
         df_heatmap["CFD_score_(highest_CFD)"] >= 0.1)]
 
     df_heatmap["Variant_MAF_(highest_CFD)"] = df_heatmap["Variant_MAF_(highest_CFD)"].fillna(-1)
-    df_heatmap["AF"] = df_heatmap["Variant_MAF_(highest_CFD)"].astype(
+    df_heatmap["Variant_MAF_(highest_CFD)"] = df_heatmap["Variant_MAF_(highest_CFD)"].astype(
         str).str.split(',')
-    df_heatmap["AF"] = df_heatmap["AF"].apply(lambda x: min(x))
-    df_heatmap["AF"] = pd.to_numeric(df_heatmap["AF"])
+    df_heatmap["Variant_MAF_(highest_CFD)"] = df_heatmap["Variant_MAF_(highest_CFD)"].apply(
+        lambda x: min(x))
+    df_heatmap["Variant_MAF_(highest_CFD)"] = pd.to_numeric(
+        df_heatmap["Variant_MAF_(highest_CFD)"])
     # df_heatmap['AF'] = np.log10(df_heatmap['AF'])
 
-    df_heatmap.drop(['Variant_MAF_(highest_CFD)'], axis=1, inplace=True)
+    # df_heatmap.drop(['Variant_MAF_(highest_CFD)'], axis=1, inplace=True)
 
     print(df_heatmap)
 
