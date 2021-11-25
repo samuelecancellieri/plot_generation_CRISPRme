@@ -31,7 +31,7 @@ def num_of_decimal_zeros(float_number):
         else:
             break
     # add 1 to respect the exp representation (10^-1 will have count_zeros=0, but should be 1)
-    return math.pow(10, count_zeros+1)
+    return math.pow(10, -(count_zeros+1))
 
 
 def generate_distribution_plot_MMBUL(original_df):
