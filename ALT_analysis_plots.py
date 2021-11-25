@@ -152,7 +152,7 @@ def generate_heatmap_CFD(original_df):
         row['MAF_aggregate'] = int(num_of_zeros(maf))
 
     df_heatmap.drop(['Variant_MAF_(highest_CFD)',
-                    'CFD_score_(highest_CFD)'], inplace=True)
+                    'CFD_score_(highest_CFD)'], axis=1, inplace=True)
     # df_heatmap = pd.DataFrame.from_dict(dict_heatmap)
     # df_heatmap.pivot()
     # table = df_heatmap.pivot('Variant_MAF_(highest_CFD)','CFD_score_(highest_CFD)')
