@@ -157,18 +157,19 @@ def generate_heatmap_CFD(original_df):
     #                 'CFD_score_(highest_CFD)'], axis=1, inplace=True)
     # df_heatmap = pd.DataFrame.from_dict(dict_heatmap)
     # df_heatmap.pivot()
-    table = df_heatmap.pivot_table(
-        index='Variant_MAF_(highest_CFD)', columns='CFD_score_(highest_CFD)', aggfunc='sum')
-    print(table)
+    print(df_heatmap)
+    # table = df_heatmap.pivot_table(
+    #     index='Variant_MAF_(highest_CFD)', columns='CFD_score_(highest_CFD)', aggfunc='sum')
+    # print(table)
     # print(table)
 
-    figu = plt.figure()
-    plt_heatmap = sns.heatmap(table)
+    # figu = plt.figure()
+    # plt_heatmap = sns.heatmap(table)
 
-    plt.tight_layout()
-    plt.savefig(out_folder+'heatmap_CFD.png')
-    plt.clf()
-    plt.close('all')
+    # plt.tight_layout()
+    # plt.savefig(out_folder+'heatmap_CFD.png')
+    # plt.clf()
+    # plt.close('all')
 
 
 def generate_distribution_plot_CFD(original_df):
