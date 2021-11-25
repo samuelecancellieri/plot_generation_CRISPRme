@@ -134,7 +134,7 @@ def generate_heatmap_CFD(original_df):
     df_heatmap["AF"] = pd.to_numeric(df_heatmap["AF"])
     # df_heatmap['AF'] = np.log10(df_heatmap['AF'])
 
-    df_heatmap.drop(['Variant_MAF_(highest_CFD)'], inplace=True)
+    # df_heatmap.drop(['Variant_MAF_(highest_CFD)'], inplace=True)
 
     print(df_heatmap)
 
