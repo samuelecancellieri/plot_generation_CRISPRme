@@ -171,7 +171,7 @@ def generate_heatmap_CFD(original_df):
     print(table)
 
     figu = plt.figure()
-    plt_heatmap = sns.heatmap(table, annot=True, square=True, norm=LogNorm())
+    plt_heatmap = sns.heatmap(table, annot=True, norm=LogNorm())
     plt_heatmap.invert_yaxis()
     # plt_heatmap.invert_xaxis()
     plt.tight_layout()
