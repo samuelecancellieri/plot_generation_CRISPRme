@@ -192,13 +192,13 @@ def generate_heatmap_CFD(original_df):
     cbar_ticks = [10**0, 10**1, 10**2, 10**3, 10**4, 10**5, 10**6]
     vmax = 10**6
     vmin = 10**0
-    formatter = tkr.ScalarFormatter(useMathText=True)
+    # formatter = tkr.ScalarFormatter(useMathText=True)
     log_norm = LogNorm(vmin=vmin, vmax=vmax)
-    formatter.set_scientific(True)
+    # formatter.set_scientific(True)
 
     figu = plt.figure()
     plt_heatmap = sns.heatmap(table, annot=True, vmax=vmax, vmin=vmin, norm=log_norm,
-                              cbar_kws={"ticks": cbar_ticks, "format": formatter})
+                              cbar_kws={"ticks": cbar_ticks})
     plt_heatmap.collections[0].colorbar.ax.yaxis.set_ticks([], minor=True)
     # print(plt_heatmap.get_xticks())
     plt_heatmap.set_xticks([x - 0.5 for x in plt_heatmap.get_xticks()])
