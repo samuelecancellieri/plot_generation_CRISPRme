@@ -191,7 +191,7 @@ def generate_heatmap_CFD(original_df):
 
     cbar_ticks = [0, 10, 100, 1000, 10000, 100000, 1000000]
     vmax = 1000000
-    vmin = 0
+    vmin = 1
     formatter = tkr.ScalarFormatter(useMathText=True)
     log_norm = LogNorm(vmin=vmin, vmax=vmax)
     # formatter.set_scientific(False)
