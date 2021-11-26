@@ -14,6 +14,8 @@ from upsetplot import from_memberships
 import warnings
 import matplotlib
 import math
+import matplotlib.ticker as tkr
+
 
 # SUPPRESS ALL WARNINGS
 warnings.filterwarnings("ignore")
@@ -187,9 +189,17 @@ def generate_heatmap_CFD(original_df):
 
     # print(table)
 
+    cbar_ticks = [0.5, 0.75, 1, 1.33, 2]
+    vmax = df_table['Variant_MAF_(highest_CFD)'].max()
+    vmin = df_table['Variant_MAF_(highest_CFD)'].min()
+    formatter = tkr.ScalarFormatter(useMathText=True)
+    log_norm = LogNorm(vmin=vmin, vmax=vmax)
+    # formatter.set_scientific(False)
+
     figu = plt.figure()
-    plt_heatmap = sns.heatmap(table, annot=True, norm=LogNorm())
-    plt_heatmap.collections[0].colorbar.ax.yaxis.set_ticks(minor=False)
+    plt_heatmap = sns.heatmap(table, annot=True, vmax=vmax, vmin=vmin, norm=log_norm,
+                              cbar_kws={"ticks": cbar_ticks, "format": formatter})
+    plt_heatmap.collections[0].colorbar.ax.yaxis.set_ticks([], minor=True)
     # plt_heatmap.set_xticklabels(
     #     labels=df_heatmap['Variant_MAF_(highest_CFD)'].unique(), ha="left")
     # plt_heatmap.set_yticklabels(
