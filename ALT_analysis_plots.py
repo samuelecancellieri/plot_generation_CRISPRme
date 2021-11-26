@@ -181,8 +181,9 @@ def generate_heatmap_CFD(original_df):
 
 
 def generate_distribution_plot_CFD(original_df):
-    filtered_df = original_df.loc[(
-        original_df["CFD_score_(highest_CFD)"] >= 0.1)]
+    filtered_df = original_df
+    # filtered_df = original_df.loc[(
+    #     original_df["CFD_score_(highest_CFD)"] >= 0.1)]
     filtered_df["Variant_MAF_(highest_CFD)"] = filtered_df["Variant_MAF_(highest_CFD)"].fillna(-1)
 
     # If multiple AFs (haplotype with multiple SNPs), take min AF
@@ -233,8 +234,9 @@ def upset_log_barplot_CFD():
 
 def generate_upset_plot_CFD(original_df):
     # CFD analysis
-    df_alt = original_df.loc[(original_df['REF/ALT_origin_(highest_CFD)']
-                              == 'alt') & (original_df["CFD_score_(highest_CFD)"] >= 0.1)]
+    # df_alt = original_df.loc[(original_df['REF/ALT_origin_(highest_CFD)']
+    #                           == 'alt') & (original_df["CFD_score_(highest_CFD)"] >= 0.1)]
+    df_alt = original_df.loc[(original_df['REF/ALT_origin_(highest_CFD)'])]
 
     # create dict
     on_target_dict = dict()
@@ -272,7 +274,7 @@ def generate_upset_plot_CFD(original_df):
     # collect categories per target
     categories_per_target = from_memberships(
         df_alt.Categories.str.split(','), data=df_alt)
-    print(categories_per_target)
+    # print(categories_per_target)
     # create figure
     figu = plt.figure()
     upset_plot = UpSet(categories_per_target, show_counts=True,
