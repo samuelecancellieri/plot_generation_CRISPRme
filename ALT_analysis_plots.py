@@ -228,8 +228,18 @@ def generate_distribution_plot_CFD(original_df):
     plt.close('all')
 
 
-def upset_log_barplot_CFD():
-    return False
+def generate_upset_log_barplot_CFD():
+    labels = ['ENCODE', 'CDS', 'ON_TARGET', 'ENCODE+CDS',
+              'TSG+CDS', 'TSG+ENCODE+CDS', 'ON_TARGET+ENCODE']
+    x_axis = [i for i in range(0, 7)]
+    y_axis = [10, 20, 30, 10, 20, 30, 44]
+    ax = plt.bar(x=x_axis, height=y_axis, labels=labels)
+    ax.set_yscale('log')
+
+    plt.tight_layout()
+    plt.savefig(out_folder+'upset_barpot_log_scale.png')
+    plt.clf()
+    plt.close('all')
 
 
 def generate_upset_plot_CFD(original_df):
@@ -299,6 +309,7 @@ original_df = pd.read_csv(inTargets, sep="\t", index_col=False,
 generate_distribution_plot_CFD(original_df)
 generate_upset_plot_CFD(original_df)
 generate_heatmap_CFD(original_df)
+generate_upset_log_barplot_CFD()
 # call to plot generation MM_BUL
 generate_distribution_plot_MMBUL(original_df)
 generate_upset_plot_MMBUL(original_df)
