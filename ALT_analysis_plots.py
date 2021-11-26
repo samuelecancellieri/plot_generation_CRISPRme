@@ -23,7 +23,6 @@ matplotlib.use('Agg')
 
 def annotation_analysis(row, on_target_dict):
     categories_list = list()
-    categories_list.append('empty')
 
     if 'CDS' in str(row['Annotation_GENCODE']):
         categories_list.append('CDS')
@@ -33,9 +32,10 @@ def annotation_analysis(row, on_target_dict):
         categories_list.append('TSG')
     if str(row['Chromosome']) == on_target_dict[str(row['Spacer+PAM'])]:
         categories_list.append('On-Target_Chromosome')
-    if len(categories_list) > 1:
-        categories_list.remove('empty')
+    if len(categories_list):
         return (','.join(categories_list))
+    else:
+        return 'empty'
 
 
 def num_of_decimal_zeros(float_number):
