@@ -161,14 +161,14 @@ def generate_heatmap_CFD(original_df):
     df_heatmap['CFD_score_(highest_CFD)'] = df_heatmap['CFD_score_(highest_CFD)'].apply(
         lambda x: round(x, 1))
 
-    print(df_heatmap)
+    # print(df_heatmap)
 
     df_table = df_heatmap.groupby(
         ["Variant_MAF_(highest_CFD)", "CFD_score_(highest_CFD)"]).size().reset_index(name="Value")
     table = df_table.pivot('CFD_score_(highest_CFD)',
                            'Variant_MAF_(highest_CFD)', 'Value')
 
-    print(table)
+    # print(table)
 
     figu = plt.figure()
     plt_heatmap = sns.heatmap(table, annot=True, norm=LogNorm())
