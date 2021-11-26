@@ -21,6 +21,23 @@ warnings.filterwarnings("ignore")
 matplotlib.use('Agg')
 
 
+def annotation_analysis(row, on_target_dict):
+    categories_list = list()
+    categories_list.append('empty')
+
+    if 'CDS' in str(row['Annotation_GENCODE']):
+        categories_list.append('CDS')
+    if 'nan' not in str(row['Annotation_ENCODE']):
+        categories_list.append('ENCODE')
+    if 'nan' not in str(row['Gene_description']) and 'CDS' in str(row['Annotation_GENCODE']):
+        categories_list.append('TSG')
+    if str(row['Chromosome']) == on_target_dict[str(row['Spacer+PAM'])]:
+        categories_list.append('On-Target_Chromosome')
+    if len(categories_list) > 1:
+        categories_list.remove('empty')
+        return (','.join(categories_list))
+
+
 def num_of_decimal_zeros(float_number):
     if float_number == 0:
         return math.pow(10, -6)  # 0.000001
@@ -244,8 +261,7 @@ def generate_upset_log_barplot_CFD():
 
 def generate_upset_plot_CFD(original_df):
     # CFD analysis
-    # df_alt = original_df.loc[(original_df['REF/ALT_origin_(highest_CFD)']
-    #                           == 'alt') & (original_df["CFD_score_(highest_CFD)"] >= 0.1)]
+    # df_alt = original_df.loc[(original_df['REF/ALT_origin_(highest_CFD)']== 'alt') & (original_df["CFD_score_(highest_CFD)"] >= 0.1)]
     df_alt = original_df.loc[(
         original_df['REF/ALT_origin_(highest_CFD)'] == 'alt')]
 
@@ -264,21 +280,23 @@ def generate_upset_plot_CFD(original_df):
     except:
         print('on target not found for guide')
     # create empty categories col
-    df_alt['Categories'] = 'empty'
+    # df_alt['Categories'] = 'empty'
 
+    df_alt['Categories'] = df_alt.apply(
+        lambda row: annotation_analysis(row, on_target_dict), axis=1)
     # process df to obtain categories of belonging for each target
-    for index in df_alt.index:
-        categories_list = list()
-        if 'CDS' in str(df_alt.loc[index, 'Annotation_GENCODE']):
-            categories_list.append('CDS')
-        if 'nan' not in str(df_alt.loc[index, 'Annotation_ENCODE']):
-            categories_list.append('ENCODE')
-        if 'nan' not in str(df_alt.loc[index, 'Gene_description']) and 'CDS' in str(df_alt.loc[index, 'Annotation_GENCODE']):
-            categories_list.append('TSG')
-        if str(df_alt.loc[index, 'Chromosome']) == on_target_dict[str(df_alt.loc[index, 'Spacer+PAM'])]:
-            categories_list.append('On-Target_Chromosome')
-        if len(categories_list):
-            df_alt.loc[index, 'Categories'] = ','.join(categories_list)
+    # for index in df_alt.index:
+    #     categories_list = list()
+    #     if 'CDS' in str(df_alt.loc[index, 'Annotation_GENCODE']):
+    #         categories_list.append('CDS')
+    #     if 'nan' not in str(df_alt.loc[index, 'Annotation_ENCODE']):
+    #         categories_list.append('ENCODE')
+    #     if 'nan' not in str(df_alt.loc[index, 'Gene_description']) and 'CDS' in str(df_alt.loc[index, 'Annotation_GENCODE']):
+    #         categories_list.append('TSG')
+    #     if str(df_alt.loc[index, 'Chromosome']) == on_target_dict[str(df_alt.loc[index, 'Spacer+PAM'])]:
+    #         categories_list.append('On-Target_Chromosome')
+    #     if len(categories_list):
+    #         df_alt.loc[index, 'Categories'] = ','.join(categories_list)
 
     # remove targets with empty categories
     df_alt = df_alt.loc[(df_alt['Categories'] != 'empty')]
