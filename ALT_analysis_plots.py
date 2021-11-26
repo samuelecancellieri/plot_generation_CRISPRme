@@ -6,6 +6,7 @@ import pandas as pd
 import seaborn as sns
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.colors import LogNorm
 # from upsetplot import generate_counts
 from upsetplot import UpSet
 # import matplotlib as mpl
@@ -170,7 +171,7 @@ def generate_heatmap_CFD(original_df):
     print(table)
 
     figu = plt.figure()
-    plt_heatmap = sns.heatmap(table, annot=True)
+    plt_heatmap = sns.heatmap(table, annot=True, square=True, norm=LogNorm())
     plt_heatmap.invert_yaxis()
     # plt_heatmap.invert_xaxis()
     plt.tight_layout()
