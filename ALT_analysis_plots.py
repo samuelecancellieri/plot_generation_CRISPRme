@@ -250,7 +250,7 @@ def generate_upset_log_barplot_CFD():
               'TSG+CDS', 'TSG+ENCODE+CDS', 'ON_TARGET+ENCODE']
     x_axis = [i for i in range(0, 7)]
     y_axis = [10, 20, 30, 10, 20, 30, 44]
-    ax = plt.bar(x=x_axis, height=y_axis, labels=labels)
+    ax = plt.bar(x=x_axis, height=y_axis, tick_label=labels)
     ax.set_yscale('log')
 
     plt.tight_layout()
