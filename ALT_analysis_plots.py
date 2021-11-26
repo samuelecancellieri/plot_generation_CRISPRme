@@ -44,7 +44,7 @@ def annotation_analysis(row, on_target_dict):
 
 def num_of_decimal_zeros(float_number):
     if float_number == 0:
-        return math.pow(10, -5)  # 0.000001
+        return math.pow(10, -5)  # 0.00001
     decimals = str(float_number).split('.')[1]
     count_zeros = 0
     for decimal in decimals:
@@ -285,32 +285,18 @@ def generate_upset_plot_CFD(original_df):
         on_target_dict[str(on_target_guide)] = str(on_target_chr)
     except:
         print('on target not found for guide')
-    # create empty categories col
-    # df_alt['Categories'] = 'empty'
 
+    # compute analysis to compute annotations
     df_alt['Categories'] = df_alt.apply(
         lambda row: annotation_analysis(row, on_target_dict), axis=1)
-    # process df to obtain categories of belonging for each target
-    # for index in df_alt.index:
-    #     categories_list = list()
-    #     if 'CDS' in str(df_alt.loc[index, 'Annotation_GENCODE']):
-    #         categories_list.append('CDS')
-    #     if 'nan' not in str(df_alt.loc[index, 'Annotation_ENCODE']):
-    #         categories_list.append('ENCODE')
-    #     if 'nan' not in str(df_alt.loc[index, 'Gene_description']) and 'CDS' in str(df_alt.loc[index, 'Annotation_GENCODE']):
-    #         categories_list.append('TSG')
-    #     if str(df_alt.loc[index, 'Chromosome']) == on_target_dict[str(df_alt.loc[index, 'Spacer+PAM'])]:
-    #         categories_list.append('On-Target_Chromosome')
-    #     if len(categories_list):
-    #         df_alt.loc[index, 'Categories'] = ','.join(categories_list)
 
     # remove targets with empty categories
     df_alt = df_alt.loc[(df_alt['Categories'] != 'empty')]
-    # print(df_alt)
+
     # collect categories per target
     categories_per_target = from_memberships(
         df_alt.Categories.str.split(','), data=df_alt)
-    # print(categories_per_target)
+
     # create figure
     figu = plt.figure()
     upset_plot = UpSet(categories_per_target, show_counts=True,
