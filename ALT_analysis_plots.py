@@ -190,7 +190,7 @@ def generate_heatmap_CFD(original_df):
     figu = plt.figure()
     plt_heatmap = sns.heatmap(table, annot=True, norm=LogNorm())
     plt_heatmap.set_yticklabels(
-        labels=df_heatmap['Variant_MAF_(highest_CFD)'].unique(), rotation=0, va="left")
+        labels=df_heatmap['Variant_MAF_(highest_CFD)'].unique(), ha="left")
     # plt_heatmap.xticks(1, 2, 3, 4, 5)
     plt_heatmap.invert_yaxis()
     # plt_heatmap.invert_xaxis()
