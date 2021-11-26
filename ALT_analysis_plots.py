@@ -26,6 +26,7 @@ matplotlib.use('Agg')
 def annotation_analysis(row, on_target_dict):
     categories_list = list()
 
+    print(row['PAM_creation_(highest_CFD)'])
     if 'CDS' in str(row['Annotation_GENCODE']):
         categories_list.append('CDS')
     if 'nan' not in str(row['Annotation_ENCODE']):
