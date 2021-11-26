@@ -40,7 +40,7 @@ def annotation_analysis(row, on_target_dict):
 
 def num_of_decimal_zeros(float_number):
     if float_number == 0:
-        return math.pow(10, -6)  # 0.000001
+        return math.pow(10, -5)  # 0.000001
     decimals = str(float_number).split('.')[1]
     count_zeros = 0
     for decimal in decimals:
@@ -189,6 +189,7 @@ def generate_heatmap_CFD(original_df):
 
     figu = plt.figure()
     plt_heatmap = sns.heatmap(table, annot=True, norm=LogNorm())
+    plt_heatmap.xticks(1, 2, 3, 4, 5)
     plt_heatmap.invert_yaxis()
     # plt_heatmap.invert_xaxis()
     plt.tight_layout()
