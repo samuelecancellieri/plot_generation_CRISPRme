@@ -300,6 +300,7 @@ def generate_upset_plot_CFD(original_df):
 
     # remove targets with empty categories
     df_alt = df_alt.loc[(df_alt['Categories'] != 'empty')]
+    print(df_alt)
     # collect categories per target
     categories_per_target = from_memberships(
         df_alt.Categories.str.split(','), data=df_alt)
