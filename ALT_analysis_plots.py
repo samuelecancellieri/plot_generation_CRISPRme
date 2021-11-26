@@ -189,7 +189,7 @@ def generate_heatmap_CFD(original_df):
 
     # print(table)
 
-    cbar_ticks = df_table['Variant_MAF_(highest_CFD)'].unique()
+    cbar_ticks = [0, 10, 100, 1000, 10000, 100000, 1000000]
     vmax = df_table['Variant_MAF_(highest_CFD)'].max()
     vmin = df_table['Variant_MAF_(highest_CFD)'].min()
     formatter = tkr.ScalarFormatter(useMathText=True)
