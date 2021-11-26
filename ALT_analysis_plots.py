@@ -200,9 +200,11 @@ def generate_heatmap_CFD(original_df):
     plt_heatmap = sns.heatmap(table, annot=True, vmax=vmax, vmin=vmin, norm=log_norm,
                               cbar_kws={"ticks": cbar_ticks, "format": formatter})
     plt_heatmap.collections[0].colorbar.ax.yaxis.set_ticks([], minor=True)
-    print(plt_heatmap.get_xticks())
-    plt_heatmap.set_yticklabels(
-        labels=plt_heatmap.get_yticklabels(), va='bottom')
+    # print(plt_heatmap.get_xticks())
+    plt_heatmap.set_xticks([x - 0.5 for x in plt_heatmap.get_xticks()])
+    plt_heatmap.set_yticks([x - 0.5 for x in plt_heatmap.get_yticks()])
+    # plt_heatmap.set_yticklabels(
+    #     labels=plt_heatmap.get_yticklabels(), va='bottom')
     plt_heatmap.invert_yaxis()
     # plt_heatmap.invert_xaxis()
     plt.tight_layout()
