@@ -227,6 +227,10 @@ def generate_distribution_plot_CFD(original_df):
     plt.close('all')
 
 
+def upset_log_barplot_CFD():
+    return False
+
+
 def generate_upset_plot_CFD(original_df):
     # CFD analysis
     df_alt = original_df.loc[(original_df['REF/ALT_origin_(highest_CFD)']
@@ -268,7 +272,7 @@ def generate_upset_plot_CFD(original_df):
     # collect categories per target
     categories_per_target = from_memberships(
         df_alt.Categories.str.split(','), data=df_alt)
-    # print(categories_per_target)
+    print(categories_per_target)
     # create figure
     figu = plt.figure()
     upset_plot = UpSet(categories_per_target, show_counts=True,
