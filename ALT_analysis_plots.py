@@ -246,7 +246,8 @@ def generate_upset_plot_CFD(original_df):
     # CFD analysis
     # df_alt = original_df.loc[(original_df['REF/ALT_origin_(highest_CFD)']
     #                           == 'alt') & (original_df["CFD_score_(highest_CFD)"] >= 0.1)]
-    df_alt = original_df.loc[(original_df['REF/ALT_origin_(highest_CFD)'])]
+    df_alt = original_df.loc[(
+        original_df['REF/ALT_origin_(highest_CFD)'] == 'alt')]
 
     # create dict
     on_target_dict = dict()
@@ -306,10 +307,10 @@ original_df = pd.read_csv(inTargets, sep="\t", index_col=False,
                           na_values=['n'])
 
 # call to plot generation CFD
-generate_distribution_plot_CFD(original_df)
+# generate_distribution_plot_CFD(original_df)
 generate_upset_plot_CFD(original_df)
 generate_heatmap_CFD(original_df)
 generate_upset_log_barplot_CFD()
 # call to plot generation MM_BUL
-generate_distribution_plot_MMBUL(original_df)
-generate_upset_plot_MMBUL(original_df)
+# generate_distribution_plot_MMBUL(original_df)
+# generate_upset_plot_MMBUL(original_df)
