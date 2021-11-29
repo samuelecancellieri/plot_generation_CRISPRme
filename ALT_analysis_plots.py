@@ -237,7 +237,8 @@ def generate_distribution_plot_CFD(original_df):
     andamenti = list()
     for guide in filtered_df['Spacer+PAM'].unique():
         guide_df = filtered_df.loc[(filtered_df['Spacer+PAM'] == guide)]
-        for permutation in range(100):
+        for permutation in range(10):
+            print('done permutation', permutation)
             guide_df = guide_df.sample(frac=1)
 
             andamento_ALT_MAF005 = list()
