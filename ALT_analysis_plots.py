@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from _typeshed import FileDescriptorLike
 import sys
 import time
 import pandas as pd
@@ -21,6 +22,19 @@ import matplotlib.ticker as tkr
 warnings.filterwarnings("ignore")
 # do not use X11
 matplotlib.use('Agg')
+
+
+def maf_analysis(af, altTarget_MAF005, altTarget_MAF05, altTarget_MAF0, andamento_ALT_MAF005, andamento_ALT_MAF05, andamento_ALT_MAF0):
+    if af > 0.005:
+        altTarget_MAF005 += 1
+    if af > 0.05:
+        altTarget_MAF05 += 1
+    if af >= 0:
+        altTarget_MAF0 += 1
+
+    andamento_ALT_MAF005.append(altTarget_MAF005)
+    andamento_ALT_MAF05.append(altTarget_MAF05)
+    andamento_ALT_MAF0.append(altTarget_MAF0)
 
 
 def annotation_analysis(row, on_target_dict):
@@ -228,31 +242,27 @@ def generate_distribution_plot_CFD(original_df):
     filtered_df["AF"] = filtered_df["Variant_MAF_(highest_CFD)"].astype(
         str).str.split(',')
     filtered_df["AF"] = filtered_df["AF"].apply(lambda x: min(x))
-    filtered_df["AF"] = pd.to_numeric(filtered_df["AF"])
+    filtered_df["AF"] = pd.to_numeric(filtered_df["AF"], downcast="float")
+    # sort over CFD
     filtered_df.sort_values(['CFD_score_(highest_CFD)'],
                             inplace=True, ascending=False)
 
-    andamento_ALT_MAF005 = list()
-    andamento_ALT_MAF05 = list()
-    andamento_ALT_MAF0 = list()
-    altTarget_MAF005 = 0
-    altTarget_MAF05 = 0
-    altTarget_MAF0 = 0
+    for guide in filtered_df['Spacer+PAM'].unique():
+        guide_df = filtered_df.loc[filtered_df['Spacer+PAM'] == guide]
 
-    for index, row in filtered_df.iterrows():
-        if row['AF'] > 0.005:
-            altTarget_MAF005 += 1
-        if row['AF'] > 0.05:
-            altTarget_MAF05 += 1
-        if row['AF'] >= 0:
-            altTarget_MAF0 += 1
-        andamento_ALT_MAF005.append(altTarget_MAF005)
-        andamento_ALT_MAF05.append(altTarget_MAF05)
-        andamento_ALT_MAF0.append(altTarget_MAF0)
+        andamento_ALT_MAF005 = list()
+        andamento_ALT_MAF05 = list()
+        andamento_ALT_MAF0 = list()
+        altTarget_MAF005 = 0
+        altTarget_MAF05 = 0
+        altTarget_MAF0 = 0
 
-    plt.plot(andamento_ALT_MAF0, label='MAF>0')
-    plt.plot(andamento_ALT_MAF005, label='MAF>0.005')
-    plt.plot(andamento_ALT_MAF05, label='MAF>0.05')
+        guide_df['AF'].apply(lambda x: maf_analysis(
+            x, altTarget_MAF005, altTarget_MAF05, altTarget_MAF0, andamento_ALT_MAF005, andamento_ALT_MAF05, andamento_ALT_MAF0), axis=1)
+
+        plt.plot(andamento_ALT_MAF0, label='MAF>0')
+        plt.plot(andamento_ALT_MAF005, label='MAF>0.005')
+        plt.plot(andamento_ALT_MAF05, label='MAF>0.05')
 
     plt.ylabel('ALT Targets')
     plt.xlabel('Targets')
@@ -318,9 +328,9 @@ original_df = pd.read_csv(inTargets, sep="\t", index_col=False,
                           na_values=['n'])
 
 # call to plot generation CFD
-# generate_distribution_plot_CFD(original_df)
-generate_upset_plot_CFD(original_df)
-generate_heatmap_CFD(original_df)
+generate_distribution_plot_CFD(original_df)
+# generate_upset_plot_CFD(original_df)
+# generate_heatmap_CFD(original_df)
 # generate_upset_log_barplot_CFD()
 # call to plot generation MM_BUL
 # generate_distribution_plot_MMBUL(original_df)
