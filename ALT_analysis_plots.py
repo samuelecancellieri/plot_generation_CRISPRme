@@ -258,9 +258,10 @@ def generate_distribution_plot_CFD(original_df):
         altTarget_MAF05 = 0
         altTarget_MAF0 = 0
 
-        altTarget_MAF005, altTarget_MAF05, altTarget_MAF0 = guide_df['AF'].apply(lambda x: maf_analysis(
+        save = guide_df['AF'].apply(lambda x: maf_analysis(
             x, altTarget_MAF005, altTarget_MAF05, altTarget_MAF0, andamento_ALT_MAF005, andamento_ALT_MAF05, andamento_ALT_MAF0))
 
+        print(save)
         plt.plot(andamento_ALT_MAF0, label='MAF>0')
         plt.plot(andamento_ALT_MAF005, label='MAF>0.005')
         plt.plot(andamento_ALT_MAF05, label='MAF>0.05')
