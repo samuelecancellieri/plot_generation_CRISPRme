@@ -233,14 +233,13 @@ def generate_distribution_plot_CFD(original_df):
     filtered_df.sort_values(['CFD_score_(highest_CFD)'],
                             inplace=True, ascending=False)
 
-    andamenti = list()
     plt.figure()
-
     for guide in filtered_df['Spacer+PAM'].unique():
         guide_df = filtered_df.loc[(filtered_df['Spacer+PAM'] == guide)]
         af_list = guide_df['AF'].tolist()
+        andamenti = list()
 
-        for permutation in range(10):
+        for permutation in range(50):
 
             andamento_ALT_MAF005 = list()
             andamento_ALT_MAF05 = list()
@@ -267,6 +266,7 @@ def generate_distribution_plot_CFD(original_df):
 
         # read values to generate plot
         andamentiArray = np.array(andamenti)
+        print(andamentiArray)
         media = np.mean(andamentiArray, axis=0)
         print('media', media)
         standarddev = np.std(andamentiArray, axis=0)
