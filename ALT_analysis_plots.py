@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-from _typeshed import FileDescriptorLike
 import sys
 import time
 import pandas as pd
