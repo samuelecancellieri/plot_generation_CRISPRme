@@ -23,21 +23,6 @@ warnings.filterwarnings("ignore")
 matplotlib.use('Agg')
 
 
-def maf_analysis(af, altTarget_MAF005, altTarget_MAF05, altTarget_MAF0, andamento_ALT_MAF005, andamento_ALT_MAF05, andamento_ALT_MAF0):
-    if af > 0.005:
-        altTarget_MAF005 += 1
-    if af > 0.05:
-        altTarget_MAF05 += 1
-    if af >= 0:
-        altTarget_MAF0 += 1
-
-    andamento_ALT_MAF005.append(altTarget_MAF005)
-    andamento_ALT_MAF05.append(altTarget_MAF05)
-    andamento_ALT_MAF0.append(altTarget_MAF0)
-
-    return altTarget_MAF005, altTarget_MAF05, altTarget_MAF0
-
-
 def annotation_analysis(row, on_target_dict):
     categories_list = list()
 
@@ -258,10 +243,18 @@ def generate_distribution_plot_CFD(original_df):
         altTarget_MAF05 = 0
         altTarget_MAF0 = 0
 
-        save = guide_df['AF'].apply(lambda x: maf_analysis(
-            x, altTarget_MAF005, altTarget_MAF05, altTarget_MAF0, andamento_ALT_MAF005, andamento_ALT_MAF05, andamento_ALT_MAF0))
+        for af in guide_df['AF']:
+            if af > 0.005:
+                altTarget_MAF005 += 1
+            if af > 0.05:
+                altTarget_MAF05 += 1
+            if af >= 0:
+                altTarget_MAF0 += 1
 
-        print(save)
+        andamento_ALT_MAF005.append(altTarget_MAF005)
+        andamento_ALT_MAF05.append(altTarget_MAF05)
+        andamento_ALT_MAF0.append(altTarget_MAF0)
+
         plt.plot(andamento_ALT_MAF0, label='MAF>0')
         plt.plot(andamento_ALT_MAF005, label='MAF>0.005')
         plt.plot(andamento_ALT_MAF05, label='MAF>0.05')
