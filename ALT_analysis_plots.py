@@ -277,7 +277,7 @@ def generate_distribution_plot_CFD(original_df):
         # print(lowerbound)
         # print(upperbound)
         # allMedie.append(media)
-        plt.plot(media, label=str(guide_df.loc[0, 'Spacer+PAM']))
+        plt.plot(media, label=str(guide))
         plt.fill_between(range(len(media)), lowerbound,
                          upperbound, alpha=0.10)
         # plt.plot(andamento_ALT_MAF0, label='MAF>0')
