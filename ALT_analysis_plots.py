@@ -233,8 +233,11 @@ def generate_distribution_plot_CFD(original_df):
     filtered_df.sort_values(['CFD_score_(highest_CFD)'],
                             inplace=True, ascending=False)
 
+    # for sampling in range(100):
+    andamenti = list()
     for guide in filtered_df['Spacer+PAM'].unique():
         guide_df = filtered_df.loc[(filtered_df['Spacer+PAM'] == guide)]
+        # guide_df = guide_df.sample(frac=1)
 
         andamento_ALT_MAF005 = list()
         andamento_ALT_MAF05 = list()
@@ -250,16 +253,28 @@ def generate_distribution_plot_CFD(original_df):
                 altTarget_MAF05 += 1
             if af >= 0:
                 altTarget_MAF0 += 1
+            # andamento_ALT_MAF005.append(altTarget_MAF005)
+            # andamento_ALT_MAF05.append(altTarget_MAF05)
+            andamento_ALT_MAF0.append(altTarget_MAF0)
 
-        andamento_ALT_MAF005.append(altTarget_MAF005)
-        andamento_ALT_MAF05.append(altTarget_MAF05)
-        andamento_ALT_MAF0.append(altTarget_MAF0)
+        # andamenti con media andamento di ogni guida
+        andamenti.append(andamento_ALT_MAF0)
 
-        print(andamento_ALT_MAF0)
-
-        plt.plot(andamento_ALT_MAF0, label='MAF>0')
-        plt.plot(andamento_ALT_MAF005, label='MAF>0.005')
-        plt.plot(andamento_ALT_MAF05, label='MAF>0.05')
+        # read values to generate plot
+        andamentiArray = np.array(andamenti)
+        media = np.mean(andamentiArray, axis=0)
+        standarddev = np.std(andamentiArray, axis=0)
+        standarderr = standarddev/np.sqrt(len(list(guide_df.index)))
+        z_score = 1.96  # for confidence 95%
+        lowerbound = media-(z_score*standarderr)
+        upperbound = media+(z_score*standarderr)
+        # allMedie.append(media)
+        plt.plot(media, label=str(guide_df.loc[0, 'Spacer+PAM']))
+        plt.fill_between(range(len(media)), lowerbound,
+                         upperbound, alpha=0.10)
+        # plt.plot(andamento_ALT_MAF0, label='MAF>0')
+        # plt.plot(andamento_ALT_MAF005, label='MAF>0.005')
+        # plt.plot(andamento_ALT_MAF05, label='MAF>0.05')
 
     plt.ylabel('ALT Targets')
     plt.xlabel('Targets')
