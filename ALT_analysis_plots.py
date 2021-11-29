@@ -35,6 +35,8 @@ def maf_analysis(af, altTarget_MAF005, altTarget_MAF05, altTarget_MAF0, andament
     andamento_ALT_MAF05.append(altTarget_MAF05)
     andamento_ALT_MAF0.append(altTarget_MAF0)
 
+    print(andamento_ALT_MAF005)
+
 
 def annotation_analysis(row, on_target_dict):
     categories_list = list()
