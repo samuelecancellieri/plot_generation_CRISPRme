@@ -230,11 +230,12 @@ def generate_distribution_plot_CFD(original_df):
     filtered_df["AF"] = filtered_df["AF"].apply(lambda x: min(x))
     filtered_df["AF"] = pd.to_numeric(filtered_df["AF"], downcast="float")
     # sort over CFD
-    filtered_df.sort_values(['CFD_score_(highest_CFD)'],
-                            inplace=True, ascending=False)
+    # filtered_df.sort_values(['CFD_score_(highest_CFD)'],
+    #                         inplace=True, ascending=False)
 
     plt.figure()
     for guide in filtered_df['Spacer+PAM'].unique():
+        print('analyzing guide', guide)
         guide_df = filtered_df.loc[(filtered_df['Spacer+PAM'] == guide)]
         af_list = guide_df['AF'].tolist()
         andamenti = list()
