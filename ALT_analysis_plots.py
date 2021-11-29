@@ -237,28 +237,29 @@ def generate_distribution_plot_CFD(original_df):
     andamenti = list()
     for guide in filtered_df['Spacer+PAM'].unique():
         guide_df = filtered_df.loc[(filtered_df['Spacer+PAM'] == guide)]
-        # guide_df = guide_df.sample(frac=1)
+        for permutation in range(100):
+            guide_df = guide_df.sample(frac=1)
 
-        andamento_ALT_MAF005 = list()
-        andamento_ALT_MAF05 = list()
-        andamento_ALT_MAF0 = list()
-        altTarget_MAF005 = 0
-        altTarget_MAF05 = 0
-        altTarget_MAF0 = 0
+            andamento_ALT_MAF005 = list()
+            andamento_ALT_MAF05 = list()
+            andamento_ALT_MAF0 = list()
+            altTarget_MAF005 = 0
+            altTarget_MAF05 = 0
+            altTarget_MAF0 = 0
 
-        for af in guide_df['AF'].tolist():
-            if af > 0.005:
-                altTarget_MAF005 += 1
-            if af > 0.05:
-                altTarget_MAF05 += 1
-            if af >= 0:
-                altTarget_MAF0 += 1
-            # andamento_ALT_MAF005.append(altTarget_MAF005)
-            # andamento_ALT_MAF05.append(altTarget_MAF05)
-            andamento_ALT_MAF0.append(altTarget_MAF0)
+            for af in guide_df['AF'].tolist():
+                if af > 0.005:
+                    altTarget_MAF005 += 1
+                if af > 0.05:
+                    altTarget_MAF05 += 1
+                if af >= 0:
+                    altTarget_MAF0 += 1
+                # andamento_ALT_MAF005.append(altTarget_MAF005)
+                # andamento_ALT_MAF05.append(altTarget_MAF05)
+                andamento_ALT_MAF0.append(altTarget_MAF0)
 
-        # andamenti con media andamento di ogni guida
-        andamenti.append(andamento_ALT_MAF0)
+            # andamenti con media andamento di ogni guida
+            andamenti.append(andamento_ALT_MAF0)
 
         # read values to generate plot
         andamentiArray = np.array(andamenti)
