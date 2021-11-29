@@ -243,7 +243,8 @@ def generate_distribution_plot_CFD(original_df):
         altTarget_MAF05 = 0
         altTarget_MAF0 = 0
 
-        for af in guide_df['AF']:
+        for af in guide_df['AF'].tolist():
+            print(type(af))
             if af > 0.005:
                 altTarget_MAF005 += 1
             if af > 0.05:
