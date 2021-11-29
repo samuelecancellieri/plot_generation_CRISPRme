@@ -233,10 +233,13 @@ def generate_distribution_plot_CFD(original_df):
     filtered_df.sort_values(['CFD_score_(highest_CFD)'],
                             inplace=True, ascending=False)
 
-    # for sampling in range(100):
     andamenti = list()
+    plt.figure()
+
     for guide in filtered_df['Spacer+PAM'].unique():
         guide_df = filtered_df.loc[(filtered_df['Spacer+PAM'] == guide)]
+        af_list = guide_df['AF'].tolist()
+
         for permutation in range(10):
 
             andamento_ALT_MAF005 = list()
@@ -245,7 +248,6 @@ def generate_distribution_plot_CFD(original_df):
             altTarget_MAF005 = 0
             altTarget_MAF05 = 0
             altTarget_MAF0 = 0
-            af_list = guide_df['AF'].tolist()
             np.random.shuffle(af_list)
 
             for af in af_list:
@@ -266,11 +268,14 @@ def generate_distribution_plot_CFD(original_df):
         # read values to generate plot
         andamentiArray = np.array(andamenti)
         media = np.mean(andamentiArray, axis=0)
+        print('media', media)
         standarddev = np.std(andamentiArray, axis=0)
-        standarderr = standarddev/np.sqrt(len(list(guide_df.index)))
+        standarderr = standarddev/np.sqrt(len(list(af_list)))
         z_score = 1.96  # for confidence 95%
         lowerbound = media-(z_score*standarderr)
         upperbound = media+(z_score*standarderr)
+        print(lowerbound)
+        print(upperbound)
         # allMedie.append(media)
         plt.plot(media, label=str(guide_df.loc[0, 'Spacer+PAM']))
         plt.fill_between(range(len(media)), lowerbound,
