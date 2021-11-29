@@ -238,8 +238,6 @@ def generate_distribution_plot_CFD(original_df):
     for guide in filtered_df['Spacer+PAM'].unique():
         guide_df = filtered_df.loc[(filtered_df['Spacer+PAM'] == guide)]
         for permutation in range(10):
-            print('done permutation', permutation)
-            guide_df = guide_df.sample(frac=1)
 
             andamento_ALT_MAF005 = list()
             andamento_ALT_MAF05 = list()
@@ -247,8 +245,10 @@ def generate_distribution_plot_CFD(original_df):
             altTarget_MAF005 = 0
             altTarget_MAF05 = 0
             altTarget_MAF0 = 0
+            af_list = guide_df['AF'].tolist()
+            np.random.shuffle(af_list)
 
-            for af in guide_df['AF'].tolist():
+            for af in af_list:
                 if af > 0.005:
                     altTarget_MAF005 += 1
                 if af > 0.05:
@@ -261,6 +261,7 @@ def generate_distribution_plot_CFD(original_df):
 
             # andamenti con media andamento di ogni guida
             andamenti.append(andamento_ALT_MAF0)
+            print('done permutation number', permutation+1)
 
         # read values to generate plot
         andamentiArray = np.array(andamenti)
