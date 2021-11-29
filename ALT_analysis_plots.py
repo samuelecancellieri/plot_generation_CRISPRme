@@ -240,20 +240,19 @@ def generate_distribution_plot_CFD(original_df):
         andamenti = list()
 
         for permutation in range(50):
-
-            andamento_ALT_MAF005 = list()
-            andamento_ALT_MAF05 = list()
+            # andamento_ALT_MAF005 = list()
+            # andamento_ALT_MAF05 = list()
             andamento_ALT_MAF0 = list()
-            altTarget_MAF005 = 0
-            altTarget_MAF05 = 0
+            # altTarget_MAF005 = 0
+            # altTarget_MAF05 = 0
             altTarget_MAF0 = 0
             np.random.shuffle(af_list)
 
             for af in af_list:
-                if af > 0.005:
-                    altTarget_MAF005 += 1
-                if af > 0.05:
-                    altTarget_MAF05 += 1
+                # if af > 0.005:
+                #     altTarget_MAF005 += 1
+                # if af > 0.05:
+                #     altTarget_MAF05 += 1
                 if af >= 0:
                     altTarget_MAF0 += 1
                 # andamento_ALT_MAF005.append(altTarget_MAF005)
@@ -266,16 +265,16 @@ def generate_distribution_plot_CFD(original_df):
 
         # read values to generate plot
         andamentiArray = np.array(andamenti)
-        print(andamentiArray)
+        # print(andamentiArray)
         media = np.mean(andamentiArray, axis=0)
-        print('media', media)
+        # print('media', media)
         standarddev = np.std(andamentiArray, axis=0)
         standarderr = standarddev/np.sqrt(len(list(af_list)))
         z_score = 1.96  # for confidence 95%
         lowerbound = media-(z_score*standarderr)
         upperbound = media+(z_score*standarderr)
-        print(lowerbound)
-        print(upperbound)
+        # print(lowerbound)
+        # print(upperbound)
         # allMedie.append(media)
         plt.plot(media, label=str(guide_df.loc[0, 'Spacer+PAM']))
         plt.fill_between(range(len(media)), lowerbound,
@@ -286,7 +285,7 @@ def generate_distribution_plot_CFD(original_df):
 
     plt.ylabel('ALT Targets')
     plt.xlabel('Targets')
-    plt.title('Distribution of targets with different MAFs filtered with CFD >= 0.1')
+    plt.title('Distribution of targets with different MAFs filtered with MAF>0')
     plt.legend()
 
     plt.tight_layout()
