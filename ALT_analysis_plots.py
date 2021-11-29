@@ -234,7 +234,7 @@ def generate_distribution_plot_CFD(original_df):
                             inplace=True, ascending=False)
 
     for guide in filtered_df['Spacer+PAM'].unique():
-        guide_df = filtered_df.loc[filtered_df['Spacer+PAM'] == guide]
+        guide_df = filtered_df.loc[(filtered_df['Spacer+PAM'] == guide)]
 
         andamento_ALT_MAF005 = list()
         andamento_ALT_MAF05 = list()
@@ -254,6 +254,8 @@ def generate_distribution_plot_CFD(original_df):
         andamento_ALT_MAF005.append(altTarget_MAF005)
         andamento_ALT_MAF05.append(altTarget_MAF05)
         andamento_ALT_MAF0.append(altTarget_MAF0)
+
+        print(andamento_ALT_MAF0)
 
         plt.plot(andamento_ALT_MAF0, label='MAF>0')
         plt.plot(andamento_ALT_MAF005, label='MAF>0.005')
