@@ -270,7 +270,8 @@ def generate_distribution_plot_CFD(original_df):
         # mediana = np.median(andamentiArray, axis=0)
         # print('media', media)
         standarddev = np.std(andamentiArray, axis=0)
-        standarderr = standarddev/np.sqrt(len(af_list))
+        # standarderr = standarddev/np.sqrt(len(af_list))
+        standarderr = standarddev/np.sqrt(np.amax(andamentiArray))
         z_score = 1.96  # for confidence 95%
         lowerbound = media-(z_score*standarderr)
         # lowerbound = mediana-media
