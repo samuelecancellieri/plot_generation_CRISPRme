@@ -271,14 +271,15 @@ def generate_distribution_plot_CFD(original_df):
         # print('media', media)
         standarddev = np.std(andamentiArray, axis=0)
         # standarderr = standarddev/np.sqrt(len(af_list))
+        print('count of alt targets', np.amax(andamentiArray))
         standarderr = standarddev/np.sqrt(np.amax(andamentiArray))
         z_score = 1.96  # for confidence 95%
         lowerbound = media-(z_score*standarderr)
         # lowerbound = mediana-media
         upperbound = media+(z_score*standarderr)
         # upperbound = mediana+media
-        # print(lowerbound)
-        # print(upperbound)
+        print(lowerbound)
+        print(upperbound)
         # allMedie.append(media)
         plt.plot(media, label=str(guide))
         # plt.plot(mediana, label=str(guide))
