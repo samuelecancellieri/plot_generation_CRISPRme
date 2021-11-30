@@ -239,7 +239,7 @@ def generate_distribution_plot_CFD(original_df):
         af_list = guide_df['AF'].tolist()
         andamenti = list()
 
-        for permutation in range(10):
+        for permutation in range(100):
             # andamento_ALT_MAF005 = list()
             # andamento_ALT_MAF05 = list()
             andamento_ALT_MAF0 = list()
