@@ -21,5 +21,5 @@ alt_target_count_MMvBUL = len(
 on_target_df = original_df.loc[(
     original_df['Mismatches+bulges_(highest_CFD)'] <= 1)]
 
-print(on_target_df, len(original_df.index),
+print(on_target_df[['Spacer+PAM', 'Chromosome', 'Start_coordinate_(highest_CFD)', 'Aligned_protospacer+PAM_REF_(highest_CFD)', 'Annotation_closest_gene_name']], len(original_df.index),
       alt_target_count_CFD, alt_target_count_MMvBUL)
