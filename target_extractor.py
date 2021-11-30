@@ -1,10 +1,9 @@
 import sys
 import pandas as pd
 
-
+print('start processing')
 original_df = pd.read_csv(sys.argv[1], sep="\t", index_col=False,
                           na_values=['n'])
-
 data_frames_list = list()
 
 for guide in original_df['Spacer+PAM'].unique():
