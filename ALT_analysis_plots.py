@@ -259,7 +259,7 @@ def generate_distribution_plot_CFD(original_df):
                 # andamento_ALT_MAF05.append(altTarget_MAF05)
                 andamento_ALT_MAF0.append(altTarget_MAF0)
 
-            # andamenti con media andamento di ogni guida
+            # andamenti con distribuzione andamento di ogni guida
             andamenti.append(andamento_ALT_MAF0)
             print('done permutation number', permutation+1)
 
@@ -279,9 +279,9 @@ def generate_distribution_plot_CFD(original_df):
         upperbound = np.amax(andamentiArray, axis=0)
         # upperbound = mediana+media
         # print('mediana', mediana)
-        # print('media', media)
-        # print('lower', lowerbound)
-        # print('upper', upperbound)
+        print('media', media)
+        print('lower', lowerbound)
+        print('upper', upperbound)
         # allMedie.append(media)
         plt.plot(media)
         # plt.plot(mediana, label=str(guide))
