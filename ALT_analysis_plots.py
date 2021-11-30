@@ -269,6 +269,7 @@ def generate_distribution_plot_CFD(original_df):
         media = np.mean(andamentiArray, axis=0)
         # mediana = np.median(andamentiArray, axis=0)
         # print('media', media)
+        variance = np.var(andamentiArray, axis=0)
         standarddev = np.std(andamentiArray, axis=0)
         standarderr = standarddev/np.sqrt(np.amax(andamentiArray))
         z_score = 1.96  # for confidence 95%
@@ -280,6 +281,8 @@ def generate_distribution_plot_CFD(original_df):
         print('media', media[:10])
         print('lower', lowerbound[:10])
         print('upper', upperbound[:10])
+        print('std', standarddev[:10])
+        print('var', variance[:10])
         # allMedie.append(media)
         plt.plot(media)
         # plt.plot(mediana, label=str(guide))
