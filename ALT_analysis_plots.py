@@ -239,7 +239,7 @@ def generate_distribution_plot_CFD(original_df):
         af_list = guide_df['AF'].tolist()
         andamenti = list()
 
-        for permutation in range(50):
+        for permutation in range(10):
             # andamento_ALT_MAF005 = list()
             # andamento_ALT_MAF05 = list()
             andamento_ALT_MAF0 = list()
@@ -277,10 +277,10 @@ def generate_distribution_plot_CFD(original_df):
         lowerbound = mediana-media
         # upperbound = media+(z_score*standarderr)
         upperbound = mediana+media
-        print('mediana', mediana)
-        print('media', media)
-        print('lower', lowerbound)
-        print('upper', upperbound)
+        # print('mediana', mediana)
+        # print('media', media)
+        # print('lower', lowerbound)
+        # print('upper', upperbound)
         # allMedie.append(media)
         # plt.plot(media, label=str(guide))
         plt.plot(mediana, label=str(guide))
