@@ -14,8 +14,7 @@ from upsetplot import from_memberships
 import warnings
 import matplotlib
 import math
-import matplotlib.ticker as tkr
-
+# import matplotlib.ticker as tkr
 
 # SUPPRESS ALL WARNINGS
 warnings.filterwarnings("ignore")
