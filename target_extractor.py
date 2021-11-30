@@ -5,6 +5,7 @@ import pandas as pd
 original_df = pd.read_csv(sys.argv[1], sep="\t", index_col=False,
                           na_values=['n'])
 
+data_frames_list = list()
 
 for guide in original_df['Spacer+PAM'].unique():
 
@@ -27,6 +28,11 @@ for guide in original_df['Spacer+PAM'].unique():
     on_target_df = guide_df.loc[(
         guide_df['Mismatches+bulges_(fewest_mm+b)'] <= 1)]
 
-    print(on_target_df[['Spacer+PAM', 'Chromosome',
-                        'Start_coordinate_(fewest_mm+b)', 'Aligned_protospacer+PAM_REF_(fewest_mm+b)',
-                        'Annotation_closest_gene_name', 'total_target', 'alt_target_cfd', 'alt_target_mmvbul']])
+    data_frames_list.append(on_target_df[['Spacer+PAM', 'Chromosome',
+                                          'Start_coordinate_(fewest_mm+b)', 'Aligned_protospacer+PAM_REF_(fewest_mm+b)',
+                                          'Annotation_closest_gene_name', 'total_target', 'alt_target_cfd', 'alt_target_mmvbul']])
+
+final_df = pd.concat(data_frames_list)
+
+final_df.to_csv(sys.argv[2]+'_processed_data.tsv',
+                sep='\t', na_rep='NA', index=False)
