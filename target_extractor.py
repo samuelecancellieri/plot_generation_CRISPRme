@@ -37,5 +37,5 @@ for guide in original_df['Spacer+PAM'].unique():
 
 final_df = pd.concat(data_frames_list)
 
-final_df.to_csv(sys.argv[2]+'processed_data.tsv',
+final_df.to_csv(sys.argv[2]+str(sys.argv[1]).split('/')[-1]+'extracted_target.tsv',
                 sep='\t', na_rep='NA', index=False)
