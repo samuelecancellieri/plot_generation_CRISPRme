@@ -291,7 +291,7 @@ def generate_distribution_plot_CFD(original_df):
         # plt.plot(andamento_ALT_MAF0, label='MAF>0')
         # plt.plot(andamento_ALT_MAF005, label='MAF>0.005')
         # plt.plot(andamento_ALT_MAF05, label='MAF>0.05')
-    plt.yscale('log')
+
     plt.ylabel('ALT Targets')
     plt.xlabel('Targets')
     plt.title('Distribution of targets with different MAFs filtered with MAF>0')
