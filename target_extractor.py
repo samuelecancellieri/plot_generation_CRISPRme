@@ -23,8 +23,8 @@ for guide in original_df['Spacer+PAM'].unique():
     original_df['total_target'] = len(original_df.index)
 
     on_target_df = original_df.loc[(
-        original_df['Mismatches+bulges_(highest_CFD)'] <= 1)]
+        original_df['Mismatches+bulges_(fewest_mm+b)'] <= 1)]
 
     print(on_target_df[['Spacer+PAM', 'Chromosome',
-                        'Start_coordinate_(highest_CFD)', 'Aligned_protospacer+PAM_REF_(highest_CFD)',
+                        'Start_coordinate_(fewest_mm+b)', 'Aligned_protospacer+PAM_REF_(fewest_mm+b)',
                         'Annotation_closest_gene_name', 'total_target', 'alt_target_cfd', 'alt_target_mmvbul']])
