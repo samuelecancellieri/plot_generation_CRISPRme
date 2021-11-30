@@ -29,8 +29,11 @@ for guide in original_df['Spacer+PAM'].unique():
         guide_df['Mismatches+bulges_(fewest_mm+b)'] <= 1)]
 
     data_frames_list.append(on_target_df[['Spacer+PAM', 'Chromosome',
-                                          'Start_coordinate_(fewest_mm+b)', 'Aligned_protospacer+PAM_REF_(fewest_mm+b)',
-                                          'Annotation_closest_gene_name', 'total_target', 'alt_target_cfd', 'alt_target_mmvbul']])
+                                          'Start_coordinate_(fewest_mm+b)',
+                                          'Aligned_protospacer+PAM_REF_(fewest_mm+b)',
+                                          'Aligned_protospacer+PAM_ALT_(fewest_mm+b)',
+                                          'Annotation_closest_gene_name', 'total_target',
+                                          'alt_target_cfd', 'alt_target_mmvbul']])
 
 final_df = pd.concat(data_frames_list)
 
