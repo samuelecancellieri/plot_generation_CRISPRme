@@ -268,17 +268,21 @@ def generate_distribution_plot_CFD(original_df):
         andamentiArray = np.array(andamenti)
         # print(andamentiArray)
         media = np.mean(andamentiArray, axis=0)
+        mediana = np.median(andamentiArray, axis=0)
         # print('media', media)
-        standarddev = np.std(andamentiArray, axis=0)
-        standarderr = standarddev/np.sqrt(len(list(af_list)))
-        z_score = 1.96  # for confidence 95%
-        lowerbound = media-(z_score*standarderr)
-        upperbound = media+(z_score*standarderr)
+        # standarddev = np.std(andamentiArray, axis=0)
+        # standarderr = standarddev/np.sqrt(len(list(af_list)))
+        # z_score = 1.96  # for confidence 95%
+        # lowerbound = media-(z_score*standarderr)
+        lowerbound = mediana-media
+        # upperbound = media+(z_score*standarderr)
+        upperbound = mediana+media
         # print(lowerbound)
         # print(upperbound)
         # allMedie.append(media)
-        plt.plot(media, label=str(guide))
-        plt.fill_between(range(len(media)), lowerbound,
+        # plt.plot(media, label=str(guide))
+        plt.plot(mediana, label=str(guide))
+        plt.fill_between(range(len(mediana)), lowerbound,
                          upperbound, alpha=0.10)
         # plt.plot(andamento_ALT_MAF0, label='MAF>0')
         # plt.plot(andamento_ALT_MAF005, label='MAF>0.005')
