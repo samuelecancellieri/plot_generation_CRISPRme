@@ -201,13 +201,16 @@ def generate_heatmap_CFD(original_df):
     plt_heatmap = sns.heatmap(table, annot=True, vmax=vmax, vmin=vmin, norm=log_norm,
                               cbar_kws={"ticks": cbar_ticks})
     plt_heatmap.collections[0].colorbar.ax.yaxis.set_ticks([], minor=True)
-    # print(plt_heatmap.get_xticks())
-    plt_heatmap.set_xticks([x - 0.5 for x in plt_heatmap.get_xticks()])
-    plt_heatmap.set_yticks([x - 0.5 for x in plt_heatmap.get_yticks()])
-    plt_heatmap.set_yticklabels(
-        labels=plt_heatmap.get_yticklabels(), fontsize=8)
-    plt_heatmap.set_xticklabels(
-        labels=plt_heatmap.get_xticklabels(), fontsize=8)
+
+    plt_heatmap.xticks(np.arange(0, 6, step=1), [
+                       0.00001, 0.0001, 0.001, 0.01, 0.1, 1])
+    plt_heatmap.yticks(np.arange(0, 10, step=1), np.arange(0, 1, step=0.1))
+    # plt_heatmap.set_xticks([x - 0.5 for x in plt_heatmap.get_xticks()])
+    # plt_heatmap.set_yticks([x - 0.5 for x in plt_heatmap.get_yticks()])
+    # plt_heatmap.set_yticklabels(
+    #     labels=plt_heatmap.get_yticklabels(), fontsize=8)
+    # plt_heatmap.set_xticklabels(
+    #     labels=plt_heatmap.get_xticklabels(), fontsize=8)
     plt_heatmap.invert_yaxis()
     # plt_heatmap.invert_xaxis()
     plt.tight_layout()
@@ -356,9 +359,9 @@ original_df = pd.read_csv(inTargets, sep="\t", index_col=False,
                           na_values=['n'])
 
 # call to plot generation CFD
-generate_distribution_plot_CFD(original_df)
+# generate_distribution_plot_CFD(original_df)
 # generate_upset_plot_CFD(original_df)
-# generate_heatmap_CFD(original_df)
+generate_heatmap_CFD(original_df)
 # generate_upset_log_barplot_CFD()
 # call to plot generation MM_BUL
 # generate_distribution_plot_MMBUL(original_df)
