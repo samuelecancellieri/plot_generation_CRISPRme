@@ -207,9 +207,10 @@ def generate_heatmap_CFD(original_df):
 
     # plt_heatmap.set_xticks([x - 0.5 for x in plt_heatmap.get_xticks()])
     # plt_heatmap.set_yticks([x - 0.5 for x in plt_heatmap.get_yticks()])
-    plt_heatmap.set_yticklabels(labels=np.arange(0, 1, step=0.1), fontsize=8)
+    plt_heatmap.set_yticklabels(
+        [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1], fontsize=8)
     plt_heatmap.set_xticklabels(
-        [0.00001, 0.0001, 0.001, 0.01, 0.1, 1], fontsize=8)
+        labels=[0.00001, 0.0001, 0.001, 0.01, 0.1, 1], fontsize=8)
     plt_heatmap.invert_yaxis()
     # plt_heatmap.invert_xaxis()
     plt.tight_layout()
