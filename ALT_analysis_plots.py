@@ -199,7 +199,7 @@ def generate_heatmap_CFD(original_df):
 
     figu = plt.figure()
     plt_heatmap = sns.heatmap(table, annot=True, vmax=vmax, vmin=vmin, norm=log_norm,
-                              cbar_kws={"ticks": cbar_ticks}, xticklabels=False, yticklabels=False)
+                              cbar_kws={"ticks": cbar_ticks, 'label': 'Target sites'}, xticklabels=False, yticklabels=False)
     plt_heatmap.collections[0].colorbar.ax.yaxis.set_ticks([], minor=True)
     # set labels and position of ticks
 
