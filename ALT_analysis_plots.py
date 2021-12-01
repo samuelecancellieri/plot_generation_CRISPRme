@@ -199,14 +199,12 @@ def generate_heatmap_CFD(original_df):
 
     figu = plt.figure()
     plt_heatmap = sns.heatmap(table, annot=True, vmax=vmax, vmin=vmin, norm=log_norm,
-                              cbar_kws={"ticks": cbar_ticks})
+                              cbar_kws={"ticks": cbar_ticks}, xticklabels=False, yticklabels=False)
     plt_heatmap.collections[0].colorbar.ax.yaxis.set_ticks([], minor=True)
+    # set labels and position of ticks
 
     plt_heatmap.set_xticks(np.arange(0, 6, step=1))
-    plt_heatmap.set_yticks(np.arange(0, 10, step=1))
-
-    # plt_heatmap.set_xticks([x - 0.5 for x in plt_heatmap.get_xticks()])
-    # plt_heatmap.set_yticks([x - 0.5 for x in plt_heatmap.get_yticks()])
+    plt_heatmap.set_yticks(np.arange(0, 11, step=1))
     plt_heatmap.set_yticklabels(
         [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1], fontsize=8)
     plt_heatmap.set_xticklabels(
