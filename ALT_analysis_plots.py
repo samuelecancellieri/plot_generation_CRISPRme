@@ -2,6 +2,7 @@
 
 import sys
 import time
+import random
 import pandas as pd
 import seaborn as sns
 import numpy as np
@@ -242,14 +243,15 @@ def generate_distribution_plot_CFD(original_df):
         #     ['CFD_score_(highest_CFD)', 'AF'], inplace=True, ascending=False)
         af_list = guide_df['AF'].tolist()
 
-        for permutation in range(1000):
+        for permutation in range(100):
             # andamento_ALT_MAF005 = list()
             # andamento_ALT_MAF05 = list()
             andamento_ALT_MAF0 = list()
             # altTarget_MAF005 = 0
             # altTarget_MAF05 = 0
             altTarget_MAF0 = 0
-            np.random.shuffle(af_list)
+            # np.random.shuffle(af_list)
+            random.shuffle(af_list)
 
             # read af to select alt targets
             for af in af_list:
