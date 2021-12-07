@@ -201,8 +201,8 @@ def generate_heatmap_CFD(original_df):
     plt_heatmap = sns.heatmap(table, annot=True, vmax=vmax, vmin=vmin, norm=log_norm,
                               cbar_kws={"ticks": cbar_ticks, 'label': 'Target sites'}, xticklabels=False, yticklabels=False)
     plt_heatmap.collections[0].colorbar.ax.yaxis.set_ticks([], minor=True)
-    # set labels and position of ticks
 
+    # set labels and position of ticks
     plt_heatmap.set_xticks(np.arange(0, 6, step=1))
     plt_heatmap.set_yticks(np.arange(0, 11, step=1))
     plt_heatmap.set_yticklabels(
@@ -240,14 +240,18 @@ def generate_distribution_plot_CFD(original_df):
         af_list = guide_df['AF'].tolist()
         andamenti = list()
 
-        for permutation in range(100):
+        for permutation in range(2):
             # andamento_ALT_MAF005 = list()
             # andamento_ALT_MAF05 = list()
             andamento_ALT_MAF0 = list()
             # altTarget_MAF005 = 0
             # altTarget_MAF05 = 0
             altTarget_MAF0 = 0
-            np.random.shuffle(af_list)
+            # np.random.shuffle(af_list)
+            if permutation:
+                af_list.sort(reverse=True)
+            else:
+                af_list.sort(reverse=False)
 
             for af in af_list:
                 # if af > 0.005:
@@ -357,9 +361,9 @@ original_df = pd.read_csv(inTargets, sep="\t", index_col=False,
                           na_values=['n'])
 
 # call to plot generation CFD
-# generate_distribution_plot_CFD(original_df)
+generate_distribution_plot_CFD(original_df)
 # generate_upset_plot_CFD(original_df)
-generate_heatmap_CFD(original_df)
+# generate_heatmap_CFD(original_df)
 # generate_upset_log_barplot_CFD()
 # call to plot generation MM_BUL
 # generate_distribution_plot_MMBUL(original_df)
