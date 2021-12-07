@@ -189,7 +189,7 @@ def generate_heatmap_CFD(original_df):
     table = df_table.pivot('CFD_score_(highest_CFD)',
                            'Variant_MAF_(highest_CFD)', 'Value')
 
-    print(table)
+    # print(table)
 
     cbar_ticks = [10**0, 10**1, 10**2, 10**3, 10**4, 10**5, 10**6]
     vmax = 10**7
@@ -199,7 +199,7 @@ def generate_heatmap_CFD(original_df):
     # formatter.set_scientific(True)
 
     figu = plt.figure()
-    plt_heatmap = sns.heatmap(table, annot=True, fmt="d", vmax=vmax, vmin=vmin, norm=log_norm,
+    plt_heatmap = sns.heatmap(table, cmap="RdYlBu", annot=True, fmt='.2f', vmax=vmax, vmin=vmin, norm=log_norm,
                               cbar_kws={"ticks": cbar_ticks, 'label': 'Target sites'}, xticklabels=False, yticklabels=False)
     plt_heatmap.collections[0].colorbar.ax.yaxis.set_ticks([], minor=True)
 
@@ -211,6 +211,9 @@ def generate_heatmap_CFD(original_df):
     plt_heatmap.set_xticklabels(
         labels=[0.00001, 0.0001, 0.001, 0.01, 0.1, 1], fontsize=8)
     plt_heatmap.invert_yaxis()
+
+    plt.xlabel("Variant MAF")
+    plt.ylabel("CFD score")
     # plt_heatmap.invert_xaxis()
     plt.tight_layout()
     plt.savefig(out_folder+'heatmap_CFD.png')
@@ -362,7 +365,7 @@ original_df = pd.read_csv(inTargets, sep="\t", index_col=False,
                           na_values=['n'])
 
 # call to plot generation CFD
-generate_distribution_plot_CFD(original_df)
+# generate_distribution_plot_CFD(original_df)
 # generate_upset_plot_CFD(original_df)
 generate_heatmap_CFD(original_df)
 # generate_upset_log_barplot_CFD()
