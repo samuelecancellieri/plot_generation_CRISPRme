@@ -189,9 +189,9 @@ def generate_heatmap_CFD(original_df):
     table = df_table.pivot('CFD_score_(highest_CFD)',
                            'Variant_MAF_(highest_CFD)', 'Value')
 
-    # print(table)
+    print(table)
 
-    cbar_ticks = [10**0, 10**1, 10**2, 10**3, 10**4, 10**5, 10**6, 10**7]
+    cbar_ticks = [10**0, 10**1, 10**2, 10**3, 10**4, 10**5, 10**6]
     vmax = 10**7
     vmin = 10**0
     # formatter = tkr.ScalarFormatter(useMathText=True)
@@ -199,7 +199,7 @@ def generate_heatmap_CFD(original_df):
     # formatter.set_scientific(True)
 
     figu = plt.figure()
-    plt_heatmap = sns.heatmap(table, annot=True, vmax=vmax, vmin=vmin, norm=log_norm,
+    plt_heatmap = sns.heatmap(table, annot=True, fmt="d", vmax=vmax, vmin=vmin, norm=log_norm,
                               cbar_kws={"ticks": cbar_ticks, 'label': 'Target sites'}, xticklabels=False, yticklabels=False)
     plt_heatmap.collections[0].colorbar.ax.yaxis.set_ticks([], minor=True)
 
@@ -364,7 +364,7 @@ original_df = pd.read_csv(inTargets, sep="\t", index_col=False,
 # call to plot generation CFD
 generate_distribution_plot_CFD(original_df)
 # generate_upset_plot_CFD(original_df)
-# generate_heatmap_CFD(original_df)
+generate_heatmap_CFD(original_df)
 # generate_upset_log_barplot_CFD()
 # call to plot generation MM_BUL
 # generate_distribution_plot_MMBUL(original_df)
