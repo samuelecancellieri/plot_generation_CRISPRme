@@ -222,9 +222,9 @@ def generate_heatmap_CFD(original_df):
 
 
 def generate_distribution_plot_CFD(original_df, name):
-    # filtered_df = original_df
-    filtered_df = original_df.loc[(
-        original_df["CFD_score_(highest_CFD)"] >= 0.1)]
+    filtered_df = original_df
+    # filtered_df = original_df.loc[(
+    #     original_df["CFD_score_(highest_CFD)"] >= 0.1)]
     filtered_df["Variant_MAF_(highest_CFD)"] = filtered_df["Variant_MAF_(highest_CFD)"].fillna(-1)
 
     # If multiple AFs (haplotype with multiple SNPs), take min AF
@@ -314,8 +314,8 @@ def generate_distribution_plot_CFD(original_df, name):
 
     plt.tight_layout()
     plt.savefig(out_folder+name+'_distribution_plt_CFD.png')
-    plt.clf()
-    plt.close('all')
+    # plt.clf()
+    # plt.close('all')
 
 
 def generate_upset_plot_CFD(original_df):
@@ -367,11 +367,11 @@ out_folder = sys.argv[2]  # folder for output images
 
 print('starting generating distribution and upset plots')
 # create dataframe with file
-original_df = pd.read_csv(inTargets, sep="\t", index_col=False,
-                          na_values=['n'])
+original_df_read = pd.read_csv(inTargets, sep="\t", index_col=False,
+                               na_values=['n'])
 
 # call to plot generation CFD with original data
-generate_distribution_plot_CFD(original_df, 'no_filter')
+generate_distribution_plot_CFD(original_df_read, 'no_filter')
 # generate_upset_plot_CFD(original_df)
 # generate_heatmap_CFD(original_df)
 # generate_upset_log_barplot_CFD()
@@ -380,7 +380,7 @@ generate_distribution_plot_CFD(original_df, 'no_filter')
 # generate_upset_plot_MMBUL(original_df)
 
 # call to plot generation CFD with CFD>=0.1
-# print('execute with cfd>=0.1')
-# cfd_01_df = original_df.loc[(original_df["CFD_score_(highest_CFD)"] >= 0.1)]
-
-# # generate_distribution_plot_CFD(cfd_01_df, 'cfd>=0.1')
+print('execute with cfd>=0.1')
+cfd_01_df = original_df_read.loc[(
+    original_df_read["CFD_score_(highest_CFD)"] >= 0.1)]
+generate_distribution_plot_CFD(cfd_01_df, 'cfd>=0.1')
