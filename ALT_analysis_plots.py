@@ -237,7 +237,7 @@ def generate_distribution_plot_CFD(original_df, name):
     # filtered_df.sort_values(['CFD_score_(highest_CFD)'],
     #                         inplace=True, ascending=False)
 
-    # plt.figure()
+    plt.figure()
     for guide in filtered_df['Spacer+PAM'].unique():
         print('analyzing guide', guide)
         guide_df = filtered_df.loc[(filtered_df['Spacer+PAM'] == guide)]
@@ -371,7 +371,7 @@ original_df_read = pd.read_csv(inTargets, sep="\t", index_col=False,
                                na_values=['n'])
 
 # call to plot generation CFD with original data
-generate_distribution_plot_CFD(original_df_read, 'no_filter')
+# generate_distribution_plot_CFD(original_df_read, 'no_filter')
 # generate_upset_plot_CFD(original_df)
 # generate_heatmap_CFD(original_df)
 # generate_upset_log_barplot_CFD()
