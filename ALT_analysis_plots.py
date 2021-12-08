@@ -311,7 +311,7 @@ def generate_distribution_plot_CFD(original_df, name):
     plt.ylabel('ALT Targets')
     plt.xlabel('Targets')
     plt.title('Distribution of targets with different MAFs filtered with MAF>0')
-    plt.legend()
+    plt.legend(loc='upper left', fontsize=8)
 
     plt.tight_layout()
     plt.savefig(out_folder+name+'_distribution_plt_CFD.png')
