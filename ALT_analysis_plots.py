@@ -237,7 +237,7 @@ def generate_distribution_plot_CFD(original_df, name):
     # filtered_df.sort_values(['CFD_score_(highest_CFD)'],
     #                         inplace=True, ascending=False)
 
-    plt.figure()
+    # plt.figure()
     for guide in filtered_df['Spacer+PAM'].unique():
         print('analyzing guide', guide)
         guide_df = filtered_df.loc[(filtered_df['Spacer+PAM'] == guide)]
@@ -314,8 +314,8 @@ def generate_distribution_plot_CFD(original_df, name):
 
     plt.tight_layout()
     plt.savefig(out_folder+name+'_distribution_plt_CFD.png')
-    # plt.clf()
-    # plt.close('all')
+    plt.clf()
+    plt.close('all')
 
 
 def generate_upset_plot_CFD(original_df):
