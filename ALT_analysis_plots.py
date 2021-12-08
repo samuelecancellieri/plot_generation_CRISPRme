@@ -236,7 +236,7 @@ def generate_distribution_plot_CFD(original_df, name):
         guide_df.sort_values(
             ['CFD_score_(highest_CFD)'], inplace=True, ascending=False)
         alt_list = guide_df['REF/ALT_origin_(highest_CFD)'].tolist()
-        print(alt_list[:10])
+        # print(alt_list[:10])
 
         # read af to select alt targets
         for target in alt_list:
