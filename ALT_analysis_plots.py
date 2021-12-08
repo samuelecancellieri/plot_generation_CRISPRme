@@ -223,17 +223,17 @@ def generate_heatmap_CFD(original_df):
 
 def generate_distribution_plot_CFD(original_df, name):
     filtered_df = original_df
-    if 'cfd' in name:
-        filtered_df = original_df.loc[(
-            original_df["CFD_score_(highest_CFD)"] >= 0.1)]
-    filtered_df["Variant_MAF_(highest_CFD)"] = filtered_df["Variant_MAF_(highest_CFD)"].fillna(-1)
+    # if 'cfd' in name:
+    #     filtered_df = original_df.loc[(
+    #         original_df["CFD_score_(highest_CFD)"] >= 0.1)]
+    # filtered_df["Variant_MAF_(highest_CFD)"] = filtered_df["Variant_MAF_(highest_CFD)"].fillna(-1)
 
-    # If multiple AFs (haplotype with multiple SNPs), take min AF
-    # Approximation until we have haplotype frequencies
-    filtered_df["AF"] = filtered_df["Variant_MAF_(highest_CFD)"].astype(
-        str).str.split(',')
-    filtered_df["AF"] = filtered_df["AF"].apply(lambda x: min(x))
-    filtered_df["AF"] = pd.to_numeric(filtered_df["AF"], downcast="float")
+    # # If multiple AFs (haplotype with multiple SNPs), take min AF
+    # # Approximation until we have haplotype frequencies
+    # filtered_df["AF"] = filtered_df["Variant_MAF_(highest_CFD)"].astype(
+    #     str).str.split(',')
+    # filtered_df["AF"] = filtered_df["AF"].apply(lambda x: min(x))
+    # filtered_df["AF"] = pd.to_numeric(filtered_df["AF"], downcast="float")
     # sort over CFD
     # filtered_df.sort_values(['CFD_score_(highest_CFD)'],
     #                         inplace=True, ascending=False)
@@ -243,70 +243,33 @@ def generate_distribution_plot_CFD(original_df, name):
         print('analyzing guide', guide)
         guide_df = filtered_df.loc[(filtered_df['Spacer+PAM'] == guide)]
         andamenti = list()
+        andamento_ALT_MAF0 = list()
+        altTarget_MAF0 = 0
+
         guide_df.sort_values(
-            ['CFD_score_(highest_CFD)', 'AF'], inplace=True, ascending=False)
-        # af_list_ordered = guide_df['AF'].tolist()
+            ['CFD_score_(highest_CFD)'], inplace=True, ascending=False)
         af_list = guide_df['AF'].tolist()
-        print(len(af_list))
 
-        for permutation in range(100):
-            # andamento_ALT_MAF005 = list()
-            # andamento_ALT_MAF05 = list()
-            andamento_ALT_MAF0 = list()
-            # altTarget_MAF005 = 0
-            # altTarget_MAF05 = 0
-            altTarget_MAF0 = 0
-            # np.random.shuffle(af_list)
-            if permutation:
-                random.shuffle(af_list)
+        # read af to select alt targets
+        for af in af_list:
+            if af >= 0:
+                altTarget_MAF0 += 1
+            andamento_ALT_MAF0.append(altTarget_MAF0)
 
-            # read af to select alt targets
-            for af in af_list:
-                # if af > 0.005:
-                #     altTarget_MAF005 += 1
-                # if af > 0.05:
-                #     altTarget_MAF05 += 1
-                if af >= 0:
-                    altTarget_MAF0 += 1
-                # andamento_ALT_MAF005.append(altTarget_MAF005)
-                # andamento_ALT_MAF05.append(altTarget_MAF05)
-                andamento_ALT_MAF0.append(altTarget_MAF0)
+        # andamenti con distribuzione andamento di ogni guida
+        andamenti.append(andamento_ALT_MAF0)
+        # plt line for single guide
+        plt.plot(andamento_ALT_MAF0)
 
-            # andamenti con distribuzione andamento di ogni guida
-            andamenti.append(andamento_ALT_MAF0)
-            print('done permutation number', permutation+1)
+    andamentiArray = np.array(andamenti)
+    media = np.mean(andamentiArray, axis=0)
+    standarddev = np.std(andamentiArray, axis=0)
+    standarderr = standarddev/np.sqrt(np.amax(andamentiArray))
+    z_score = 1.96  # for confidence 95%
+    lowerbound = media-(z_score*standarderr)
+    upperbound = media+(z_score*standarderr)
 
-        # read values to generate plot
-        # skip first andamento since it's ordered
-        andamentiArray = np.array(andamenti[1:])
-        # print(andamentiArray)
-        media = np.mean(andamentiArray, axis=0)
-        # mediana = np.median(andamentiArray, axis=0)
-        # print('media', media)
-        variance = np.var(andamentiArray, axis=0)
-        standarddev = np.std(andamentiArray, axis=0)
-        standarderr = standarddev/np.sqrt(np.amax(andamentiArray))
-        z_score = 1.96  # for confidence 95%
-        lowerbound = media-(z_score*standarderr)
-        upperbound = media+(z_score*standarderr)
-        # lowerbound = np.negative(np.amin(andamentiArray, axis=0))
-        # upperbound = np.amax(andamentiArray, axis=0)
-        # print('mediana', mediana)
-        # print('media', media[:10])
-        # print('lower', lowerbound[:10])
-        # print('upper', upperbound[:10])
-        # print('std', standarddev[:10])
-        # print('var', variance[:10])
-        # allMedie.append(media)
-        # plt.plot(media)
-        # plot andamenti[0] as reference value since it's ordered
-        plt.plot(andamenti[0])
-        # plt.plot(mediana, label=str(guide))
-        plt.fill_between(range(len(media)), lowerbound,
-                         upperbound, alpha=0.10)
-        # plt.plot(andamento_ALT_MAF0, label='MAF>0')
-        # plt.plot(andamento_ALT_MAF005, label='MAF>0.005')
-        # plt.plot(andamento_ALT_MAF05, label='MAF>0.05')
+    plt.fill_between(range(len(media)), lowerbound, upperbound, alpha=0.10)
 
     plt.ylabel('ALT Targets')
     plt.xlabel('Targets')
@@ -374,7 +337,7 @@ original_df_read = pd.read_csv(inTargets, sep="\t", index_col=False,
                                na_values=['n'])
 
 # call to plot generation CFD with original data
-generate_distribution_plot_CFD(original_df_read, 'cfd_01')
+# generate_distribution_plot_CFD(original_df_read, 'cfd_01')
 generate_distribution_plot_CFD(original_df_read, 'no_filter')
 # generate_upset_plot_CFD(original_df)
 # generate_heatmap_CFD(original_df)
