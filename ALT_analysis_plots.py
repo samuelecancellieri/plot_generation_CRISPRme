@@ -246,6 +246,7 @@ def generate_distribution_plot_CFD(original_df, name):
             ['CFD_score_(highest_CFD)', 'AF'], inplace=True, ascending=False)
         # af_list_ordered = guide_df['AF'].tolist()
         af_list = guide_df['AF'].tolist()
+        print(af_list)
 
         for permutation in range(100):
             # andamento_ALT_MAF005 = list()
@@ -379,6 +380,7 @@ generate_distribution_plot_CFD(original_df, 'no_filter')
 # generate_upset_plot_MMBUL(original_df)
 
 # call to plot generation CFD with CFD>=0.1
+print('execute with cfd>=0.1')
 cfd_01_df = original_df.loc[(original_df["CFD_score_(highest_CFD)"] >= 0.1)]
 
 generate_distribution_plot_CFD(cfd_01_df, 'cfd>=0.1')
