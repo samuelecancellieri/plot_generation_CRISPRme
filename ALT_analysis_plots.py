@@ -257,10 +257,12 @@ def generate_distribution_plot_CFD(original_df, name):
     lowerbound = media-(z_score*standarderr)
     upperbound = media+(z_score*standarderr)
 
-    plt.fill_between(range(len(media)), lowerbound, upperbound, alpha=0.10)
+    plt.fill_between(range(len(media)), lowerbound,
+                     upperbound, alpha=0.10, color='black')
 
     plt.ylabel('ALT Targets')
-    plt.yscale('log')
+    if 'log' in name:
+        plt.yscale('log')
     plt.xlabel('Targets')
     plt.title('Distribution of targets with different MAFs filtered with MAF>0')
     plt.legend(filtered_df['Spacer+PAM'].unique(),
@@ -328,6 +330,7 @@ original_df_read = pd.read_csv(inTargets, sep="\t", index_col=False,
 # call to plot generation CFD with original data
 # generate_distribution_plot_CFD(original_df_read, 'cfd_01')
 generate_distribution_plot_CFD(original_df_read, 'no_filter')
+generate_distribution_plot_CFD(original_df_read, 'no_filter_log')
 # generate_upset_plot_CFD(original_df)
 # generate_heatmap_CFD(original_df)
 # generate_upset_log_barplot_CFD()
