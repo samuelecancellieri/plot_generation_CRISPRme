@@ -222,9 +222,9 @@ def generate_heatmap_CFD(original_df):
 
 
 def generate_distribution_plot_CFD(original_df, name):
-    filtered_df = original_df
-    # filtered_df = original_df.loc[(
-    #     original_df["CFD_score_(highest_CFD)"] >= 0.1)]
+    # filtered_df = original_df
+    filtered_df = original_df.loc[(
+        original_df["CFD_score_(highest_CFD)"] >= 0.1)]
     filtered_df["Variant_MAF_(highest_CFD)"] = filtered_df["Variant_MAF_(highest_CFD)"].fillna(-1)
 
     # If multiple AFs (haplotype with multiple SNPs), take min AF
@@ -380,7 +380,7 @@ generate_distribution_plot_CFD(original_df, 'no_filter')
 # generate_upset_plot_MMBUL(original_df)
 
 # call to plot generation CFD with CFD>=0.1
-print('execute with cfd>=0.1')
-cfd_01_df = original_df.loc[(original_df["CFD_score_(highest_CFD)"] >= 0.1)]
+# print('execute with cfd>=0.1')
+# cfd_01_df = original_df.loc[(original_df["CFD_score_(highest_CFD)"] >= 0.1)]
 
-generate_distribution_plot_CFD(cfd_01_df, 'cfd>=0.1')
+# # generate_distribution_plot_CFD(cfd_01_df, 'cfd>=0.1')
