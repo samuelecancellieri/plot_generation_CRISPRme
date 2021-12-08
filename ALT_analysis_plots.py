@@ -311,12 +311,14 @@ def generate_distribution_plot_CFD(original_df, name):
     plt.ylabel('ALT Targets')
     plt.xlabel('Targets')
     plt.title('Distribution of targets with different MAFs filtered with MAF>0')
-    plt.legend(filtered_df['Spacer+PAM'].unique(),loc='upper left', fontsize=8)
+    plt.legend(filtered_df['Spacer+PAM'].unique(),
+               loc='upper left', fontsize=8)
 
     plt.tight_layout()
     plt.savefig(out_folder+name+'_distribution_plt_CFD.png')
     plt.clf()
     plt.close('all')
+    print('done')
 
 
 def generate_upset_plot_CFD(original_df):
