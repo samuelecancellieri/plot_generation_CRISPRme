@@ -223,20 +223,6 @@ def generate_heatmap_CFD(original_df):
 
 def generate_distribution_plot_CFD(original_df, name):
     filtered_df = original_df
-    # if 'cfd' in name:
-    #     filtered_df = original_df.loc[(
-    #         original_df["CFD_score_(highest_CFD)"] >= 0.1)]
-    # filtered_df["Variant_MAF_(highest_CFD)"] = filtered_df["Variant_MAF_(highest_CFD)"].fillna(-1)
-
-    # # If multiple AFs (haplotype with multiple SNPs), take min AF
-    # # Approximation until we have haplotype frequencies
-    # filtered_df["AF"] = filtered_df["Variant_MAF_(highest_CFD)"].astype(
-    #     str).str.split(',')
-    # filtered_df["AF"] = filtered_df["AF"].apply(lambda x: min(x))
-    # filtered_df["AF"] = pd.to_numeric(filtered_df["AF"], downcast="float")
-    # sort over CFD
-    # filtered_df.sort_values(['CFD_score_(highest_CFD)'],
-    #                         inplace=True, ascending=False)
 
     plt.figure()
     for guide in filtered_df['Spacer+PAM'].unique():
@@ -272,6 +258,7 @@ def generate_distribution_plot_CFD(original_df, name):
     plt.fill_between(range(len(media)), lowerbound, upperbound, alpha=0.10)
 
     plt.ylabel('ALT Targets')
+    plt.yscale('log')
     plt.xlabel('Targets')
     plt.title('Distribution of targets with different MAFs filtered with MAF>0')
     plt.legend(filtered_df['Spacer+PAM'].unique(),
