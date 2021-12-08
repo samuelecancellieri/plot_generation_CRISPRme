@@ -246,7 +246,7 @@ def generate_distribution_plot_CFD(original_df, name):
             ['CFD_score_(highest_CFD)', 'AF'], inplace=True, ascending=False)
         # af_list_ordered = guide_df['AF'].tolist()
         af_list = guide_df['AF'].tolist()
-        print(af_list)
+        print(len(af_list))
 
         for permutation in range(100):
             # andamento_ALT_MAF005 = list()
