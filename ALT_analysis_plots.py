@@ -4,6 +4,7 @@ import sys
 import time
 import random
 import pandas as pd
+from pandas.core.indexes.api import all_indexes_same
 import seaborn as sns
 import numpy as np
 import matplotlib.pyplot as plt
@@ -234,11 +235,12 @@ def generate_distribution_plot_CFD(original_df, name):
 
         guide_df.sort_values(
             ['CFD_score_(highest_CFD)'], inplace=True, ascending=False)
-        af_list = guide_df['AF'].tolist()
+        alt_list = guide_df['REF/ALT_origin_(highest_CFD)'].tolist()
+        print(alt_list[:10])
 
         # read af to select alt targets
-        for af in af_list:
-            if af >= 0:
+        for target in alt_list:
+            if target == 'alt':
                 altTarget_MAF0 += 1
             andamento_ALT_MAF0.append(altTarget_MAF0)
 
