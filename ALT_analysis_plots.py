@@ -221,7 +221,7 @@ def generate_heatmap_CFD(original_df):
     plt.close('all')
 
 
-def generate_distribution_plot_CFD(original_df):
+def generate_distribution_plot_CFD(original_df, name):
     filtered_df = original_df
     # filtered_df = original_df.loc[(
     #     original_df["CFD_score_(highest_CFD)"] >= 0.1)]
@@ -242,8 +242,9 @@ def generate_distribution_plot_CFD(original_df):
         print('analyzing guide', guide)
         guide_df = filtered_df.loc[(filtered_df['Spacer+PAM'] == guide)]
         andamenti = list()
-        # guide_df.sort_values(
-        #     ['CFD_score_(highest_CFD)', 'AF'], inplace=True, ascending=False)
+        guide_df.sort_values(
+            ['CFD_score_(highest_CFD)', 'AF'], inplace=True, ascending=False)
+        # af_list_ordered = guide_df['AF'].tolist()
         af_list = guide_df['AF'].tolist()
 
         for permutation in range(100):
@@ -254,7 +255,8 @@ def generate_distribution_plot_CFD(original_df):
             # altTarget_MAF05 = 0
             altTarget_MAF0 = 0
             # np.random.shuffle(af_list)
-            random.shuffle(af_list)
+            if permutation:
+                random.shuffle(af_list)
 
             # read af to select alt targets
             for af in af_list:
@@ -273,7 +275,8 @@ def generate_distribution_plot_CFD(original_df):
             print('done permutation number', permutation+1)
 
         # read values to generate plot
-        andamentiArray = np.array(andamenti)
+        # skip first andamento since it's ordered
+        andamentiArray = np.array(andamenti[1:])
         # print(andamentiArray)
         media = np.mean(andamentiArray, axis=0)
         # mediana = np.median(andamentiArray, axis=0)
@@ -293,7 +296,9 @@ def generate_distribution_plot_CFD(original_df):
         print('std', standarddev[:10])
         print('var', variance[:10])
         # allMedie.append(media)
-        plt.plot(media)
+        # plt.plot(media)
+        # plot andamenti[0] as reference value since it's ordered
+        plt.plot(andamenti[0])
         # plt.plot(mediana, label=str(guide))
         plt.fill_between(range(len(media)), lowerbound,
                          upperbound, alpha=0.10)
@@ -307,7 +312,7 @@ def generate_distribution_plot_CFD(original_df):
     plt.legend()
 
     plt.tight_layout()
-    plt.savefig(out_folder+'distribution_plt_CFD.png')
+    plt.savefig(out_folder+name+'_distribution_plt_CFD.png')
     plt.clf()
     plt.close('all')
 
@@ -364,11 +369,16 @@ print('starting generating distribution and upset plots')
 original_df = pd.read_csv(inTargets, sep="\t", index_col=False,
                           na_values=['n'])
 
-# call to plot generation CFD
-# generate_distribution_plot_CFD(original_df)
+# call to plot generation CFD with original data
+generate_distribution_plot_CFD(original_df, 'no_filter')
 # generate_upset_plot_CFD(original_df)
-generate_heatmap_CFD(original_df)
+# generate_heatmap_CFD(original_df)
 # generate_upset_log_barplot_CFD()
 # call to plot generation MM_BUL
 # generate_distribution_plot_MMBUL(original_df)
 # generate_upset_plot_MMBUL(original_df)
+
+# call to plot generation CFD with CFD>=0.1
+cfd_01_df = original_df.loc[(original_df["CFD_score_(highest_CFD)"] >= 0.1)]
+
+generate_distribution_plot_CFD(cfd_01_df, 'cfd>=0.1')
