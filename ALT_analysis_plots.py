@@ -266,7 +266,7 @@ def generate_distribution_plot_CFD(original_df, name):
         plt.yscale('log')
     plt.xlabel('Targets')
     plt.title('Distribution of targets with different MAFs filtered with MAF>0')
-    list_labels = filtered_df['Spacer+PAM'].unique()
+    list_labels = list(filtered_df['Spacer+PAM'].unique())
     list_labels.append('Mean distribution')
     plt.legend(list_labels, loc='lower right', fontsize=8)
 
