@@ -257,16 +257,18 @@ def generate_distribution_plot_CFD(original_df, name):
     lowerbound = media-(z_score*standarderr)
     upperbound = media+(z_score*standarderr)
 
+    plt.plot(media)
     plt.fill_between(range(len(media)), lowerbound,
-                     upperbound, alpha=0.10, color='black')
+                     upperbound, alpha=0.10)
 
     plt.ylabel('ALT Targets')
     if 'log' in name:
         plt.yscale('log')
     plt.xlabel('Targets')
     plt.title('Distribution of targets with different MAFs filtered with MAF>0')
-    plt.legend(filtered_df['Spacer+PAM'].unique(),
-               loc='lower right', fontsize=8)
+    list_labels = filtered_df['Spacer+PAM'].unique()
+    list_labels.append('Mean distribution')
+    plt.legend(list_labels, loc='lower right', fontsize=8)
 
     plt.tight_layout()
     plt.savefig(out_folder+name+'_distribution_plt_CFD.png')
