@@ -335,7 +335,7 @@ def crisprme_plot_MMvBUL(df, guide, out_folder, max_mm_bul_value, pam_first_nucl
     # Save
     plt.tight_layout()
     plt.savefig(
-        out_folder+f"CRISPRme_top_1000_log_for_main_text_{guide}.png", bbox_inches="tight")
+        out_folder+f"CRISPRme_top_1000_log_for_main_text_{guide}.svg", bbox_inches="tight", format="svg")
     plt.clf()
     plt.close('all')
 
@@ -565,7 +565,7 @@ def crisprme_plot_CFD(df, guide, out_folder):
     plt.tight_layout()
     # plt.subplots_adjust(hspace=0.1)
     plt.savefig(
-        out_folder+f"CRISPRme_top_1000_log_for_main_text_{guide}.png", bbox_inches="tight")
+        out_folder+f"CRISPRme_top_1000_log_for_main_text_{guide}.svg", bbox_inches="tight", format="svg")
     plt.clf()
     plt.close('all')
 
