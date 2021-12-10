@@ -315,7 +315,7 @@ def generate_upset_plot_CFD(original_df):
     upset_plot = UpSet(categories_per_target, show_counts=True,
                        sort_by='cardinality', sort_categories_by=None)
     upset_plot.plot(fig=figu)
-    plt.title('ALT targets overlapping categories filtered with CFD >= 0.1')
+    plt.title('ALT targets overlapping categories')
     # plt.tight_layout()
     plt.savefig(out_folder+'overlapping_alt_targets_categories_CFD.png')
     plt.clf()
