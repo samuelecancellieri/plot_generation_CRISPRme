@@ -28,11 +28,6 @@ def annotation_analysis(row, on_target_dict):
     # empty category list
     categories_list = list()
 
-    print('check string')
-    print(str(row['PAM_creation_(highest_CFD)']),
-          str(row['Annotation_ENCODE']),
-          str(row['Gene_description']))
-
     if 'nan' not in str(row['PAM_creation_(highest_CFD)']):
         categories_list.append('PAM creation')
     if 'CDS' in str(row['Annotation_GENCODE']):
