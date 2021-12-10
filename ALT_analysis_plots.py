@@ -16,7 +16,6 @@ from upsetplot import from_memberships
 import warnings
 import matplotlib
 import math
-from matplotlib.ticker import FuncFormatter
 
 # import matplotlib.ticker as tkr
 
@@ -191,7 +190,6 @@ def generate_heatmap_CFD(original_df):
 
     df_table = df_heatmap.groupby(
         ["Variant_MAF_(highest_CFD)", "CFD_score_(highest_CFD)"]).size().reset_index(name="Value")
-    df_table = df_table.apply(pd.to_numeric)
 
     table = df_table.pivot('CFD_score_(highest_CFD)',
                            'Variant_MAF_(highest_CFD)', 'Value').fillna(0)
@@ -203,11 +201,10 @@ def generate_heatmap_CFD(original_df):
     vmin = 10**0
     # formatter = tkr.ScalarFormatter(useMathText=True)
     log_norm = LogNorm(vmin=vmin, vmax=vmax)
-    # comma_fmt = FuncFormatter(lambda x, p: format(int(x), ','))
     # formatter.set_scientific(True)
 
     figu = plt.figure()
-    plt_heatmap = sns.heatmap(table, cmap="RdYlBu", annot=True, vmax=vmax, vmin=vmin, norm=log_norm,
+    plt_heatmap = sns.heatmap(table, cmap="RdYlBu", fmt='.0f', annot=True, vmax=vmax, vmin=vmin, norm=log_norm,
                               cbar_kws={"ticks": cbar_ticks, 'label': 'Target sites'}, xticklabels=False, yticklabels=False)
     plt_heatmap.collections[0].colorbar.ax.yaxis.set_ticks([], minor=True)
 
