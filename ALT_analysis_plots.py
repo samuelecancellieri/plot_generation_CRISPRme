@@ -192,7 +192,7 @@ def generate_heatmap_CFD(original_df):
     table = df_table.pivot('CFD_score_(highest_CFD)',
                            'Variant_MAF_(highest_CFD)', 'Value')
 
-    # print(table)
+    print(table)
 
     cbar_ticks = [10**0, 10**1, 10**2, 10**3, 10**4, 10**5, 10**6]
     vmax = 10**6
