@@ -273,7 +273,7 @@ def generate_distribution_plot_CFD(original_df, name):
     plt.legend(list_labels, loc='lower right', fontsize=8)
 
     plt.tight_layout()
-    plt.savefig(out_folder+name+'_distribution_plt_CFD.svg', format="svg")
+    plt.savefig(out_folder+name+'_distribution_plt_CFD.pdf', format="pdf")
     plt.clf()
     plt.close('all')
     print('done')
@@ -319,7 +319,7 @@ def generate_upset_plot_CFD(original_df):
     plt.title('ALT targets overlapping categories')
     # plt.tight_layout()
     plt.savefig(
-        out_folder+'overlapping_alt_targets_categories_CFD.svg', format="svg")
+        out_folder+'overlapping_alt_targets_categories_CFD.pdf', format="pdf")
     plt.clf()
     plt.close('all')
 
