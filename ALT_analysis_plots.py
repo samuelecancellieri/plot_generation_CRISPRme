@@ -25,11 +25,13 @@ matplotlib.use('Agg')
 
 
 def annotation_analysis(row, on_target_dict):
+    # empty category list
     categories_list = list()
 
     print('check string')
     print(str(row['PAM_creation_(highest_CFD)']),
-          str(row['Annotation_ENCODE']))
+          str(row['Annotation_ENCODE']),
+          str(row['Gene_description']))
 
     if 'nan' not in str(row['PAM_creation_(highest_CFD)']):
         categories_list.append('PAM creation')
@@ -41,7 +43,7 @@ def annotation_analysis(row, on_target_dict):
         categories_list.append('cCRE')
     if str(row['Chromosome']) == on_target_dict[str(row['Spacer+PAM'])]:
         categories_list.append('Same chr')
-    if len(categories_list):
+    if len(categories_list):  # if any annotation is found return it, else empty
         return (','.join(categories_list))
     else:
         return 'empty'
