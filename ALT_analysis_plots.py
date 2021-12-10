@@ -27,6 +27,7 @@ matplotlib.use('Agg')
 def annotation_analysis(row, on_target_dict):
     categories_list = list()
 
+    print('test row', row)
     if 'nan' not in str(row['PAM_creation_(highest_CFD)']):
         categories_list.append('PAM creation')
     if 'CDS' in str(row['Annotation_GENCODE']):
@@ -329,16 +330,11 @@ print('starting generating distribution and upset plots')
 original_df_read = pd.read_csv(inTargets, sep="\t", index_col=False,
                                na_values=['n'])
 
-print('pam creation')
-notnull_df = original_df_read.loc[original_df_read['PAM_creation_(highest_CFD)'].notnull(
-)]
-
-print(len(notnull_df.index))
 # call to plot generation CFD with original data
 # generate_distribution_plot_CFD(original_df_read, 'cfd_01')
 # generate_distribution_plot_CFD(original_df_read, 'no_filter')
 # generate_distribution_plot_CFD(original_df_read, 'no_filter_log')
-# generate_upset_plot_CFD(original_df)
+generate_upset_plot_CFD(original_df_read)
 # generate_heatmap_CFD(original_df)
 # generate_upset_log_barplot_CFD()
 # call to plot generation MM_BUL
