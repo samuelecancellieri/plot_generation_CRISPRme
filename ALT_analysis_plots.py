@@ -101,7 +101,7 @@ def generate_distribution_plot_MMBUL(original_df):
     plt.legend()
 
     plt.tight_layout()
-    plt.savefig(out_folder+'distribution_plt_MMBUL.png')
+    plt.savefig(out_folder+'distribution_plt_MMBUL.svg', format="svg")
     plt.clf()
     plt.close('all')
 
@@ -155,7 +155,8 @@ def generate_upset_plot_MMBUL(original_df):
     upset_plot.plot(fig=figu)
     plt.title('ALT targets overlapping categories filtered with MM+BUL <= 4')
     # plt.tight_layout()
-    plt.savefig(out_folder+'overlapping_alt_targets_categories_MMBUL.png')
+    plt.savefig(
+        out_folder+'overlapping_alt_targets_categories_MMBUL.svg', format="svg")
     plt.clf()
     plt.close('all')
 
@@ -218,7 +219,7 @@ def generate_heatmap_CFD(original_df):
     plt.ylabel("CFD score")
     # plt_heatmap.invert_xaxis()
     plt.tight_layout()
-    plt.savefig(out_folder+'heatmap_CFD.png')
+    plt.savefig(out_folder+'heatmap_CFD.svg', format="svg")
     plt.clf()
     plt.close('all')
 
@@ -272,7 +273,7 @@ def generate_distribution_plot_CFD(original_df, name):
     plt.legend(list_labels, loc='lower right', fontsize=8)
 
     plt.tight_layout()
-    plt.savefig(out_folder+name+'_distribution_plt_CFD.png')
+    plt.savefig(out_folder+name+'_distribution_plt_CFD.svg', format="svg")
     plt.clf()
     plt.close('all')
     print('done')
@@ -317,7 +318,8 @@ def generate_upset_plot_CFD(original_df):
     upset_plot.plot(fig=figu)
     plt.title('ALT targets overlapping categories')
     # plt.tight_layout()
-    plt.savefig(out_folder+'overlapping_alt_targets_categories_CFD.png')
+    plt.savefig(
+        out_folder+'overlapping_alt_targets_categories_CFD.svg', format="svg")
     plt.clf()
     plt.close('all')
 
@@ -331,11 +333,10 @@ original_df_read = pd.read_csv(inTargets, sep="\t", index_col=False,
                                na_values=['n'])
 
 # call to plot generation CFD with original data
-# generate_distribution_plot_CFD(original_df_read, 'cfd_01')
-# generate_distribution_plot_CFD(original_df_read, 'no_filter')
-# generate_distribution_plot_CFD(original_df_read, 'no_filter_log')
+generate_distribution_plot_CFD(original_df_read, 'no_filter')
+generate_distribution_plot_CFD(original_df_read, 'no_filter_log')
 generate_upset_plot_CFD(original_df_read)
-# generate_heatmap_CFD(original_df)
+generate_heatmap_CFD(original_df_read)
 # generate_upset_log_barplot_CFD()
 # call to plot generation MM_BUL
 # generate_distribution_plot_MMBUL(original_df)
