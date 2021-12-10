@@ -219,7 +219,7 @@ def generate_heatmap_CFD(original_df):
     plt.ylabel("CFD score")
     # plt_heatmap.invert_xaxis()
     plt.tight_layout()
-    plt.savefig(out_folder+'heatmap_CFD.svg', format="svg")
+    plt.savefig(out_folder+'heatmap_CFD.pdf', format="pdf")
     plt.clf()
     plt.close('all')
 
