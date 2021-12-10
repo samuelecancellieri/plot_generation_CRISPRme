@@ -330,9 +330,9 @@ original_df_read = pd.read_csv(inTargets, sep="\t", index_col=False,
                                na_values=['n'])
 
 print('pam creation')
-print(original_df_read[['PAM_creation_(highest_CFD)']].where(
-    ['PAM_creation_(highest_CFD)'].notnull()))
+notnull_df = original_df_read['PAM_creation_(highest_CFD)'].notnull()
 
+print(notnull_df[['PAM_creation_(highest_CFD)']])
 # call to plot generation CFD with original data
 # generate_distribution_plot_CFD(original_df_read, 'cfd_01')
 # generate_distribution_plot_CFD(original_df_read, 'no_filter')
