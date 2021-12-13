@@ -204,7 +204,7 @@ def generate_heatmap_CFD(original_df):
     # formatter.set_scientific(True)
 
     figu = plt.figure()
-    plt_heatmap = sns.heatmap(table, cmap="RdYlBu", fmt='n', annot=True, vmax=vmax, vmin=vmin, norm=log_norm,
+    plt_heatmap = sns.heatmap(table, cmap="RdYlBu", fmt='g', annot=True, vmax=vmax, vmin=vmin, norm=log_norm,
                               cbar_kws={"ticks": cbar_ticks, 'label': 'Target sites'}, xticklabels=False, yticklabels=False)
     plt_heatmap.collections[0].colorbar.ax.yaxis.set_ticks([], minor=True)
 
@@ -217,11 +217,11 @@ def generate_heatmap_CFD(original_df):
         labels=[0.00001, 0.0001, 0.001, 0.01, 0.1, 1], fontsize=8)
     plt_heatmap.invert_yaxis()
 
-    plt.xlabel("Variant MAF", fontsize=11)
-    plt.ylabel("CFD score", fontsize=11)
+    plt.xlabel("Variant MAF", fontsize=13)
+    plt.ylabel("CFD score", fontsize=13)
     # plt_heatmap.invert_xaxis()
     plt.tight_layout()
-    plt.savefig(out_folder+'heatmap_CFD.pdf', format="pdf")
+    plt.savefig(out_folder+'heatmap_CFD.png')
     plt.clf()
     plt.close('all')
 
@@ -268,8 +268,8 @@ def generate_distribution_plot_CFD(original_df, name):
     # plt.ylabel('ALT Targets')
     if 'log' in name:
         plt.yscale('log')
-    plt.xlabel('Targets', fontsize=11)
-    plt.ylabel('ALT Targets', fontsize=11)
+    plt.xlabel('Targets', fontsize=13)
+    plt.ylabel('ALT Targets', fontsize=13)
     plt.title('Distribution of targets with different MAFs filtered with MAF>0')
     list_labels = list(filtered_df['Spacer+PAM'].unique())
     list_labels.append('Mean distribution')
