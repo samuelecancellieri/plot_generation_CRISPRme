@@ -997,9 +997,9 @@ for guide in df["Spacer+PAM"].unique():
     top_100_list.append(str(guide))
     top_1000_list.append(str(guide))
 
-    print('doing extraction and plots using mm+bul for guide', guide)
-    extraction_with_total(guide, df, outdir, max_mm_bul_value,
-                          pam_first_nucleotide, pam_len, top_10_list, top_100_list, top_1000_list)
+    # print('doing extraction and plots using mm+bul for guide', guide)
+    # extraction_with_total(guide, df, outdir, max_mm_bul_value,
+    #                       pam_first_nucleotide, pam_len, top_10_list, top_100_list, top_1000_list)
 
     print('doing extraction and plots using CFD for guide', guide)
     extraction_with_CFD(guide, df, outdir, top_10_list,
