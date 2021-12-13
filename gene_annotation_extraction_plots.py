@@ -385,13 +385,14 @@ def crisprme_plot_CFD(df, guide, out_folder):
     Log, ref/alt, top 1000: for main text
     """
     # matplotlib plot settings
-    plt.rcParams["figure.dpi"] = 600
-    # plt.rcParams["figure.figsize"] = 7.5, 2.25
-    plt.rcParams.update({'font.size': 7})
-    plt.rcParams['pdf.fonttype'] = 42
-    plt.rcParams['ps.fonttype'] = 42
+    # plt.rcParams["figure.dpi"] = 600
+    # # plt.rcParams["figure.figsize"] = 7.5, 2.25
+    # plt.rcParams.update({'font.size': 7})
+    # plt.rcParams['pdf.fonttype'] = 42
+    # plt.rcParams['ps.fonttype'] = 42
 
-    plt.figure(figsize=(10, 4))
+    # plt.figure(figsize=(10, 4))
+    plt.figure()
     ax1 = plt.subplot(7, 1, (1, 5))
     # ax1.set_position([0.125, 0.4, 0.9, 0.9])
     # print('ax1-position', ax1.get_position())
@@ -451,13 +452,14 @@ def crisprme_plot_CFD(df, guide, out_folder):
     # adjust_text(plotted_text)
 
     # plt.xlabel("Candidate off-target site")
-    plt.ylabel("Score")
+    plt.ylabel("Score", fontsize=13)
 
     # Boundaries
     ax1.margins(0.05)
     # plt.xlim(1,100)
-    plt.xticks([1, 20, 40, 60, 80, 100])
-    plt.ylim(0, 1)
+    plt.xticks([1, 20, 40, 60, 80, 100], fontsize=13)
+    # plt.ylim(0, 1)
+    plt.yticks([0, 0.2, 0.4, 0.6, 0.8, 1], fontsize=13)
 
     # Arrows
     # head_width=(x*(10**0.005-10**(-0.005)))
@@ -497,14 +499,14 @@ def crisprme_plot_CFD(df, guide, out_folder):
     red_TSG = mpatches.Patch(color='tab:red', label="TSG")
 
     # legend for allele frequency
-    plt.gca().add_artist(plt.legend(handles=[s1, s01, s001, s0001], title='Allele frequency', bbox_to_anchor=(
-        0.01, 1.03), loc='lower left', borderaxespad=0, ncol=4))
-    # legend for target origin
-    plt.gca().add_artist(plt.legend(handles=[s1_red, s1_blue], title='Target genome', bbox_to_anchor=(
-        0.30, 1.03), loc='lower left', borderaxespad=0, ncol=3))
-    # legend for encode annotation
-    plt.gca().add_artist(plt.legend(handles=[green_PLS, cyan_CDS, blue_pELS, red_TSG, gray_dELS, purple_CTCFonly, olive_DNaseH3K4me3],
-                                    loc='lower left', bbox_to_anchor=(0.54, 1.02), title='Annotations', borderaxespad=0, ncol=5))
+    # plt.gca().add_artist(plt.legend(handles=[s1, s01, s001, s0001], title='Allele frequency', bbox_to_anchor=(
+    #     0.01, 1.03), loc='lower left', borderaxespad=0, ncol=4))
+    # # legend for target origin
+    # plt.gca().add_artist(plt.legend(handles=[s1_red, s1_blue], title='Target genome', bbox_to_anchor=(
+    #     0.30, 1.03), loc='lower left', borderaxespad=0, ncol=3))
+    # # legend for encode annotation
+    # plt.gca().add_artist(plt.legend(handles=[green_PLS, cyan_CDS, blue_pELS, red_TSG, gray_dELS, purple_CTCFonly, olive_DNaseH3K4me3],
+    #                                 loc='lower left', bbox_to_anchor=(0.54, 1.02), title='Annotations', borderaxespad=0, ncol=5))
 
     # ENCODE BARPLOT
     ax2 = plt.subplot(7, 1, 6, sharex=ax1)
@@ -527,12 +529,12 @@ def crisprme_plot_CFD(df, guide, out_folder):
     # print(bar_list)
     # print(df['index'])
     # print(df_coordinates_ENCODE['index'])
-    ax2.bar(bar_range, bar_list, width=0.3, align='center', color=bar_color)
+    ax2.bar(bar_range, bar_list, width=0.4, align='center', color=bar_color)
     # plt.xticks([])
     plt.yticks([])
     # ax2.margins(0.05)
     # plt.xlim(1, 100)
-    plt.ylabel('ALT cCRE', fontsize=6)
+    plt.ylabel('ALT cCRE', fontsize=13)
 
     # CDS AND TSG BARPLOT
     ax3 = plt.subplot(7, 1, 7, sharex=ax1)
@@ -545,12 +547,12 @@ def crisprme_plot_CFD(df, guide, out_folder):
         # print(str(row['Gene_description']))
         if str(row['Gene_description']) != 'nan':
             bar_color[index] = 'tab:red'
-    ax3.bar(bar_range, bar_list, width=0.3, align='center', color=bar_color)
+    ax3.bar(bar_range, bar_list, width=0.4, align='center', color=bar_color)
     # plt.xticks([])
     plt.yticks([])
     # ax3.margins(0.05)
     # plt.xlim(1, 100)
-    plt.ylabel('ALT CDS', fontsize=6)
+    plt.ylabel('ALT CDS', fontsize=13)
 
     # columns to drop
     columns_to_drop = list()
@@ -565,7 +567,7 @@ def crisprme_plot_CFD(df, guide, out_folder):
               sep='\t', na_rep='NA', index=False)
 
     # Save
-    plt.tight_layout()
+    # plt.tight_layout()
     # plt.subplots_adjust(hspace=0.1)
     plt.savefig(
         out_folder+f"CRISPRme_top_1000_log_for_main_text_{guide}.pdf", transparent=True)
