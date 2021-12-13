@@ -194,7 +194,7 @@ def generate_heatmap_CFD(original_df):
     table = df_table.pivot('CFD_score_(highest_CFD)',
                            'Variant_MAF_(highest_CFD)', 'Value').fillna(0.1)
 
-    print(table)
+    # print(table)
 
     cbar_ticks = [10**0, 10**1, 10**2, 10**3, 10**4, 10**5, 10**6]
     vmax = 10**6
@@ -207,14 +207,15 @@ def generate_heatmap_CFD(original_df):
     plt_heatmap = sns.heatmap(table, cmap="RdYlBu", fmt='.0f', annot=True, vmax=vmax, vmin=vmin, norm=log_norm,
                               cbar_kws={"ticks": cbar_ticks, 'label': 'Target sites'}, xticklabels=False, yticklabels=False)
     plt_heatmap.collections[0].colorbar.ax.yaxis.set_ticks([], minor=True)
+    plt_heatmap.collections[0].colorbar.ax.tick_params(labelsize=13)
 
     # set labels and position of ticks
     plt_heatmap.set_xticks(np.arange(0, 6, step=1))
     plt_heatmap.set_yticks(np.arange(0, 11, step=1))
     plt_heatmap.set_yticklabels(
-        [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1], fontsize=8)
+        [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1], fontsize=13)
     plt_heatmap.set_xticklabels(
-        labels=[0.00001, 0.0001, 0.001, 0.01, 0.1, 1], fontsize=8)
+        labels=[0.00001, 0.0001, 0.001, 0.01, 0.1, 1], fontsize=13)
     plt_heatmap.invert_yaxis()
 
     plt.xlabel("Variant MAF", fontsize=13)
@@ -262,13 +263,15 @@ def generate_distribution_plot_CFD(original_df, name):
     upperbound = media+(z_score*standarderr)
 
     plt.plot(media)
-    plt.fill_between(range(len(media)), lowerbound,
-                     upperbound, alpha=0.10)
+    plt.xticks
+    # plt.fill_between(range(len(media)), lowerbound,
+    #                  upperbound, alpha=0.10)
 
     # plt.ylabel('ALT Targets')
     if 'log' in name:
         plt.yscale('log')
         plt.xscale('log')
+
     plt.xlabel('Targets', fontsize=13)
     plt.ylabel('ALT Targets', fontsize=13)
     plt.title('Distribution of targets with different MAFs filtered with MAF>0')
@@ -276,7 +279,9 @@ def generate_distribution_plot_CFD(original_df, name):
     list_labels.append('Mean distribution')
     # plt.gca().add_artist(plt.legend(labels=list_labels, title='sgRNAs',
     #                                 loc='center left', bbox_to_anchor=(1, 0.2)))
-    plt.legend(list_labels, loc='best', fontsize=10)
+    plt.legend(list_labels, loc='best', fontsize=13, ncols=len(list_labels))
+    plt.xticks(fontsize=13)
+    plt.yticks(fontsize=13)
 
     plt.tight_layout()
     plt.savefig(out_folder+name+'_distribution_plt_CFD.pdf', transparent=True)
