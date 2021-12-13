@@ -279,7 +279,8 @@ def generate_distribution_plot_CFD(original_df, name):
     list_labels.append('Mean distribution')
     # plt.gca().add_artist(plt.legend(labels=list_labels, title='sgRNAs',
     #                                 loc='center left', bbox_to_anchor=(1, 0.2)))
-    plt.legend(list_labels, loc='best', fontsize=13, ncol=len(list_labels))
+    # plt.legend(list_labels, loc='best', fontsize=13, ncol=len(list_labels))
+    plt.legend([])
     plt.xticks(fontsize=13)
     plt.yticks(fontsize=13)
 
