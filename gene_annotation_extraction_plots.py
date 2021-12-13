@@ -14,9 +14,12 @@ import math
 
 # ignore all warnings
 warnings.filterwarnings("ignore")
-
 # set matplotlib to not use X11 server
 matplotlib.use('Agg')
+
+# set matplotlib to print in pdf editable format
+matplotlib.rcParams['pdf.fonttype'] = 42
+matplotlib.rcParams['ps.fonttype'] = 42
 
 
 iupac_code_set = {
@@ -335,7 +338,7 @@ def crisprme_plot_MMvBUL(df, guide, out_folder, max_mm_bul_value, pam_first_nucl
     # Save
     plt.tight_layout()
     plt.savefig(
-        out_folder+f"CRISPRme_top_1000_log_for_main_text_{guide}.svg", bbox_inches="tight", format="svg")
+        out_folder+f"CRISPRme_top_1000_log_for_main_text_{guide}.pdf", transparent=True)
     plt.clf()
     plt.close('all')
 
@@ -565,7 +568,7 @@ def crisprme_plot_CFD(df, guide, out_folder):
     plt.tight_layout()
     # plt.subplots_adjust(hspace=0.1)
     plt.savefig(
-        out_folder+f"CRISPRme_top_1000_log_for_main_text_{guide}.svg", bbox_inches="tight", format="svg")
+        out_folder+f"CRISPRme_top_1000_log_for_main_text_{guide}.pdf", transparent=True)
     plt.clf()
     plt.close('all')
 

@@ -102,7 +102,7 @@ def generate_distribution_plot_MMBUL(original_df):
     plt.legend()
 
     plt.tight_layout()
-    plt.savefig(out_folder+'distribution_plt_MMBUL.svg', format="svg")
+    plt.savefig(out_folder+'distribution_plt_MMBUL.pdf')
     plt.clf()
     plt.close('all')
 
@@ -157,7 +157,7 @@ def generate_upset_plot_MMBUL(original_df):
     plt.title('ALT targets overlapping categories filtered with MM+BUL <= 4')
     # plt.tight_layout()
     plt.savefig(
-        out_folder+'overlapping_alt_targets_categories_MMBUL.svg', format="svg")
+        out_folder+'overlapping_alt_targets_categories_MMBUL.pdf')
     plt.clf()
     plt.close('all')
 
