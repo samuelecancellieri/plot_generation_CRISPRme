@@ -273,9 +273,9 @@ def generate_distribution_plot_CFD(original_df, name):
     plt.title('Distribution of targets with different MAFs filtered with MAF>0')
     list_labels = list(filtered_df['Spacer+PAM'].unique())
     list_labels.append('Mean distribution')
-    plt.gca().add_artist(plt.legend(labels=list_labels, title='sgRNAs',
-                                    loc='center left', bbox_to_anchor=(1, 0.2)))
-    # plt.legend(list_labels, loc='lower right', fontsize=8)
+    # plt.gca().add_artist(plt.legend(labels=list_labels, title='sgRNAs',
+    #                                 loc='center left', bbox_to_anchor=(1, 0.2)))
+    plt.legend(list_labels, loc='best', fontsize=10)
 
     plt.tight_layout()
     plt.savefig(out_folder+name+'_distribution_plt_CFD.png')
