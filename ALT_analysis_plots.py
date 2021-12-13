@@ -16,13 +16,13 @@ from upsetplot import from_memberships
 import warnings
 import matplotlib
 import math
-
-# import matplotlib.ticker as tkr
-
 # SUPPRESS ALL WARNINGS
 warnings.filterwarnings("ignore")
 # do not use X11
 matplotlib.use('Agg')
+# set matplotlib for pdf editing
+matplotlib.rcParams['pdf.fonttype'] = 42
+matplotlib.rcParams['ps.fonttype'] = 42
 
 
 def annotation_analysis(row, on_target_dict):
@@ -221,7 +221,7 @@ def generate_heatmap_CFD(original_df):
     plt.ylabel("CFD score", fontsize=13)
     # plt_heatmap.invert_xaxis()
     plt.tight_layout()
-    plt.savefig(out_folder+'heatmap_CFD.png')
+    plt.savefig(out_folder+'heatmap_CFD.pdf', transparent=True)
     plt.clf()
     plt.close('all')
 
@@ -279,7 +279,7 @@ def generate_distribution_plot_CFD(original_df, name):
     plt.legend(list_labels, loc='best', fontsize=10)
 
     plt.tight_layout()
-    plt.savefig(out_folder+name+'_distribution_plt_CFD.png')
+    plt.savefig(out_folder+name+'_distribution_plt_CFD.pdf', transparent=True)
     plt.clf()
     plt.close('all')
     print('done')
@@ -325,7 +325,7 @@ def generate_upset_plot_CFD(original_df):
     plt.title('ALT targets overlapping categories')
     # plt.tight_layout()
     plt.savefig(
-        out_folder+'overlapping_alt_targets_categories_CFD.pdf', format="pdf")
+        out_folder+'overlapping_alt_targets_categories_CFD.pdf', transparent=True)
     plt.clf()
     plt.close('all')
 
