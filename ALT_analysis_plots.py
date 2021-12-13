@@ -182,11 +182,11 @@ def generate_heatmap_CFD(original_df):
 
     df_fake_target = pd.DataFrame([[0.9, 0.00001], [0.9, 0.0001], [0.9, 0.001], [0.9, 0.01], [
                                   0.9, 0.1]], columns=['CFD_score_(highest_CFD)', 'Variant_MAF_(highest_CFD)'])
-    df_heatmap.append(df_fake_target, ignore_index=True)
+    df_heatmap = df_heatmap.append(df_fake_target)
 
     df_fake_target = pd.DataFrame([[1, 0.00001], [1, 0.0001], [1, 0.001], [1, 0.01], [
                                   1, 0.1]], columns=['CFD_score_(highest_CFD)', 'Variant_MAF_(highest_CFD)'])
-    df_heatmap.append(df_fake_target, ignore_index=True)
+    df_heatmap = df_heatmap.append(df_fake_target)
 
     # CFD score rounding to 1 decimal
     df_heatmap['CFD_score_(highest_CFD)'] = df_heatmap['CFD_score_(highest_CFD)'].astype(
