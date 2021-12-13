@@ -204,7 +204,7 @@ def generate_heatmap_CFD(original_df):
     # formatter.set_scientific(True)
 
     figu = plt.figure()
-    plt_heatmap = sns.heatmap(table, cmap="RdYlBu", fmt='.0f', annot=True, vmax=vmax, vmin=vmin, norm=log_norm,
+    plt_heatmap = sns.heatmap(table, cmap="RdYlBu", fmt='n', annot=True, vmax=vmax, vmin=vmin, norm=log_norm,
                               cbar_kws={"ticks": cbar_ticks, 'label': 'Target sites'}, xticklabels=False, yticklabels=False)
     plt_heatmap.collections[0].colorbar.ax.yaxis.set_ticks([], minor=True)
 
@@ -217,8 +217,8 @@ def generate_heatmap_CFD(original_df):
         labels=[0.00001, 0.0001, 0.001, 0.01, 0.1, 1], fontsize=8)
     plt_heatmap.invert_yaxis()
 
-    plt.xlabel("Variant MAF")
-    plt.ylabel("CFD score")
+    plt.xlabel("Variant MAF", fontsize=11)
+    plt.ylabel("CFD score", fontsize=11)
     # plt_heatmap.invert_xaxis()
     plt.tight_layout()
     plt.savefig(out_folder+'heatmap_CFD.pdf', format="pdf")
@@ -265,17 +265,18 @@ def generate_distribution_plot_CFD(original_df, name):
     plt.fill_between(range(len(media)), lowerbound,
                      upperbound, alpha=0.10)
 
-    plt.ylabel('ALT Targets')
+    # plt.ylabel('ALT Targets')
     if 'log' in name:
         plt.yscale('log')
-    plt.xlabel('Targets')
+    plt.xlabel('Targets', fontsize=11)
+    plt.ylabel('ALT Targets', fontsize=11)
     plt.title('Distribution of targets with different MAFs filtered with MAF>0')
     list_labels = list(filtered_df['Spacer+PAM'].unique())
     list_labels.append('Mean distribution')
     plt.legend(list_labels, loc='lower right', fontsize=8)
 
     plt.tight_layout()
-    plt.savefig(out_folder+name+'_distribution_plt_CFD.pdf', format="pdf")
+    plt.savefig(out_folder+name+'_distribution_plt_CFD.png')
     plt.clf()
     plt.close('all')
     print('done')
@@ -335,8 +336,8 @@ original_df_read = pd.read_csv(inTargets, sep="\t", index_col=False,
                                na_values=['n'])
 
 # call to plot generation CFD with original data
-# generate_distribution_plot_CFD(original_df_read, 'no_filter')
-# generate_distribution_plot_CFD(original_df_read, 'no_filter_log')
+generate_distribution_plot_CFD(original_df_read, 'no_filter')
+generate_distribution_plot_CFD(original_df_read, 'no_filter_log')
 # generate_upset_plot_CFD(original_df_read)
 generate_heatmap_CFD(original_df_read)
 # generate_upset_log_barplot_CFD()
