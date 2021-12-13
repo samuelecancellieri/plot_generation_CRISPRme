@@ -268,6 +268,7 @@ def generate_distribution_plot_CFD(original_df, name):
     # plt.ylabel('ALT Targets')
     if 'log' in name:
         plt.yscale('log')
+        plt.xscale('log')
     plt.xlabel('Targets', fontsize=13)
     plt.ylabel('ALT Targets', fontsize=13)
     plt.title('Distribution of targets with different MAFs filtered with MAF>0')
