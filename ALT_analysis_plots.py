@@ -275,7 +275,7 @@ def generate_distribution_plot_CFD(original_df, name):
     upperbound = media+(z_score*standarderr)
 
     plt.plot(media)
-    plt.xticks
+    # plt.xticks
     # plt.fill_between(range(len(media)), lowerbound,
     #                  upperbound, alpha=0.10)
 
