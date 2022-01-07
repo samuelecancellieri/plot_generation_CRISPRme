@@ -26,7 +26,7 @@ for guide in original_df['Spacer+PAM'].unique():
                                   'Aligned_protospacer+PAM_ALT_(highest_CRISTA)',
                                   'Mismatches+bulges_(highest_CRISTA)',
                                   'CRISTA_score_(highest_CRISTA)',
-                                  'Annotation_GENCODE'
+                                  'Annotation_GENCODE',
                                   'Annotation_closest_gene_name',
                                   'Annotation_ENCODE']]]
 
