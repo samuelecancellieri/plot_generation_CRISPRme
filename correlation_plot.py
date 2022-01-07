@@ -19,10 +19,13 @@ def plot_correlation(nrows, original_df):
 
     plt.figure()
 
-    ax = sns.scatterplot(x="CFD_score_(highest_CFD)",
-                         y="CRISTA_score_(highest_CRISTA)", data=original_df_filtered)
-    sns.lmplot(x="CFD_score_(highest_CFD)",
-               y="CRISTA_score_(highest_CRISTA)", data=original_df_filtered)
+    ax = sns.regplot(data=original_df_filtered, x="CFD_score_(highest_CFD)",
+                     y="CRISTA_score_(highest_CRISTA)", fit_reg=True, marker="+", color="skyblue")
+
+    # ax = sns.scatterplot(x="CFD_score_(highest_CFD)",
+    #                      y="CRISTA_score_(highest_CRISTA)", data=original_df_filtered)
+    # sns.lmplot(x="CFD_score_(highest_CFD)",
+    #            y="CRISTA_score_(highest_CRISTA)", data=original_df_filtered)
     ax.set_title("Score correlation CFD vs CRISTA")
 
     print(stats.pearsonr(original_df_filtered['CFD_score_(highest_CFD)'],
