@@ -16,7 +16,7 @@ matplotlib.rcParams['ps.fonttype'] = 42
 
 print('start processing')
 original_df = pd.read_csv(sys.argv[1], sep="\t", index_col=False,
-                          na_values=['n'])
+                          na_values=['n'], nrows=1000)
 
 original_df = original_df.head(1000)
 
