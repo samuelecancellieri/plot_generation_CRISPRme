@@ -1,6 +1,7 @@
 import sys
 import pandas as pd
 import matplotlib
+import seaborn as sns
 from matplotlib import pyplot as plt
 import warnings
 # SUPPRESS ALL WARNINGS
@@ -19,8 +20,14 @@ original_df = pd.read_csv(sys.argv[1], sep="\t", index_col=False,
 original_df = original_df.head(1000)
 
 plt.figure()
-plt.scatter(original_df['CFD_score_(highest_CFD)'],
-            original_df['CRISTA_score_(highest_CRISTA)'])
+ax = sns.scatterplot(x="CFD_score_(highest_CFD)",
+                     y="CRISTA_score_(highest_CRISTA)", data=original_df)
+sns.lmplot(x="CFD_score_(highest_CFD)",
+           y="CRISTA_score_(highest_CRISTA)", data=original_df)
+
+ax.set_title("Score correlation CFD vs CRISTA")
+# plt.scatter(original_df['CFD_score_(highest_CFD)'],
+#             original_df['CRISTA_score_(highest_CRISTA)'])
 plt.tight_layout()
 plt.savefig(sys.argv[2]+'correlation_CFDvCRISTA.pdf')
 plt.clf()
