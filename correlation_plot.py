@@ -14,25 +14,30 @@ matplotlib.rcParams['pdf.fonttype'] = 42
 matplotlib.rcParams['ps.fonttype'] = 42
 
 
+def plot_correlation(nrows, original_df):
+    original_df_filtered = original_df.head(nrows)
+
+    plt.figure()
+
+    ax = sns.scatterplot(x="CFD_score_(highest_CFD)",
+                         y="CRISTA_score_(highest_CRISTA)", data=original_df_filtered)
+    sns.lmplot(x="CFD_score_(highest_CFD)",
+               y="CRISTA_score_(highest_CRISTA)", data=original_df_filtered)
+    ax.set_title("Score correlation CFD vs CRISTA")
+
+    print(stats.pearsonr(original_df_filtered['CFD_score_(highest_CFD)'],
+                         original_df_filtered['CRISTA_score_(highest_CRISTA)']))
+
+    plt.tight_layout()
+    plt.savefig(sys.argv[2]+'correlation_CFDvCRISTA_top'+str(nrows)+'.pdf')
+    plt.clf()
+    plt.close('all')
+
+
 print('start processing')
 original_df = pd.read_csv(sys.argv[1], sep="\t", index_col=False,
                           na_values=['n'], nrows=1000)
-
-original_df = original_df.head(1000)
-
-plt.figure()
-ax = sns.scatterplot(x="CFD_score_(highest_CFD)",
-                     y="CRISTA_score_(highest_CRISTA)", data=original_df)
-sns.lmplot(x="CFD_score_(highest_CFD)",
-           y="CRISTA_score_(highest_CRISTA)", data=original_df)
-
-ax.set_title("Score correlation CFD vs CRISTA")
-print(stats.pearsonr(original_df['CFD_score_(highest_CFD)'],
-                     original_df['CRISTA_score_(highest_CRISTA)']))
-
-# plt.scatter(original_df['CFD_score_(highest_CFD)'],
-#             original_df['CRISTA_score_(highest_CRISTA)'])
-plt.tight_layout()
-plt.savefig(sys.argv[2]+'correlation_CFDvCRISTA.pdf')
-plt.clf()
-plt.close('all')
+# correlation with top1000 rows
+plot_correlation(1000, original_df)
+# correlation with top100 rows
+plot_correlation(100, original_df)
