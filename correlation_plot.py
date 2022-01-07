@@ -4,6 +4,7 @@ import matplotlib
 import seaborn as sns
 from matplotlib import pyplot as plt
 import warnings
+from scipy import stats
 # SUPPRESS ALL WARNINGS
 warnings.filterwarnings("ignore")
 # do not use X11
@@ -26,6 +27,9 @@ sns.lmplot(x="CFD_score_(highest_CFD)",
            y="CRISTA_score_(highest_CRISTA)", data=original_df)
 
 ax.set_title("Score correlation CFD vs CRISTA")
+print(stats.pearsonr(original_df['CFD_score_(highest_CFD)'],
+                     original_df['CRISTA_score_(highest_CRISTA)']))
+
 # plt.scatter(original_df['CFD_score_(highest_CFD)'],
 #             original_df['CRISTA_score_(highest_CRISTA)'])
 plt.tight_layout()
