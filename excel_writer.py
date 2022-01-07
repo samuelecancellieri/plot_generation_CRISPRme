@@ -30,6 +30,9 @@ for guide in original_df['Spacer+PAM'].unique():
                                   'Annotation_closest_gene_name',
                                   'Annotation_ENCODE']]]
 
+    # extract top 1000 rows for each guide
+    guide_df = guide_df.head(1000)
+
     # generate excel sheets
     guide_df.to_excel(writer, sheet_name=str(guide))
 
