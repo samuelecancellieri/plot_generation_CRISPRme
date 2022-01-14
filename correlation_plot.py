@@ -32,7 +32,7 @@ def plot_correlation(original_df):
     #            y="CRISTA_score_(highest_CRISTA)", data=original_df_filtered)
     ax.set(xlabel='CFD Score', ylabel='CRISTA Score')
 
-    ax.set_title("Score correlation CFD vs CRISTA top")
+    # ax.set_title("Score correlation CFD vs CRISTA top")
 
     print(stats.pearsonr(original_df_filtered['CFD_score_(highest_CFD)'],
                          original_df_filtered['CRISTA_score_(highest_CRISTA)']))
