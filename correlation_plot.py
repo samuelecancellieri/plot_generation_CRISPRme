@@ -35,11 +35,11 @@ def plot_correlation(original_df_filtered):
     ax = sns.displot(
         data=original_df_filtered, x="CFD_score_(highest_CFD)", y="CRISTA_score_(highest_CRISTA)", kind="kde", color='orange')
 
-    # sns.regplot(data=original_df_filtered.head(100), x="CFD_score_(highest_CFD)",
-    #             y="CRISTA_score_(highest_CRISTA)", fit_reg=True, marker="+", color="skyblue")
+    sns.regplot(data=df_union_crista_cfd, x="CFD_score_(highest_CFD)",
+                y="CRISTA_score_(highest_CRISTA)", fit_reg=True, marker="+", color="skyblue")
 
-    sns.scatterplot(x="CFD_score_(highest_CFD)",
-                    y="CRISTA_score_(highest_CRISTA)", data=df_union_crista_cfd, marker='+', color="skyblue")
+    # sns.scatterplot(x="CFD_score_(highest_CFD)",
+    #                 y="CRISTA_score_(highest_CRISTA)", data=df_union_crista_cfd, marker='+', color="skyblue")
     # sns.lmplot(x="CFD_score_(highest_CFD)",
     #            y="CRISTA_score_(highest_CRISTA)", data=original_df_filtered)
     ax.set(xlabel='CFD Score', ylabel='CRISTA Score')
