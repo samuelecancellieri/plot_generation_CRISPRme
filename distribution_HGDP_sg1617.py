@@ -3,7 +3,7 @@ import pandas as pd
 
 # original_df = pd.read_csv(sys.argv[1], sep="\t", index_col=False,
 #                           na_values=['n'])
-target_file = open(sys.argv[1], 'w')
+target_file = open(sys.argv[1], 'r')
 sample_file = open(sys.argv[2], 'r')
 sample_dict = dict()
 pop_dict = dict()
