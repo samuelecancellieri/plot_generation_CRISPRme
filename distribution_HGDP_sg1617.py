@@ -28,6 +28,7 @@ target_file = open(sys.argv[1], 'r')
 sample_file = open(sys.argv[2], 'r')
 sample_dict = dict()
 pop_dict = dict()
+
 for line in sample_file:
     split = line.strip().split('\t')
     if '#' in line:
@@ -101,4 +102,5 @@ for index, target in enumerate(target_file):
         pop = pop_dict[sample]
         sample_dict[pop][sample].add(index)
 
-print(sample_dict)
+# print(sample_dict)
+printDensityPlot()
