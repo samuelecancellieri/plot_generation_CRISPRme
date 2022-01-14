@@ -60,7 +60,7 @@ def printDensityPlot():
         for sample in sample_dict[pop]:
             # append samples to list to permute
             permutationList.append(sample)
-        print('DOING SUPERPOPULATION PLOT FOR: ', pop)
+        print('DOING POP PLOT FOR: ', pop)
         for permutation in range(0, 100):
             np.random.shuffle(permutationList)
             andamento = list()
@@ -87,7 +87,7 @@ def printDensityPlot():
               ' and CI '+str(95)+'%'+' and CFD score >='+str(0.2))
     plt.xlabel('# Individuals')
     plt.ylabel('# Cumulative Targets')
-    plt.legend()
+    # plt.legend()
     plt.tight_layout()
     plt.savefig(sys.argv[3]+'_allpop_with_diffCFD_'+str(0.1) +
                 'and_CI_95_and_CFD_score_'+str(0.2)+'.pdf')
