@@ -14,9 +14,15 @@ matplotlib.rcParams['pdf.fonttype'] = 42
 matplotlib.rcParams['ps.fonttype'] = 42
 
 
-def plot_correlation(original_df):
+def plot_correlation(original_df_filtered):
     print('plotting')
-    original_df_filtered = original_df
+    original_df_cfd_sort = original_df_filtered.sort_values(
+        ['CFD_score_(highest_CFD)'], inplace=True, ascending=False)
+    original_df_crista_sort = original_df_filtered.sort_values(
+        ['CRISTA_score_(highest_CRISTA)'], inplace=True, ascending=False)
+
+    df_union_crista_cfd = pd.concat([original_df_crista_sort.head(
+        100), original_df_cfd_sort.head(100)]).drop_duplicates()
 
     plt.figure()
 
@@ -27,7 +33,7 @@ def plot_correlation(original_df):
     #             y="CRISTA_score_(highest_CRISTA)", fit_reg=True, marker="+", color="skyblue")
 
     ax = sns.scatterplot(x="CFD_score_(highest_CFD)",
-                         y="CRISTA_score_(highest_CRISTA)", data=original_df_filtered.head(100), marker='+', color="skyblue")
+                         y="CRISTA_score_(highest_CRISTA)", data=df_union_crista_cfd, marker='+', color="skyblue")
     # sns.lmplot(x="CFD_score_(highest_CFD)",
     #            y="CRISTA_score_(highest_CRISTA)", data=original_df_filtered)
     ax.set(xlabel='CFD Score', ylabel='CRISTA Score')
@@ -38,7 +44,7 @@ def plot_correlation(original_df):
                          original_df_filtered['CRISTA_score_(highest_CRISTA)']))
 
     plt.tight_layout()
-    plt.savefig(sys.argv[2]+'correlation_CFDvCRISTA_top.svg')
+    plt.savefig(sys.argv[2]+'correlation_CFDvCRISTA_top.pdf')
     plt.clf()
     plt.close('all')
 
@@ -46,6 +52,9 @@ def plot_correlation(original_df):
 print('start processing')
 original_df = pd.read_csv(sys.argv[1], sep="\t", index_col=False,
                           na_values=['n'], nrows=1000)
+
+original_df = original_df.loc[(
+    original_df['Mismatches+bulges_(highest_CFD)'] > 1)]
 # correlation with top1000 rows
 plot_correlation(original_df)
 # correlation with top100 rows
