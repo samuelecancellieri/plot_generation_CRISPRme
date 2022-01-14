@@ -21,7 +21,7 @@ def plot_correlation(original_df):
     plt.figure()
 
     ax = sns.displot(
-        data=original_df_filtered, x="CFD_score_(highest_CFD)", y="CRISTA_score_(highest_CRISTA)", kind="kde", rug=True, color='orange')
+        data=original_df_filtered, x="CFD_score_(highest_CFD)", y="CRISTA_score_(highest_CRISTA)", kind="kde", color='orange')
 
     # sns.regplot(data=original_df_filtered, x="CFD_score_(highest_CFD)",
     #             y="CRISTA_score_(highest_CRISTA)", fit_reg=True, marker="+", color="skyblue")
@@ -45,7 +45,7 @@ def plot_correlation(original_df):
 
 print('start processing')
 original_df = pd.read_csv(sys.argv[1], sep="\t", index_col=False,
-                          na_values=['n'])
+                          na_values=['n'], nrows=1000)
 # correlation with top1000 rows
 plot_correlation(original_df)
 # correlation with top100 rows
