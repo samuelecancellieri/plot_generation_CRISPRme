@@ -38,7 +38,7 @@ def plot_correlation(original_df):
                          original_df_filtered['CRISTA_score_(highest_CRISTA)']))
 
     plt.tight_layout()
-    plt.savefig(sys.argv[2]+'correlation_CFDvCRISTA_top.pdf')
+    plt.savefig(sys.argv[2]+'correlation_CFDvCRISTA_top.svg')
     plt.clf()
     plt.close('all')
 
