@@ -32,13 +32,13 @@ def plot_correlation(original_df_filtered):
     # sns.regplot(data=original_df_filtered.head(100), x="CFD_score_(highest_CFD)",
     #             y="CRISTA_score_(highest_CRISTA)", fit_reg=True, marker="+", color="skyblue")
 
-    ax = sns.scatterplot(x="CFD_score_(highest_CFD)",
-                         y="CRISTA_score_(highest_CRISTA)", data=df_union_crista_cfd, marker='+', color="skyblue")
+    sns.scatterplot(x="CFD_score_(highest_CFD)",
+                    y="CRISTA_score_(highest_CRISTA)", data=df_union_crista_cfd, marker='+', color="skyblue")
     # sns.lmplot(x="CFD_score_(highest_CFD)",
     #            y="CRISTA_score_(highest_CRISTA)", data=original_df_filtered)
     ax.set(xlabel='CFD Score', ylabel='CRISTA Score')
 
-    # ax.set_title("Score correlation CFD vs CRISTA top")
+    ax.set_title("Score correlation CFD vs CRISTA top")
 
     print(stats.pearsonr(original_df_filtered['CFD_score_(highest_CFD)'],
                          original_df_filtered['CRISTA_score_(highest_CRISTA)']))
@@ -51,7 +51,7 @@ def plot_correlation(original_df_filtered):
 
 print('start processing')
 original_df = pd.read_csv(sys.argv[1], sep="\t", index_col=False,
-                          na_values=['n'], nrows=1000)
+                          na_values=['n'], nrows=100000)
 
 original_df = original_df.loc[(
     original_df['Mismatches+bulges_(highest_CFD)'] > 1)]
