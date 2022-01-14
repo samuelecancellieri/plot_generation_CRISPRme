@@ -21,10 +21,13 @@ def plot_correlation(original_df_filtered):
     original_df_crista_sort = original_df_filtered.sort_values(
         ['CRISTA_score_(highest_CRISTA)'], ascending=False)
 
-    print('cfd sort top100', original_df_cfd_sort.head(
-        100)['CFD_score_(highest_CFD)'])
-    print('crista sort top100', original_df_crista_sort.head(
-        100)['CRISTA_score_(highest_CRISTA)'])
+    print('cfd order')
+    print(original_df_cfd_sort.head(
+        100)['CFD_score_(highest_CFD)', 'CRISTA_score_(highest_CRISTA)'])
+
+    print('crista order')
+    print(original_df_crista_sort.head(100)[
+          'CFD_score_(highest_CFD)', 'CRISTA_score_(highest_CRISTA)'])
 
     df_union_crista_cfd = pd.concat(
         [original_df_crista_sort.head(100), original_df_cfd_sort.head(100)]).drop_duplicates()
