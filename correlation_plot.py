@@ -21,6 +21,11 @@ def plot_correlation(original_df_filtered):
     original_df_crista_sort = original_df_filtered.sort_values(
         ['CRISTA_score_(highest_CRISTA)'], ascending=False)
 
+    print('cfd sort top100', original_df_cfd_sort.head(
+        100)['CFD_score_(highest_CFD)'])
+    print('crista sort top100', original_df_crista_sort.head(
+        100)['CRISTA_score_(highest_CRISTA)'])
+
     df_union_crista_cfd = pd.concat(
         [original_df_crista_sort.head(100), original_df_cfd_sort.head(100)]).drop_duplicates()
     print('union of cfd and crista', len(df_union_crista_cfd.index))
@@ -52,7 +57,7 @@ def plot_correlation(original_df_filtered):
 
 print('start processing')
 original_df = pd.read_csv(sys.argv[1], sep="\t", index_col=False,
-                          na_values=['n'], nrows=1000000)
+                          na_values=['n'], nrows=100000)
 
 # filter df to remove on-targets and mutant on-targets
 original_df = original_df.loc[(
