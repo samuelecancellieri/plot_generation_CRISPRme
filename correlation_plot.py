@@ -17,12 +17,12 @@ matplotlib.rcParams['ps.fonttype'] = 42
 def plot_correlation(original_df_filtered):
     print('plotting')
     original_df_cfd_sort = original_df_filtered.sort_values(
-        ['CFD_score_(highest_CFD)'], inplace=True, ascending=False)
+        ['CFD_score_(highest_CFD)'], ascending=False)
     original_df_crista_sort = original_df_filtered.sort_values(
-        ['CRISTA_score_(highest_CRISTA)'], inplace=True, ascending=False)
+        ['CRISTA_score_(highest_CRISTA)'], ascending=False)
 
     df_union_crista_cfd = pd.concat(
-        [original_df_crista_sort, original_df_cfd_sort]).drop_duplicates()
+        [original_df_crista_sort.head(100), original_df_cfd_sort.head(100)]).drop_duplicates()
 
     plt.figure()
 
