@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib
 import seaborn as sns
 from matplotlib import pyplot as plt
+from matplotlib_venn import venn2
 import warnings
 from scipy import stats
 # SUPPRESS ALL WARNINGS
@@ -54,6 +55,15 @@ def plot_correlation(original_df_filtered):
 
     plt.tight_layout()
     plt.savefig(sys.argv[2]+'correlation_CFDvCRISTA_top.pdf')
+    plt.clf()
+    plt.close('all')
+
+    plt.figure()
+
+    set_cfd = set(original_df_cfd_sort.head(100).index)
+    set_crista = set(original_df_crista_sort.head(100).index)
+    venn2([set_cfd, set_crista], ('CFD', 'CRISTA'))
+    plt.savefig(sys.argv[2]+'venn_CFDvCRISTA_top.pdf')
     plt.clf()
     plt.close('all')
 
