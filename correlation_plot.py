@@ -21,8 +21,8 @@ def plot_correlation(original_df_filtered):
     original_df_crista_sort = original_df_filtered.sort_values(
         ['CRISTA_score_(highest_CRISTA)'], inplace=True, ascending=False)
 
-    df_union_crista_cfd = pd.concat([original_df_crista_sort.head(
-        100), original_df_cfd_sort.head(100)]).drop_duplicates()
+    df_union_crista_cfd = pd.concat(
+        [original_df_crista_sort, original_df_cfd_sort]).drop_duplicates()
 
     plt.figure()
 
