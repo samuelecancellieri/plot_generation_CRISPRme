@@ -15,6 +15,7 @@ matplotlib.rcParams['ps.fonttype'] = 42
 
 
 def plot_correlation(original_df):
+    print('plotting')
     original_df_filtered = original_df
 
     plt.figure()
