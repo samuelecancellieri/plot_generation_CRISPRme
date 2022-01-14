@@ -30,7 +30,7 @@ for line in sample_file:
 
 
 for index, target in enumerate(target_file):
-    if '#' in target:
+    if 'CFD' in target:
         continue
     split = target.strip().split('\t')
     samples = split[22].split(',')
