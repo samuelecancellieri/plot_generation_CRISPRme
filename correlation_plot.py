@@ -25,6 +25,9 @@ def plot_correlation(guide, original_df_filtered):
     original_df_crista_sort = original_df_filtered.sort_values(
         ['CRISTA_score_(highest_CRISTA)'], ascending=False)
 
+    print(original_df_cfd_sort)
+    print(original_df_crista_sort)
+
     # union of top100 CFD & CRISTA
     df_union_crista_cfd_100 = pd.concat(
         [original_df_crista_sort.head(100), original_df_cfd_sort.head(100)]).drop_duplicates()
@@ -62,7 +65,7 @@ def plot_correlation(guide, original_df_filtered):
 
     crista_index_list = list()
     sorted_crista_index_list = list(
-        original_df_crista_sort.index)
+        original_df_crista_sort['index'])
     for index in original_df_cfd_sort.head(100).index:
         print('cfd index', index)
         crista_index_found = sorted_crista_index_list.index(index)+1
@@ -101,4 +104,4 @@ for guide in original_df["Spacer+PAM"].unique():
         ['CFD_score_(highest_CFD)'], ascending=False, inplace=True)
     df_guide.reset_index(inplace=True)
     print(df_guide)
-    # plot_correlation(guide, df_guide)
+    plot_correlation(guide, df_guide)
