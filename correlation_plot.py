@@ -62,14 +62,10 @@ def plot_correlation(guide, original_df_filtered):
         original_df_crista_sort.head(100).index), marker='+', color="skyblue")
 
     original_df_cfd_sort.head(100).to_csv(sys.argv[2]+guide+'_original_df_cfd_sort.tsv',
-                                          sep='\t', na_rep='NA', index=False)
+                                          sep='\t', na_rep='NA')
 
     original_df_crista_sort.head(100).to_csv(sys.argv[2]+guide+'_original_df_crista_sort.tsv',
-                                             sep='\t', na_rep='NA', index=False)
-
-    for index in range(len(original_df_cfd_sort.head(100).index)):
-        print(list(original_df_cfd_sort.head(100).index)[
-              index], (list(original_df_crista_sort.head(100).index)[index]))
+                                             sep='\t', na_rep='NA')
 
     plt.tight_layout()
     plt.savefig(sys.argv[2]+f'scatter_rank_CFDvCRISTA_{guide}_top100.pdf')
