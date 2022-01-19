@@ -72,6 +72,7 @@ def plot_correlation(guide, original_df_filtered):
         x=cfd_crista_point_x_coordinates, y=cfd_crista_point_y_coordinates, marker='+', color="skyblue")
     ax.set(xlabel='CFD Rank', ylabel='CRISTA Rank')
     plt.yscale('log')
+    plt.xlim(1, 100)
     # plt.ticklabel_format(style='plain', axis='y')
 
     plt.tight_layout()
