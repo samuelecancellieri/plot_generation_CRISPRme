@@ -83,7 +83,7 @@ original_df = pd.read_csv(sys.argv[1], sep="\t", index_col=False,
 
 # filter df to remove on-targets and mutant on-targets
 original_df = original_df.loc[(
-    original_df['Mismatches+bulges_(highest_CFD)'] > 1)]
+    original_df['Mismatches+bulges_(fewest_mm+b)'] > 1)]
 
 # correlation plot exec
 for guide in original_df["Spacer+PAM"].unique():
