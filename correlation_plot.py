@@ -62,7 +62,7 @@ def plot_correlation(guide, original_df_filtered):
     sorted_crista_index_list = list(
         original_df_crista_sort.index)
     for index in original_df_cfd_sort.head(100).index:
-        crista_index_found = sorted_crista_index_list.index(index)
+        crista_index_found = sorted_crista_index_list.index(index)+1
         # print('cfd index', index, 'crista index', crista_index_found)
         print('cfd target', original_df_cfd_sort.iloc[[
               index]], 'crista target', original_df_crista_sort.iloc[[crista_index_found]])
