@@ -74,11 +74,12 @@ def plot_correlation(guide, original_df_filtered):
         cfd_crista_point_y_coordinates.append(
             sorted_crista_index_list.index(index)+1)
 
-    for i in range(100):
-        print(cfd_crista_point_x_coordinates[i],
-              cfd_crista_point_y_coordinates[i])
-    # sns.scatterplot(
-    #     x=cfd_crista_point_coordinates[0], y=cfd_crista_point_coordinates[1], marker='+', color="skyblue")
+    # for i in range(100):
+    #     print(cfd_crista_point_x_coordinates[i],
+    #           cfd_crista_point_y_coordinates[i])
+
+    sns.scatterplot(
+        x=cfd_crista_point_x_coordinates, y=cfd_crista_point_y_coordinates, marker='+', color="skyblue")
 
     # original_df_cfd_sort.head(100).to_csv(sys.argv[2]+guide+'_original_df_cfd_sort.tsv',
     #                                       sep='\t', na_rep='NA')
