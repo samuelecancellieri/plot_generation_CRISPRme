@@ -25,17 +25,11 @@ def plot_correlation(guide, original_df_filtered):
     original_df_crista_sort = original_df_filtered.sort_values(
         ['CRISTA_score_(highest_CRISTA)'], ascending=False)
 
-    print(original_df_cfd_sort)
-    print(original_df_crista_sort)
-
     # union of top100 CFD & CRISTA
     df_union_crista_cfd_100 = pd.concat(
         [original_df_crista_sort.head(100), original_df_cfd_sort.head(100)]).drop_duplicates()
 
     plt.figure()
-
-    # ax = sns.displot(
-    #     data=original_df_filtered, x="CFD_score_(highest_CFD)", y="CRISTA_score_(highest_CRISTA)", kind="kde", color='orange')
 
     ax = sns.regplot(data=df_union_crista_cfd_100, x="CFD_score_(highest_CFD)",
                      y="CRISTA_score_(highest_CRISTA)", fit_reg=False, marker="+", color="skyblue")
@@ -74,18 +68,10 @@ def plot_correlation(guide, original_df_filtered):
         cfd_crista_point_y_coordinates.append(
             sorted_crista_index_list.index(index)+1)
 
-    # for i in range(100):
-    #     print(cfd_crista_point_x_coordinates[i],
-    #           cfd_crista_point_y_coordinates[i])
-
-    sns.scatterplot(
+    ax = sns.scatterplot(
         x=cfd_crista_point_x_coordinates, y=cfd_crista_point_y_coordinates, marker='+', color="skyblue")
 
-    # original_df_cfd_sort.head(100).to_csv(sys.argv[2]+guide+'_original_df_cfd_sort.tsv',
-    #                                       sep='\t', na_rep='NA')
-
-    # original_df_crista_sort.head(100).to_csv(sys.argv[2]+guide+'_original_df_crista_sort.tsv',
-    #                                          sep='\t', na_rep='NA')
+    ax.set(xlabel='CFD Rank', ylabel='CRISTA Rank')
 
     plt.tight_layout()
     plt.savefig(sys.argv[2]+f'scatter_rank_CFDvCRISTA_{guide}_top100.pdf')
