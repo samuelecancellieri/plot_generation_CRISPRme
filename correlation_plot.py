@@ -61,8 +61,9 @@ def plot_correlation(guide, original_df_filtered):
     sns.scatterplot(x=list(original_df_cfd_sort.head(100).index), y=list(
         original_df_crista_sort.head(100).index), marker='+', color="skyblue")
 
-    print(list(original_df_cfd_sort.head(100).index),
-          list(original_df_crista_sort.head(100).index))
+    for index in range(len(original_df_cfd_sort.head(100).index)):
+        print(list(original_df_cfd_sort.head(100).index)[
+              index], (list(original_df_crista_sort.head(100).index)[index]))
 
     plt.tight_layout()
     plt.savefig(sys.argv[2]+f'scatter_rank_CFDvCRISTA_{guide}_top100.pdf')
