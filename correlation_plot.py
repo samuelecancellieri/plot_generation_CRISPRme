@@ -35,6 +35,9 @@ def plot_correlation(guide, original_df_filtered):
     ax = sns.regplot(data=df_union_crista_cfd_100, x="CFD_score_(highest_CFD)",
                      y="CRISTA_score_(highest_CRISTA)", fit_reg=False, marker="+", color="skyblue")
 
+    df_union_crista_cfd_100.to_csv(sys.argv[2]+guide+'_union_CFDvCRISTA.tsv',
+                                   sep='\t', na_rep='NA', index=False)
+
     ax.set(xlabel='CFD Score', ylabel='CRISTA Score')
 
     plt.tight_layout()
@@ -57,6 +60,9 @@ def plot_correlation(guide, original_df_filtered):
 
     sns.scatterplot(x=list(original_df_cfd_sort.head(100).index), y=list(
         original_df_crista_sort.head(100).index), marker='+', color="skyblue")
+
+    print(list(original_df_cfd_sort.head(100).index),
+          list(original_df_crista_sort.head(100).index))
 
     plt.tight_layout()
     plt.savefig(sys.argv[2]+f'scatter_rank_CFDvCRISTA_{guide}_top100.pdf')
