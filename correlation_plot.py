@@ -63,6 +63,7 @@ def plot_correlation(guide, original_df_filtered):
         original_df_crista_sort.index)
     for index in original_df_cfd_sort.head(100).index:
         crista_index_found = sorted_crista_index_list.index(index)
+        print('cfd index', index, 'crista index', crista_index_found)
         crista_index_list.append(crista_index_found+1)
 
     sns.scatterplot(x=list(original_df_cfd_sort.head(100).index),
