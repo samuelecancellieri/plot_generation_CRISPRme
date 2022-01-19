@@ -63,15 +63,20 @@ def plot_correlation(guide, original_df_filtered):
 
     plt.figure()
 
-    cfd_crista_point_coordinates = list()
+    cfd_crista_point_x_coordinates = list()
+    cfd_crista_point_y_coordinates = list()
     sorted_cfd_index_list = list(original_df_cfd_sort['index'])
     sorted_crista_index_list = list(
         original_df_crista_sort['index'])
 
     for pos, index in enumerate(sorted_cfd_index_list[:100]):
-        cfd_crista_point_coordinates.append(
-            [pos, sorted_crista_index_list.index(index)+1])
-    print(cfd_crista_point_coordinates)
+        cfd_crista_point_x_coordinates.append(pos+1)
+        cfd_crista_point_y_coordinates.append(
+            sorted_crista_index_list.index(index)+1)
+
+    for i in range(100):
+        print(cfd_crista_point_x_coordinates[i],
+              cfd_crista_point_y_coordinates[i])
     # sns.scatterplot(
     #     x=cfd_crista_point_coordinates[0], y=cfd_crista_point_coordinates[1], marker='+', color="skyblue")
 
