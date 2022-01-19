@@ -63,21 +63,17 @@ def plot_correlation(guide, original_df_filtered):
 
     plt.figure()
 
-    crista_index_list = list()
+    cfd_crista_point_coordinates = list()
+    sorted_cfd_index_list = list(original_df_cfd_sort['index'])
     sorted_crista_index_list = list(
         original_df_crista_sort['index'])
-    print(sorted_crista_index_list[:10])
-    print(sorted_crista_index_list.index(1))
-    # for index in original_df_cfd_sort.head(100)['index']:
-    #     print('cfd index', index)
-    #     crista_index_found = sorted_crista_index_list.index(index)+1
-    #     # print('cfd index', index, 'crista index', crista_index_found)
-    #     print('cfd target', original_df_cfd_sort.iloc[[
-    #           index]], 'crista target', original_df_crista_sort.iloc[[crista_index_found]])
-    #     crista_index_list.append(crista_index_found)
 
-    # sns.scatterplot(x=list(original_df_cfd_sort.head(100).index),
-    #                 y=crista_index_list, marker='+', color="skyblue")
+    for pos, index in enumerate(sorted_cfd_index_list[:100]):
+        cfd_crista_point_coordinates.append(
+            [pos, sorted_crista_index_list.index(index)+1])
+    print(cfd_crista_point_coordinates)
+    # sns.scatterplot(
+    #     x=cfd_crista_point_coordinates[0], y=cfd_crista_point_coordinates[1], marker='+', color="skyblue")
 
     # original_df_cfd_sort.head(100).to_csv(sys.argv[2]+guide+'_original_df_cfd_sort.tsv',
     #                                       sep='\t', na_rep='NA')
@@ -102,8 +98,7 @@ original_df = original_df.loc[(
 # correlation plot exec
 for guide in original_df["Spacer+PAM"].unique():
     df_guide = original_df.loc[(original_df['Spacer+PAM'] == guide)]
-    # df_guide.sort_values(
-    #     ['CFD_score_(highest_CFD)'], ascending=False, inplace=True)
+    # reset index after guide extraction
     df_guide.reset_index(inplace=True)
-    print(df_guide)
+    # start correlation plots
     plot_correlation(guide, df_guide)
