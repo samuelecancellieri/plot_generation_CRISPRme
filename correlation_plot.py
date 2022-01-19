@@ -58,14 +58,21 @@ def plot_correlation(guide, original_df_filtered):
 
     plt.figure()
 
-    sns.scatterplot(x=list(original_df_cfd_sort.head(100).index), y=list(
-        original_df_crista_sort.head(100).index), marker='+', color="skyblue")
+    crista_index_list = list()
+    sorted_crista_index_list = list(
+        original_df_crista_sort.index)
+    for index in original_df_cfd_sort.head(100).index:
+        crista_index_found = sorted_crista_index_list.index(index)
+        crista_index_list.append(crista_index_found+1)
 
-    original_df_cfd_sort.head(100).to_csv(sys.argv[2]+guide+'_original_df_cfd_sort.tsv',
-                                          sep='\t', na_rep='NA')
+    sns.scatterplot(x=list(original_df_cfd_sort.head(100).index),
+                    y=crista_index_list, marker='+', color="skyblue")
 
-    original_df_crista_sort.head(100).to_csv(sys.argv[2]+guide+'_original_df_crista_sort.tsv',
-                                             sep='\t', na_rep='NA')
+    # original_df_cfd_sort.head(100).to_csv(sys.argv[2]+guide+'_original_df_cfd_sort.tsv',
+    #                                       sep='\t', na_rep='NA')
+
+    # original_df_crista_sort.head(100).to_csv(sys.argv[2]+guide+'_original_df_crista_sort.tsv',
+    #                                          sep='\t', na_rep='NA')
 
     plt.tight_layout()
     plt.savefig(sys.argv[2]+f'scatter_rank_CFDvCRISTA_{guide}_top100.pdf')
