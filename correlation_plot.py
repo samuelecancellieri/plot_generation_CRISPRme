@@ -1,4 +1,6 @@
+from operator import truediv
 import sys
+from traceback import print_tb
 import pandas as pd
 import matplotlib
 import seaborn as sns
@@ -62,6 +64,7 @@ def plot_correlation(guide, original_df_filtered):
     sorted_crista_index_list = list(
         original_df_crista_sort.index)
     for index in original_df_cfd_sort.head(100).index:
+        print('cfd index', index)
         crista_index_found = sorted_crista_index_list.index(index)+1
         # print('cfd index', index, 'crista index', crista_index_found)
         print('cfd target', original_df_cfd_sort.iloc[[
@@ -94,4 +97,8 @@ original_df = original_df.loc[(
 # correlation plot exec
 for guide in original_df["Spacer+PAM"].unique():
     df_guide = original_df.loc[(original_df['Spacer+PAM'] == guide)]
-    plot_correlation(guide, df_guide)
+    df_guide.sort_values(
+        ['CFD_score_(highest_CFD)'], ascending=False, inplace=True)
+    df_guide.reset_index(inplace=True)
+    print(df_guide)
+    # plot_correlation(guide, df_guide)
