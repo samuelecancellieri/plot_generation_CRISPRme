@@ -37,10 +37,10 @@ def plot_correlation(guide, original_df_filtered):
 
     plt.figure()
 
-    sns.jointplot(x='CFD_score_(highest_CFD)', y='CRISTA_score_(highest_CRISTA)',
-                  kind="reg", data=original_df_filtered)
-    # sns.regplot(data=original_df_filtered, x='CFD_score_(highest_CFD)',
-    #             y='CRISTA_score_(highest_CRISTA)', fit_reg=True, color='blue')
+    # sns.jointplot(x='CFD_score_(highest_CFD)', y='CRISTA_score_(highest_CRISTA)',
+    #               kind="reg", data=original_df_filtered)
+    sns.regplot(data=original_df_filtered, x='CFD_score_(highest_CFD)',
+                y='CRISTA_score_(highest_CRISTA)', fit_reg=True, color='skyblue')
     plt.xlim(0, 1)
     plt.ylim(0, 1)
 
