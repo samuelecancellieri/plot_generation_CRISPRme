@@ -41,7 +41,7 @@ def plot_correlation(guide, original_df_filtered):
                 y='CRISTA_score_(highest_CRISTA)', fit_reg=False, color='orange')
 
     plt.tight_layout()
-    plt.savefig(sys.argv[2]+f'correlation_CFDvCRISTA_{guide}_no_filter.pdf')
+    plt.savefig(sys.argv[2]+f'correlation_CFDvCRISTA_{guide}_no_filter.png')
     plt.clf()
     plt.close('all')
 
