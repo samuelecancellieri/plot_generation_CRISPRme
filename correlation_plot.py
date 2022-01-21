@@ -18,6 +18,10 @@ matplotlib.rcParams['pdf.fonttype'] = 42
 matplotlib.rcParams['ps.fonttype'] = 42
 
 
+# INPUT
+# ARGV1 INTEGRATED FILE
+# ARGV2 OUTPUT FOLDER
+
 def plot_correlation(guide, original_df_filtered):
 
     print('plotting')
