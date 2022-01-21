@@ -1,6 +1,7 @@
 from operator import truediv
 import sys
 from traceback import print_tb
+from turtle import color
 import pandas as pd
 import matplotlib
 import seaborn as sns
@@ -28,6 +29,17 @@ def plot_correlation(guide, original_df_filtered):
     # union of top100 CFD & CRISTA
     df_union_crista_cfd_100 = pd.concat(
         [original_df_crista_sort.head(100), original_df_cfd_sort.head(100)]).drop_duplicates()
+
+    plt.figure()
+    original_df_filtered.sort_values(
+        ['CFD_score_(highest_CFD)'], ascending=False, inplace=True)
+    sns.regplot(data=original_df_filtered, x='CFD_score_(highest_CFD)',
+                y='CRISTA_score_(highest_CRISTA)', fit_reg=False, color='orange')
+
+    plt.tight_layout()
+    plt.savefig(sys.argv[2]+f'correlation_CFDvCRISTA_{guide}_no_filter.pdf')
+    plt.clf()
+    plt.close('all')
 
     plt.figure()
 
