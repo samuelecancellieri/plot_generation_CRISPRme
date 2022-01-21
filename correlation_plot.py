@@ -23,11 +23,6 @@ matplotlib.rcParams['ps.fonttype'] = 42
 # ARGV1 INTEGRATED FILE
 # ARGV2 OUTPUT FOLDER
 
-
-def r2(x, y):
-    return stats.pearsonr(x, y)[0] ** 2
-
-
 def plot_correlation(guide, original_df_filtered):
 
     print('plotting')
@@ -41,10 +36,9 @@ def plot_correlation(guide, original_df_filtered):
         [original_df_crista_sort.head(100), original_df_cfd_sort.head(100)]).drop_duplicates()
 
     plt.figure()
-    original_df_filtered.sort_values(
-        ['CFD_score_(highest_CFD)'], ascending=False, inplace=True)
+
     sns.jointplot(x='CFD_score_(highest_CFD)', y='CRISTA_score_(highest_CRISTA)',
-                  kind="reg", data=original_df_filtered, stat_func=r2)
+                  kind="reg", data=original_df_filtered)
     # sns.regplot(data=original_df_filtered, x='CFD_score_(highest_CFD)',
     #             y='CRISTA_score_(highest_CRISTA)', fit_reg=True, color='blue')
     plt.xlim(0, 1)
