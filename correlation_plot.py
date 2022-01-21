@@ -37,11 +37,11 @@ def plot_correlation(guide, original_df_filtered):
     plt.figure()
     original_df_filtered.sort_values(
         ['CFD_score_(highest_CFD)'], ascending=False, inplace=True)
-    sns.regplot(data=original_df_filtered, x='CFD_score_(highest_CFD)',
-                y='CRISTA_score_(highest_CRISTA)', fit_reg=False, color='orange')
+    sns.regplot(data=original_df_filtered.head(1000), x='CFD_score_(highest_CFD)',
+                y='CRISTA_score_(highest_CRISTA)', fit_reg=True, color='blue')
 
     plt.tight_layout()
-    plt.savefig(sys.argv[2]+f'correlation_CFDvCRISTA_{guide}_no_filter.png')
+    plt.savefig(sys.argv[2]+f'correlation_CFDvCRISTA_{guide}_no_filter.pdf')
     plt.clf()
     plt.close('all')
 
