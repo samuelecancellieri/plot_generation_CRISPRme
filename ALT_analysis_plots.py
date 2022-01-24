@@ -357,9 +357,9 @@ original_df_read = pd.read_csv(inTargets, sep="\t", index_col=False,
                                na_values=['n'])
 
 # call to plot generation CFD with original data
-generate_distribution_plot_CFD(original_df_read, 'no_filter')
-generate_distribution_plot_CFD(original_df_read, 'no_filter_log')
-# generate_upset_plot_CFD(original_df_read)
+# generate_distribution_plot_CFD(original_df_read, 'no_filter')
+# generate_distribution_plot_CFD(original_df_read, 'no_filter_log')
+generate_upset_plot_CFD(original_df_read)
 generate_heatmap_CFD(original_df_read)
 # generate_upset_log_barplot_CFD()
 # call to plot generation MM_BUL
