@@ -975,7 +975,7 @@ if os.path.isfile(in_targets_raw+'_annotated.txt') == False:
         new_cols = ['NA', 'NA']
         try:
             # check if gene name is in human TSG annotation
-            print(split[80])
+            # print(split[80])
             new_cols = geneDict[split[80]]
         except:
             pass
