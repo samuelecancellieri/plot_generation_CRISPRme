@@ -48,6 +48,8 @@ def annotation_analysis(row, on_target_dict):
 def num_of_decimal_zeros(float_number):
     if float_number == 0:
         return math.pow(10, -5)  # 0.00001
+    if float_number >= 0.1:
+        return 1  # messo in categoria 0.1-1
     decimals = str(float_number).split('.')[1]
     count_zeros = 0
     for decimal in decimals:
