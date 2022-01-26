@@ -25,7 +25,7 @@ sns.set_context("paper")
 # ARGV1 INTEGRATED FILE
 # ARGV2 OUTPUT FOLDER
 
-def plot_correlation(original_df):
+def plot_correlation(original_df_filtered):
 
     # start figure to plot all in one plot (scatter correlation CFD)
     plt.figure(figsize=(20, 20))
@@ -41,7 +41,7 @@ def plot_correlation(original_df):
             ['CRISTA_score_(highest_CRISTA)'], ascending=False)
 
         sns.jointplot(data=original_df_cfd_sort.head(1000), x="CFD_score_(highest_CFD)",
-                      y="CRISTA_score_(highest_CRISTA)", kind="reg", joint_kws={'line_kws': {'color': 'orange'}})
+                      y="CRISTA_score_(highest_CRISTA)", kind="reg", joint_kws={'line_kws': {'color': 'yellow'}})
         # ax.set(xlabel='CFD Score', ylabel='CRISTA Score')
 
     plt.tight_layout()
@@ -66,7 +66,7 @@ def plot_correlation(original_df):
             ['CRISTA_score_(highest_CRISTA)'], ascending=False)
 
         sns.jointplot(data=original_df_crista_sort.head(1000), x="CFD_score_(highest_CFD)",
-                      y="CRISTA_score_(highest_CRISTA)", kind="reg", joint_kws={'line_kws': {'color': 'orange'}})
+                      y="CRISTA_score_(highest_CRISTA)", kind="reg", joint_kws={'line_kws': {'color': 'yellow'}})
 
     plt.tight_layout()
     plt.xlim(0, 1)
@@ -104,19 +104,22 @@ def plot_correlation(original_df):
             except:
                 cfd_crista_point_y_coordinates.append(1001)
 
-        g = sns.jointplot(x=cfd_crista_point_x_coordinates, y=cfd_crista_point_y_coordinates,
-                          kind="reg", joint_kws={'line_kws': {'color': 'orange'}})
-        g.set(xlabel='CFD Rank', ylabel='CRISTA Rank')
-        g.fig.axes[0].invert_yaxis()
-        g.fig.axes[0].invert_xaxis()
+        ax = sns.scatterplot(
+            x=cfd_crista_point_x_coordinates, y=cfd_crista_point_y_coordinates, marker='+', color="skyblue")
+        ax.set(xlabel='CFD Rank', ylabel='CRISTA Rank')
 
-    plt.tight_layout()
+    ax.invert_xaxis()
+    ax.invert_yaxis()
+    ax.margins(0.05)
     plt.xlim(1, 1000)
     plt.ylim(1, 1000)
     plt.xticks([1, 100, 1000])
     plt.yticks([1, 100, 1000])
-    plt.savefig(
-        sys.argv[2]+f'scatter_rank_CFDvCRISTA_{guide}_top1000_union.pdf')
+    plt.hlines(100, 1, 10000)
+    plt.vlines(100, 1, 10000)
+
+    plt.tight_layout()
+    plt.savefig(sys.argv[2]+f'scatter_rank_CFDvCRISTA_{guide}_top100.pdf')
     plt.clf()
     plt.close('all')
 
