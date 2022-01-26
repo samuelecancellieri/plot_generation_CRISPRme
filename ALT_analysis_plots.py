@@ -165,6 +165,10 @@ def generate_upset_plot_MMBUL(original_df):
 
 
 def generate_heatmap_CFD(original_df):
+    # discard on-targets and quasi-on-targets(1 mm+bul)
+    original_df = original_df.loc[(
+        original_df["Mismatches+bulges_(highest_CFD)"] > 1)]
+    # filter df to use only heatmap related columns
     df_heatmap = original_df[[
         'CFD_score_(highest_CFD)', 'Variant_MAF_(highest_CFD)']]
     # df_heatmap = df_heatmap.loc[(df_heatmap["CFD_score_(highest_CFD)"] >= 0.1)]
@@ -355,9 +359,6 @@ print('starting generating distribution and upset plots')
 # create dataframe with file
 original_df_read = pd.read_csv(inTargets, sep="\t", index_col=False,
                                na_values=['n'])
-# discard on-targets and quasi-on-targets(1 mm+bul)
-original_df_read = original_df_read.loc[(
-    original_df_read["Mismatches+bulges_(highest_CFD)"] > 1)]
 
 # call to plot generation CFD with original data
 # generate_distribution_plot_CFD(original_df_read, 'no_filter')
