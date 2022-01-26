@@ -106,17 +106,17 @@ def plot_correlation(original_df_filtered):
 
         ax = sns.scatterplot(
             x=cfd_crista_point_x_coordinates, y=cfd_crista_point_y_coordinates, marker='+', color="skyblue")
-        ax.set(xlabel='CFD Rank', ylabel='CRISTA Rank')
 
     plt.xlim(1, 1000)
     plt.ylim(1, 1000)
     plt.xticks([1, 100, 1000])
     plt.yticks([1, 100, 1000])
+    ax.set(xlabel='CFD Rank', ylabel='CRISTA Rank')
     ax.invert_xaxis()
     ax.invert_yaxis()
     ax.margins(0.05)
-    # plt.hlines(100, 1, 10000)
-    # plt.vlines(100, 1, 10000)
+    plt.hlines(100, 1, 1000)
+    plt.vlines(100, 1, 1000)
 
     plt.tight_layout()
     plt.savefig(sys.argv[2]+f'scatter_rank_CFDvCRISTA_{guide}_top100.pdf')
