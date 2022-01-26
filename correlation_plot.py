@@ -18,106 +18,105 @@ matplotlib.use('Agg')
 matplotlib.rcParams['pdf.fonttype'] = 42
 matplotlib.rcParams['ps.fonttype'] = 42
 plt.style.use('seaborn-poster')
+sns.set_context("paper")
 
 
 # INPUT
 # ARGV1 INTEGRATED FILE
 # ARGV2 OUTPUT FOLDER
 
-def plot_correlation(guide, original_df_filtered):
+def plot_correlation(original_df_filtered):
 
-    print('plotting')
-    original_df_cfd_sort = original_df_filtered.sort_values(
-        ['CFD_score_(highest_CFD)'], ascending=False)
-    original_df_crista_sort = original_df_filtered.sort_values(
-        ['CRISTA_score_(highest_CRISTA)'], ascending=False)
+    # start figure to plot all in one plot (scatter correlation CFD)
+    plt.figure(figsize=(20, 20))
 
-    # union of top100 CFD & CRISTA
-    df_union_crista_cfd_10000 = pd.concat(
-        [original_df_crista_sort.head(10000), original_df_cfd_sort.head(10000)]).drop_duplicates()
+    for guide in original_df["Spacer+PAM"].unique():
 
-    plt.figure()
+        df_guide = original_df.loc[(original_df['Spacer+PAM'] == guide)]
 
-    no_zero_cfd_df = original_df_cfd_sort.loc[(
-        original_df_cfd_sort['CFD_score_(highest_CFD)'] > 0)]
-    sns.regplot(data=no_zero_cfd_df, x='CFD_score_(highest_CFD)',
-                y='CRISTA_score_(highest_CRISTA)', fit_reg=True, color='skyblue')
+        print('plotting for guide:', guide)
+        original_df_cfd_sort = df_guide.sort_values(
+            ['CFD_score_(highest_CFD)'], ascending=False)
+        original_df_crista_sort = df_guide.sort_values(
+            ['CRISTA_score_(highest_CRISTA)'], ascending=False)
 
-    plt.xlabel('CFD score')
-    plt.ylabel('CRISTA score')
-    plt.xlim(0, 1)
-    plt.ylim(0, 1)
+        sns.jointplot(data=original_df_cfd_sort.head(1000), x="CFD_score_(highest_CFD)",
+                      y="CRISTA_score_(highest_CRISTA)", kind="reg", joint_kws={'line_kws': {'color': 'yellow'}})
+        # ax.set(xlabel='CFD Score', ylabel='CRISTA Score')
 
-    plt.tight_layout()
-    plt.savefig(sys.argv[2]+f'correlation_CFDvCRISTA_{guide}_no_zero_cfd.png')
-    plt.clf()
-    plt.close('all')
-
-    plt.figure()
-
-    ax = sns.regplot(data=df_union_crista_cfd_10000, x="CFD_score_(highest_CFD)",
-                     y="CRISTA_score_(highest_CRISTA)", fit_reg=True, marker="+", color="skyblue")
-
-    df_union_crista_cfd_10000.to_csv(sys.argv[2]+guide+'_union_CFDvCRISTA.tsv',
-                                     sep='\t', na_rep='NA', index=False)
-    ax.set(xlabel='CFD Score', ylabel='CRISTA Score')
-
-    plt.xlim(0, 1)
-    plt.ylim(0, 1)
     plt.tight_layout()
     plt.savefig(
-        sys.argv[2]+f'correlation_CFDvCRISTA_{guide}_top10000_union.pdf')
+        sys.argv[2]+f'correlation_CFDvCRISTA_{guide}_top1000CFD.pdf')
     plt.clf()
     plt.close('all')
 
-    plt.figure()
+    # start figure to plot all in one plot (scatter correlation CRISTA)
+    plt.figure(figsize=(20, 20))
 
-    set_cfd = set(original_df_cfd_sort.head(10000).index)
-    set_crista = set(original_df_crista_sort.head(10000).index)
-    venn2([set_cfd, set_crista], ('CFD', 'CRISTA'))
+    for guide in original_df["Spacer+PAM"].unique():
+
+        df_guide = original_df.loc[(original_df['Spacer+PAM'] == guide)]
+
+        print('plotting for guide:', guide)
+        original_df_cfd_sort = df_guide.sort_values(
+            ['CFD_score_(highest_CFD)'], ascending=False)
+        original_df_crista_sort = df_guide.sort_values(
+            ['CRISTA_score_(highest_CRISTA)'], ascending=False)
+
+        sns.jointplot(data=original_df_crista_sort.head(1000), x="CFD_score_(highest_CFD)",
+                      y="CRISTA_score_(highest_CRISTA)", kind="reg", joint_kws={'line_kws': {'color': 'yellow'}})
 
     plt.tight_layout()
-    plt.savefig(sys.argv[2]+f'venn_CFDvCRISTA_{guide}_top10000_union.pdf')
+    plt.savefig(
+        sys.argv[2]+f'correlation_CFDvCRISTA_{guide}_top1000CRISTA.pdf')
     plt.clf()
     plt.close('all')
 
-    plt.figure()
+    # start figure to plot all in one plot (top1000 union with rank)
+    plt.figure(figsize=(20, 20))
 
-    cfd_crista_point_x_coordinates = list()
-    cfd_crista_point_y_coordinates = list()
-    sorted_cfd_index_list = list(original_df_cfd_sort['index'])
-    sorted_crista_index_list = list(
-        original_df_crista_sort['index'])
+    for guide in original_df["Spacer+PAM"].unique():
 
-    for pos, index in enumerate(sorted_cfd_index_list[:10000]):
-        cfd_crista_point_x_coordinates.append(pos+1)
-        if sorted_crista_index_list.index(index) < 10000:
-            cfd_crista_point_y_coordinates.append(
-                sorted_crista_index_list.index(index)+1)
-        else:
-            cfd_crista_point_y_coordinates.append(10000)
+        df_guide = original_df.loc[(original_df['Spacer+PAM'] == guide)]
+        df_guide.reset_index(inplace=True)
 
-    ax = sns.scatterplot(
-        x=cfd_crista_point_x_coordinates, y=cfd_crista_point_y_coordinates, marker='+', color="skyblue")
-    ax.set(xlabel='CFD Rank', ylabel='CRISTA Rank')
+        print('plotting for guide:', guide)
+        original_df_cfd_sort = df_guide.sort_values(
+            ['CFD_score_(highest_CFD)'], ascending=False)
+        original_df_crista_sort = df_guide.sort_values(
+            ['CRISTA_score_(highest_CRISTA)'], ascending=False)
 
-    plt.yscale('log')
-    plt.xscale('log')
+        cfd_crista_point_x_coordinates = list()
+        cfd_crista_point_y_coordinates = list()
+        sorted_cfd_index_list = list(original_df_cfd_sort['index'])
+        sorted_crista_index_list = list(
+            original_df_crista_sort['index'])
 
-    # plt.xticks([1, 20, 40, 60, 80, 100])
-    plt.xticks([1, 100, 10000])
-    plt.yticks([1, 100, 10000])
-    plt.hlines(100, 1, 10000)
-    plt.vlines(100, 1, 10000)
+        for pos, index in enumerate(sorted_cfd_index_list[:1000]):
+            cfd_crista_point_x_coordinates.append(pos+1)
+            try:
+                cfd_crista_point_y_coordinates.append(
+                    sorted_crista_index_list.index(index)+1)
+            except:
+                cfd_crista_point_y_coordinates.append(1001)
+
+        ax = sns.jointplot(x=cfd_crista_point_x_coordinates, y=cfd_crista_point_y_coordinates,
+                           kind="reg", joint_kws={'line_kws': {'color': 'yellow'}})
+        ax.set(xlabel='CFD Rank', ylabel='CRISTA Rank')
+
     ax.invert_xaxis()
     ax.invert_yaxis()
     ax.margins(0.05)
-    # plt.gca().invert_xaxis()
-    # plt.gca().invert_xaxis()
-    # plt.ticklabel_format(style='plain', axis='y')
+    plt.xlim(1, 1000)
+    plt.ylim(1, 1000)
+    plt.xticks([1, 100, 1000])
+    plt.yticks([1, 100, 1000])
+    # plt.hlines(100, 1, 10000)
+    # plt.vlines(100, 1, 10000)
 
     plt.tight_layout()
-    plt.savefig(sys.argv[2]+f'scatter_rank_CFDvCRISTA_{guide}_top100.pdf')
+    plt.savefig(
+        sys.argv[2]+f'scatter_rank_CFDvCRISTA_{guide}_top1000_union.pdf')
     plt.clf()
     plt.close('all')
 
@@ -127,13 +126,13 @@ original_df = pd.read_csv(sys.argv[1], sep="\t", index_col=False,
                           na_values=['n'])
 
 # filter df to remove on-targets and mutant on-targets
-original_df = original_df.loc[(
-    original_df['Mismatches+bulges_(fewest_mm+b)'] > 1)]
-
+# original_df = original_df.loc[(
+#     original_df['Mismatches+bulges_(fewest_mm+b)'] > 1)]
+plot_correlation(original_df)
 # correlation plot exec
-for guide in original_df["Spacer+PAM"].unique():
-    df_guide = original_df.loc[(original_df['Spacer+PAM'] == guide)]
-    # reset index after guide extraction
-    df_guide.reset_index(inplace=True)
-    # start correlation plots
-    plot_correlation(guide, df_guide)
+# for guide in original_df["Spacer+PAM"].unique():
+#     df_guide = original_df.loc[(original_df['Spacer+PAM'] == guide)]
+#     # reset index after guide extraction
+#     df_guide.reset_index(inplace=True)
+#     # start correlation plots
+#     plot_correlation(guide, df_guide)
