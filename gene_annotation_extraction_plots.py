@@ -11,6 +11,7 @@ import os
 import pandas as pd
 import numpy as np
 import math
+import seaborn as sns
 
 # ignore all warnings
 warnings.filterwarnings("ignore")
@@ -20,7 +21,8 @@ matplotlib.use('Agg')
 # set matplotlib to print in pdf editable format
 matplotlib.rcParams['pdf.fonttype'] = 42
 matplotlib.rcParams['ps.fonttype'] = 42
-plt.style.use('seaborn-poster')
+plt.style.use('seaborn-paper')
+# sns.set_context("poster")
 
 
 iupac_code_set = {
