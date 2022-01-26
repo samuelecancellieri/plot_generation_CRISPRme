@@ -25,7 +25,7 @@ sns.set_context("paper")
 # ARGV1 INTEGRATED FILE
 # ARGV2 OUTPUT FOLDER
 
-def plot_correlation(original_df_filtered):
+def plot_correlation(original_df):
 
     # start figure to plot all in one plot (scatter correlation CFD)
     plt.figure()
@@ -48,7 +48,7 @@ def plot_correlation(original_df_filtered):
     plt.tight_layout()
 
     plt.savefig(
-        sys.argv[2]+f'correlation_CFDvCRISTA_{guide}_top1000CFD.pdf')
+        sys.argv[2]+f'correlation_CFDvCRISTA_top1000CFD.pdf')
     plt.clf()
     plt.close('all')
 
@@ -72,7 +72,7 @@ def plot_correlation(original_df_filtered):
 
     plt.tight_layout()
     plt.savefig(
-        sys.argv[2]+f'correlation_CFDvCRISTA_{guide}_top1000CRISTA.pdf')
+        sys.argv[2]+f'correlation_CFDvCRISTA_top1000CRISTA.pdf')
     plt.clf()
     plt.close('all')
 
@@ -125,7 +125,7 @@ def plot_correlation(original_df_filtered):
     plt.vlines(100, 1, 1000)
 
     plt.tight_layout()
-    plt.savefig(sys.argv[2]+f'scatter_rank_CFDvCRISTA_{guide}_top100.pdf')
+    plt.savefig(sys.argv[2]+f'scatter_rank_CFDvCRISTA_top1000_union.pdf')
     plt.clf()
     plt.close('all')
 
