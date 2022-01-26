@@ -460,14 +460,14 @@ def crisprme_plot_CFD(df, guide, out_folder):
     red_TSG = mpatches.Patch(color='tab:red', label="TSG")
 
     # legend for allele frequency
-    plt.gca().add_artist(plt.legend(handles=[s1, s01, s001, s0001], title='Allele frequency', bbox_to_anchor=(
-        -0.05, 1.03), loc='lower left', borderaxespad=0, ncol=4))
-    # legend for target origin
-    plt.gca().add_artist(plt.legend(handles=[s1_red, s1_blue], title='Target genome', bbox_to_anchor=(
-        0.30, 1.03), loc='lower left', borderaxespad=0, ncol=3))
-    # legend for encode annotation
-    plt.gca().add_artist(plt.legend(handles=[green_PLS, cyan_CDS, blue_pELS, red_TSG, gray_dELS, purple_CTCFonly, olive_DNaseH3K4me3],
-                                    loc='lower left', bbox_to_anchor=(0.54, 1.02), title='Annotations', borderaxespad=0, ncol=5))
+    # plt.gca().add_artist(plt.legend(handles=[s1, s01, s001, s0001], title='Allele frequency', bbox_to_anchor=(
+    #     -0.05, 1.03), loc='lower left', borderaxespad=0, ncol=4))
+    # # legend for target origin
+    # plt.gca().add_artist(plt.legend(handles=[s1_red, s1_blue], title='Target genome', bbox_to_anchor=(
+    #     0.30, 1.03), loc='lower left', borderaxespad=0, ncol=3))
+    # # legend for encode annotation
+    # plt.gca().add_artist(plt.legend(handles=[green_PLS, cyan_CDS, blue_pELS, red_TSG, gray_dELS, purple_CTCFonly, olive_DNaseH3K4me3],
+    #                                 loc='lower left', bbox_to_anchor=(0.54, 1.02), title='Annotations', borderaxespad=0, ncol=5))
 
     # ENCODE BARPLOT
     ax2 = plt.subplot(7, 1, 6, sharex=ax1)
