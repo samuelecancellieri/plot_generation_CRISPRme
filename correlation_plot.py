@@ -109,8 +109,10 @@ def plot_correlation(original_df):
             except:
                 cfd_crista_point_y_coordinates.append(1001)
 
-        ax = sns.scatterplot(
-            x=cfd_crista_point_x_coordinates, y=cfd_crista_point_y_coordinates, marker='+', color="skyblue")
+        ax = sns.jointplot(x=cfd_crista_point_x_coordinates, y=cfd_crista_point_y_coordinates,
+                           kind="reg", joint_kws={'line_kws': {'color': 'orange'}})
+        # ax = sns.scatterplot(
+        #     x=cfd_crista_point_x_coordinates, y=cfd_crista_point_y_coordinates, marker='+', color="skyblue")
 
     plt.xlim(1, 1000)
     plt.ylim(1, 1000)
