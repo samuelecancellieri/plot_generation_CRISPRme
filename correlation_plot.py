@@ -126,7 +126,7 @@ def plot_correlation(original_df):
     # ax2.invert_xaxis()
     # ax2.invert_yaxis()
     # sns.JointGrid(ax1, ax2)
-    sns.jointplot(x=x_coordinates_list, y=y_coordinates_list,
+    sns.jointplot(x=x_coordinates_list, y=y_coordinates_list, xlim=1000, ylim=1000,
                   kind="reg", joint_kws={'line_kws': {'color': 'orange'}})
 
     # plt.xlim(1, 1000)
