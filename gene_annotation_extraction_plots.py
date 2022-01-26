@@ -401,55 +401,15 @@ def crisprme_plot_CFD(df, guide, out_folder):
                 s=df['ref_AF'], c=transparent_red)
     ax1.scatter(x=df['index'], y=df['CFD_score_ALT_(highest_CFD)'],
                 s=df['plot_AF'], c=transparent_blue)
-    # df.plot.scatter(x='index', y='CFD_score_REF_(highest_CFD)',
-    #                 s='ref_AF', c=transparent_red, zorder=1, ax=ax1)
-    # ax = df.plot.scatter(x="index", y="CFD_score_REF_(highest_CFD)",
-    #                      s="ref_AF", c=transparent_red, zorder=1)
-
-    # df.plot.scatter(x='index', y="CFD_score_ALT_(highest_CFD)",
-    #                 s="plot_AF", c=transparent_blue, zorder=2, ax=ax1)
 
     # texts = list()
     # annotate alternative targets with CDS regions
     df_coordinates_CDS = df.loc[(df['REF/ALT_origin_(highest_CFD)']
                                  != 'ref') & (df['Annotation_GENCODE']).str.contains('CDS')]
 
-    # counter = 0
-    # for index, row in df_coordinates.iterrows():
-    #     texts.append([row["index"], row["CFD_score_ALT_(highest_CFD)"], str(
-    #         row["Annotation_closest_gene_name"]), 'blue'])
-    #     counter += 1
-    #     if counter >= 20:
-    #         break
-
-    # annotate alternative target if the gene is associated with tumor suppression activity
-    # df_coordinates_TSG = df.loc[(df['Gene_description'].notnull()) & (
-    #     df['REF/ALT_origin_(highest_CFD)'] != 'ref') & (df['Annotation_GENCODE']).str.contains('CDS')]
-
-    # counter = 0
-    # for index, row in df_coordinates.iterrows():
-    #     texts.append([row["index"], row["CFD_score_ALT_(highest_CFD)"], str(
-    #         row["Annotation_closest_gene_name"]), 'red'])
-    #     counter += 1
-    #     if counter >= 20:
-    #         break
-
     # annotate encode targets
     df_coordinates_ENCODE = df.loc[(
         df['REF/ALT_origin_(highest_CFD)'] != 'ref') & (df['Annotation_ENCODE']).notnull()]
-
-    # counter = 0
-    # for index, row in df_coordinates_ENCODE.iterrows():
-    # texts.append([row["index"], row["CFD_score_ALT_(highest_CFD)"], str(
-    #     row["Annotation_ENCODE"]), 'black'])
-
-    # sort text to order by x
-    # texts.sort(key=lambda x: x[0])
-
-    # plot labels and then adjust them to avoid overlap
-    # plotted_text = [plt.text(texts[i][0], texts[i][1], texts[i][2], ha='center',
-    #                          va='center', color=texts[i][3], fontsize=5) for i in range(len(texts))]
-    # adjust_text(plotted_text)
 
     # plt.xlabel("Candidate off-target site")
     plt.ylabel("Score", fontsize=13)
