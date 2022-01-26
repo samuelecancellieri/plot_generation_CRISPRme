@@ -29,20 +29,18 @@ def plot_correlation(original_df):
 
     # start figure to plot all in one plot (scatter correlation CFD)
     plt.figure()
+    data_frames_list = list()
 
     for guide in original_df["Spacer+PAM"].unique():
 
         df_guide = original_df.loc[(original_df['Spacer+PAM'] == guide)]
 
-        print('plotting for guide:', guide)
         original_df_cfd_sort = df_guide.sort_values(
             ['CFD_score_(highest_CFD)'], ascending=False)
-        original_df_crista_sort = df_guide.sort_values(
-            ['CRISTA_score_(highest_CRISTA)'], ascending=False)
+        data_frames_list.append(original_df_cfd_sort)
 
-        ax = sns.jointplot(data=original_df_cfd_sort.head(1000), x="CFD_score_(highest_CFD)",
-                           y="CRISTA_score_(highest_CRISTA)", kind="reg", joint_kws={'line_kws': {'color': 'yellow'}})
-
+    sns.jointplot(data=original_df_cfd_sort.head(1000), x="CFD_score_(highest_CFD)",
+                  y="CRISTA_score_(highest_CRISTA)", kind="reg", joint_kws={'line_kws': {'color': 'yellow'}})
     plt.xlim(0, 1)
     plt.ylim(0, 1)
     plt.tight_layout()
@@ -54,19 +52,18 @@ def plot_correlation(original_df):
 
     # start figure to plot all in one plot (scatter correlation CRISTA)
     plt.figure()
+    data_frames_list = list()
 
     for guide in original_df["Spacer+PAM"].unique():
 
         df_guide = original_df.loc[(original_df['Spacer+PAM'] == guide)]
 
-        print('plotting for guide:', guide)
-        original_df_cfd_sort = df_guide.sort_values(
-            ['CFD_score_(highest_CFD)'], ascending=False)
         original_df_crista_sort = df_guide.sort_values(
             ['CRISTA_score_(highest_CRISTA)'], ascending=False)
+        data_frames_list.append(original_df_crista_sort)
 
-        ax = sns.jointplot(data=original_df_crista_sort.head(1000), x="CFD_score_(highest_CFD)",
-                           y="CRISTA_score_(highest_CRISTA)", kind="reg", joint_kws={'line_kws': {'color': 'yellow'}})
+    sns.jointplot(data=original_df_crista_sort.head(1000), x="CFD_score_(highest_CFD)",
+                  y="CRISTA_score_(highest_CRISTA)", kind="reg", joint_kws={'line_kws': {'color': 'yellow'}})
     plt.xlim(0, 1)
     plt.ylim(0, 1)
 
