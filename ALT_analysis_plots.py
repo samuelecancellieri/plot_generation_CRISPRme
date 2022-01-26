@@ -357,6 +357,9 @@ print('starting generating distribution and upset plots')
 # create dataframe with file
 original_df_read = pd.read_csv(inTargets, sep="\t", index_col=False,
                                na_values=['n'])
+# discard on-targets and quasi-on-targets(1 mm+bul)
+original_df_read = original_df_read.loc[(
+    original_df_read["Mismatches+bulges_(highest_CFD)"] > 1)]
 
 # call to plot generation CFD with original data
 # generate_distribution_plot_CFD(original_df_read, 'no_filter')
