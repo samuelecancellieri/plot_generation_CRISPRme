@@ -23,6 +23,7 @@ matplotlib.use('Agg')
 # set matplotlib for pdf editing
 matplotlib.rcParams['pdf.fonttype'] = 42
 matplotlib.rcParams['ps.fonttype'] = 42
+plt.style.use('seaborn-poster')
 
 
 def annotation_analysis(row, on_target_dict):
