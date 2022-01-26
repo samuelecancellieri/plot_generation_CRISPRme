@@ -100,8 +100,10 @@ def plot_correlation(guide, original_df_filtered):
     # plt.xticks([1, 20, 40, 60, 80, 100])
     plt.xticks([10000, 100, 1])
     plt.yticks([10000, 100, 1])
-    plt.gca().invert_xaxis()
-    plt.gca().invert_xaxis()
+    plt.hlines(100)
+    plt.vlines(100)
+    # plt.gca().invert_xaxis()
+    # plt.gca().invert_xaxis()
     # plt.ticklabel_format(style='plain', axis='y')
 
     plt.tight_layout()
