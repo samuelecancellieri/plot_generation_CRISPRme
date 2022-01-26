@@ -305,7 +305,7 @@ def crisprme_plot_MMvBUL(df, guide, out_folder, max_mm_bul_value, pam_first_nucl
     plt.yticks([])
     # ax2.margins(0.05)
     # plt.xlim(1, 100)
-    plt.ylabel('ALT cCRE', fontsize=6)
+    plt.ylabel('ALT cCRE')
 
     # CDS AND TSG BARPLOT
     ax3 = plt.subplot(7, 1, 7, sharex=ax1)
@@ -323,7 +323,7 @@ def crisprme_plot_MMvBUL(df, guide, out_folder, max_mm_bul_value, pam_first_nucl
     plt.yticks([])
     # ax3.margins(0.05)
     # plt.xlim(1, 100)
-    plt.ylabel('ALT CDS', fontsize=6)
+    plt.ylabel('ALT CDS')
 
     # columns to drop from df
     columns_to_drop = list()
@@ -413,14 +413,14 @@ def crisprme_plot_CFD(df, guide, out_folder):
         df['REF/ALT_origin_(highest_CFD)'] != 'ref') & (df['Annotation_ENCODE']).notnull()]
 
     # plt.xlabel("Candidate off-target site")
-    plt.ylabel("Score", fontsize=13)
+    plt.ylabel("Score")
 
     # Boundaries
     ax1.margins(0.05)
     # plt.xlim(1,100)
-    plt.xticks([1, 20, 40, 60, 80, 100], fontsize=13)
+    plt.xticks([1, 20, 40, 60, 80, 100])
     # plt.ylim(0, 1)
-    plt.yticks([0, 0.2, 0.4, 0.6, 0.8, 1], fontsize=13)
+    plt.yticks([0, 0.2, 0.4, 0.6, 0.8, 1])
 
     # Arrows
     # head_width=(x*(10**0.005-10**(-0.005)))
@@ -461,13 +461,13 @@ def crisprme_plot_CFD(df, guide, out_folder):
 
     # legend for allele frequency
     plt.gca().add_artist(plt.legend(handles=[s1, s01, s001, s0001], title='Allele frequency', bbox_to_anchor=(
-        -0.05, 1.03), loc='lower left', borderaxespad=0, ncol=4, fontsize=13))
+        -0.05, 1.03), loc='lower left', borderaxespad=0, ncol=4))
     # legend for target origin
     plt.gca().add_artist(plt.legend(handles=[s1_red, s1_blue], title='Target genome', bbox_to_anchor=(
-        0.30, 1.03), loc='lower left', borderaxespad=0, ncol=3, fontsize=13))
+        0.30, 1.03), loc='lower left', borderaxespad=0, ncol=3))
     # legend for encode annotation
     plt.gca().add_artist(plt.legend(handles=[green_PLS, cyan_CDS, blue_pELS, red_TSG, gray_dELS, purple_CTCFonly, olive_DNaseH3K4me3],
-                                    loc='lower left', bbox_to_anchor=(0.54, 1.02), title='Annotations', borderaxespad=0, ncol=5, fontsize=13))
+                                    loc='lower left', bbox_to_anchor=(0.54, 1.02), title='Annotations', borderaxespad=0, ncol=5))
 
     # ENCODE BARPLOT
     ax2 = plt.subplot(7, 1, 6, sharex=ax1)
@@ -495,7 +495,7 @@ def crisprme_plot_CFD(df, guide, out_folder):
     plt.yticks([])
     # ax2.margins(0.05)
     # plt.xlim(1, 100)
-    plt.ylabel('ALT cCRE', fontsize=13)
+    plt.ylabel('ALT cCRE')
 
     # CDS AND TSG BARPLOT
     ax3 = plt.subplot(7, 1, 7, sharex=ax1)
@@ -513,7 +513,7 @@ def crisprme_plot_CFD(df, guide, out_folder):
     plt.yticks([])
     # ax3.margins(0.05)
     # plt.xlim(1, 100)
-    plt.ylabel('ALT CDS', fontsize=13)
+    plt.ylabel('ALT CDS')
 
     # columns to drop
     columns_to_drop = list()
