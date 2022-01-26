@@ -90,11 +90,17 @@ def plot_correlation(original_df_filtered):
         original_df_crista_sort = df_guide.sort_values(
             ['CRISTA_score_(highest_CRISTA)'], ascending=False)
 
+        top1000_union_CFDvCRISTA = pd.concat([original_df_cfd_sort.head(
+            1000), original_df_crista_sort.head(1000)]).drop_duplicates()
+
         cfd_crista_point_x_coordinates = list()
         cfd_crista_point_y_coordinates = list()
-        sorted_cfd_index_list = list(original_df_cfd_sort['index'])
-        sorted_crista_index_list = list(
-            original_df_crista_sort['index'])
+        top1000_union_CFDvCRISTA.sort_values(
+            ['CFD_score_(highest_CFD)'], ascending=False, inplace=True)
+        sorted_cfd_index_list = list(top1000_union_CFDvCRISTA['index'])
+        top1000_union_CFDvCRISTA.sort_values(
+            ['CRISTA_score_(highest_CRISTA)'], ascending=False, inplace=True)
+        sorted_crista_index_list = list(top1000_union_CFDvCRISTA['index'])
 
         for pos, index in enumerate(sorted_cfd_index_list[:1000]):
             cfd_crista_point_x_coordinates.append(pos+1)
@@ -114,7 +120,7 @@ def plot_correlation(original_df_filtered):
     ax.set(xlabel='CFD Rank', ylabel='CRISTA Rank')
     ax.invert_xaxis()
     ax.invert_yaxis()
-    ax.margins(0.05)
+    ax.margins(0.1)
     plt.hlines(100, 1, 1000)
     plt.vlines(100, 1, 1000)
 
