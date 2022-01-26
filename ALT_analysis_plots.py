@@ -221,19 +221,19 @@ def generate_heatmap_CFD(original_df):
     plt_heatmap = sns.heatmap(table, cmap="RdYlBu", fmt='.0f', annot=True, vmax=vmax, vmin=vmin, norm=log_norm,
                               cbar_kws={"ticks": cbar_ticks, 'label': 'Target sites'}, xticklabels=False, yticklabels=False)
     plt_heatmap.collections[0].colorbar.ax.yaxis.set_ticks([], minor=True)
-    plt_heatmap.collections[0].colorbar.ax.tick_params(labelsize=13)
+    # plt_heatmap.collections[0].colorbar.ax.tick_params(labelsize=13)
 
     # set labels and position of ticks
     plt_heatmap.set_xticks(np.arange(0, 6, step=1))
     plt_heatmap.set_yticks(np.arange(0, 11, step=1))
     plt_heatmap.set_yticklabels(
-        [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1], fontsize=13)
+        [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1])
     plt_heatmap.set_xticklabels(
-        labels=[0.00001, 0.0001, 0.001, 0.01, 0.1, 1], fontsize=13)
+        labels=[0.00001, 0.0001, 0.001, 0.01, 0.1, 1])
     plt_heatmap.invert_yaxis()
 
-    plt.xlabel("Variant MAF", fontsize=13)
-    plt.ylabel("CFD score", fontsize=13)
+    plt.xlabel("Variant MAF")
+    plt.ylabel("CFD score")
     # plt_heatmap.invert_xaxis()
     plt.tight_layout()
     plt.savefig(out_folder+'heatmap_CFD.pdf', transparent=True)
@@ -285,17 +285,15 @@ def generate_distribution_plot_CFD(original_df, name):
         plt.yscale('log')
         plt.xscale('log')
 
-    plt.xlabel('Targets', fontsize=13)
-    plt.ylabel('ALT Targets', fontsize=13)
+    plt.xlabel('Targets')
+    plt.ylabel('ALT Targets')
     plt.title('Distribution of targets with different MAFs filtered with MAF>0')
     list_labels = list(filtered_df['Spacer+PAM'].unique())
     list_labels.append('Mean distribution')
-    # plt.gca().add_artist(plt.legend(labels=list_labels, title='sgRNAs',
-    #                                 loc='center left', bbox_to_anchor=(1, 0.2)))
-    # plt.legend(list_labels, loc='best', fontsize=13, ncol=len(list_labels))
+
     plt.legend([])
-    plt.xticks(fontsize=13)
-    plt.yticks(fontsize=13)
+    # plt.xticks(fontsize=13)
+    # plt.yticks(fontsize=13)
 
     plt.tight_layout()
     plt.savefig(out_folder+name+'_distribution_plt_CFD.pdf',
