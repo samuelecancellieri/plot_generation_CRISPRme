@@ -114,8 +114,8 @@ def plot_correlation(original_df):
         x_coordinates_list.extend(cfd_crista_point_x_coordinates)
         y_coordinates_list.extend(cfd_crista_point_y_coordinates)
 
-        sns.scatterplot(x=cfd_crista_point_x_coordinates,
-                        y=cfd_crista_point_y_coordinates, marker='+', color="skyblue")
+        # sns.scatterplot(x=cfd_crista_point_x_coordinates,
+        #                 y=cfd_crista_point_y_coordinates, marker='+', color="skyblue")
         # sns.jointplot(x=cfd_crista_point_x_coordinates, y=cfd_crista_point_y_coordinates,
         #               kind="reg", joint_kws={'line_kws': {'color': 'orange'}})
     # ax1 = sns.scatterplot(
@@ -129,20 +129,20 @@ def plot_correlation(original_df):
     # ax2.invert_xaxis()
     # ax2.invert_yaxis()
     # sns.JointGrid(ax1, ax2)
-    # sns.jointplot(x=x_coordinates_list, y=y_coordinates_list, xlim=1000, ylim=1000,
-    #               kind="reg", joint_kws={'line_kws': {'color': 'orange'}})
+    sns.jointplot(x=x_coordinates_list, y=y_coordinates_list, xlim=1000, ylim=1000,
+                  kind="reg", joint_kws={'line_kws': {'color': 'orange'}})
     # sns.scatterplot(x=x_coordinates_list, y=y_coordinates_list,
-        # marker='o', color="skyblue")
-    plt.xlim(1, 1000)
-    plt.ylim(1, 1000)
-    plt.xticks([1, 100, 1000])
-    plt.yticks([1, 100, 1000])
+    # marker='o', color="skyblue")
+    # plt.xlim(1, 1000)
+    # plt.ylim(1, 1000)
+    # plt.xticks([1, 100, 1000])
+    # plt.yticks([1, 100, 1000])
     # ax.set(xlabel='CFD Rank', ylabel='CRISTA Rank')
     # ax.invert_xaxis()
     # ax.invert_yaxis()
     # ax.margins(0.1)
     # plt.hlines(100, 1, 1000)
-    # plt.vlines(100, 1, 1000)
+    plt.vlines(1, 1, 2000)
 
     plt.tight_layout()
     plt.savefig(sys.argv[2]+f'scatter_rank_CFDvCRISTA_top1000_union.pdf')
