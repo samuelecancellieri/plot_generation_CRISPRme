@@ -689,8 +689,8 @@ def extraction_with_CFD(guide, df, out_dir, top_10_list, top_100_list, top_1000_
     top_1000_list.append(str(len(df_top1000_temp)))
 
     # count alt target with CDS
-    df_top1000_temp = df_top1000.loc[(
-        df_top1000["Annotation_GENCODE"].str.contains("CDS"))]
+    df_top1000_temp = df_top1000.loc[
+        df_top1000["Annotation_GENCODE"].str.contains("CDS", na=False)]
     top_1000_list.append(str(len(df_top1000_temp)))
 
     # append MAF mean,std,range
