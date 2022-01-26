@@ -11,7 +11,6 @@ import os
 import pandas as pd
 import numpy as np
 import math
-import module
 
 # ignore all warnings
 warnings.filterwarnings("ignore")
