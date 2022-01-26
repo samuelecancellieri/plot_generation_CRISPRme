@@ -41,7 +41,7 @@ def plot_correlation(original_df):
 
     final_df = pd.concat(data_frames_list)
     sns.jointplot(data=final_df, x="CFD_score_(highest_CFD)",
-                  y="CRISTA_score_(highest_CRISTA)", kind="reg", joint_kws={'line_kws': {'color': 'yellow'}})
+                  y="CRISTA_score_(highest_CRISTA)", kind="reg", joint_kws={'line_kws': {'color': 'orange'}})
     plt.xlim(0, 1)
     plt.ylim(0, 1)
     plt.tight_layout()
@@ -65,7 +65,7 @@ def plot_correlation(original_df):
 
     final_df = pd.concat(data_frames_list)
     sns.jointplot(data=final_df, x="CFD_score_(highest_CFD)",
-                  y="CRISTA_score_(highest_CRISTA)", kind="reg", joint_kws={'line_kws': {'color': 'yellow'}})
+                  y="CRISTA_score_(highest_CRISTA)", kind="reg", joint_kws={'line_kws': {'color': 'orange'}})
     plt.xlim(0, 1)
     plt.ylim(0, 1)
 
