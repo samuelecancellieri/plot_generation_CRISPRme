@@ -53,7 +53,7 @@ def plot_correlation(guide, original_df_filtered):
     plt.figure()
 
     ax = sns.regplot(data=df_union_crista_cfd_10000, x="CFD_score_(highest_CFD)",
-                     y="CRISTA_score_(highest_CRISTA)", fit_reg=False, marker="+", color="skyblue")
+                     y="CRISTA_score_(highest_CRISTA)", fit_reg=True, marker="+", color="skyblue")
 
     df_union_crista_cfd_10000.to_csv(sys.argv[2]+guide+'_union_CFDvCRISTA.tsv',
                                      sep='\t', na_rep='NA', index=False)
@@ -101,8 +101,8 @@ def plot_correlation(guide, original_df_filtered):
     # plt.xticks([1, 20, 40, 60, 80, 100])
     plt.xticks([10000, 100, 1])
     plt.yticks([10000, 100, 1])
-    plt.hlines(100)
-    plt.vlines(100)
+    plt.hlines(100, 1, 10000)
+    plt.vlines(100, 1, 10000)
     # plt.gca().invert_xaxis()
     # plt.gca().invert_xaxis()
     # plt.ticklabel_format(style='plain', axis='y')
