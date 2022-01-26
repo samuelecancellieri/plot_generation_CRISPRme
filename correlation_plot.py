@@ -25,7 +25,7 @@ sns.set_context("paper")
 # ARGV1 INTEGRATED FILE
 # ARGV2 OUTPUT FOLDER
 
-def plot_correlation(original_df_filtered):
+def plot_correlation(original_df):
 
     # start figure to plot all in one plot (scatter correlation CFD)
     plt.figure(figsize=(20, 20))
