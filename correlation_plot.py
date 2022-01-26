@@ -132,8 +132,7 @@ def plot_correlation(original_df):
 
 print('start processing')
 original_df = pd.read_csv(sys.argv[1], sep="\t", index_col=False,
-                          na_values=['n'])
-
+                          na_values=['n'], usecols=['Spacer+PAM', 'CFD_score_(highest_CFD)', 'CRISTA_score_(highest_CRISTA)'])
 # filter df to remove on-targets and mutant on-targets
 # original_df = original_df.loc[(
 #     original_df['Mismatches+bulges_(fewest_mm+b)'] > 1)]
