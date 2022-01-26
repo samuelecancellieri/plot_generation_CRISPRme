@@ -42,6 +42,9 @@ def plot_correlation(guide, original_df_filtered):
         original_df_cfd_sort['CFD_score_(highest_CFD)'] > 0)]
     sns.regplot(data=no_zero_cfd_df, x='CFD_score_(highest_CFD)',
                 y='CRISTA_score_(highest_CRISTA)', fit_reg=True, color='skyblue')
+
+    plt.xlabel('CFD score')
+    plt.ylabel('CRISTA score')
     plt.xlim(0, 1)
     plt.ylim(0, 1)
 
@@ -57,9 +60,10 @@ def plot_correlation(guide, original_df_filtered):
 
     df_union_crista_cfd_10000.to_csv(sys.argv[2]+guide+'_union_CFDvCRISTA.tsv',
                                      sep='\t', na_rep='NA', index=False)
-
     ax.set(xlabel='CFD Score', ylabel='CRISTA Score')
 
+    plt.xlim(0, 1)
+    plt.ylim(0, 1)
     plt.tight_layout()
     plt.savefig(
         sys.argv[2]+f'correlation_CFDvCRISTA_{guide}_top10000_union.pdf')
@@ -96,13 +100,18 @@ def plot_correlation(guide, original_df_filtered):
     ax = sns.scatterplot(
         x=cfd_crista_point_x_coordinates, y=cfd_crista_point_y_coordinates, marker='+', color="skyblue")
     ax.set(xlabel='CFD Rank', ylabel='CRISTA Rank')
-    # plt.yscale('log')
-    ax.margins(0.05)
+
+    plt.yscale('log')
+    plt.xscale('log')
+
     # plt.xticks([1, 20, 40, 60, 80, 100])
-    plt.xticks([10000, 100, 1])
-    plt.yticks([10000, 100, 1])
+    plt.xticks([1, 100, 10000])
+    plt.yticks([1, 100, 10000])
     plt.hlines(100, 1, 10000)
     plt.vlines(100, 1, 10000)
+    ax.invert_xaxis()
+    ax.invert_yaxis()
+    ax.margins(0.05)
     # plt.gca().invert_xaxis()
     # plt.gca().invert_xaxis()
     # plt.ticklabel_format(style='plain', axis='y')
