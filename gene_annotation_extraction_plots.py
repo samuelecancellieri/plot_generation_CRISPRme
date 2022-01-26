@@ -551,7 +551,7 @@ def extraction_with_CFD(guide, df, out_dir, top_10_list, top_100_list, top_1000_
 
     # Remove targets with total=0 (any on-target)
     df_single_guide.drop(
-        df_single_guide.loc[(df_single_guide["Mismatches+bulges_(highest_CFD)"] > 1)].index, inplace=True)
+        df_single_guide.loc[(df_single_guide["Mismatches+bulges_(highest_CFD)"] <= 1)].index, inplace=True)
 
     # sort values using score and annotation (NA goes last)
     df_single_guide.sort_values(
