@@ -129,20 +129,20 @@ def plot_correlation(original_df):
     # ax2.invert_xaxis()
     # ax2.invert_yaxis()
     # sns.JointGrid(ax1, ax2)
-    sns.jointplot(x=x_coordinates_list, y=y_coordinates_list,
-                  kind="reg", joint_kws={'line_kws': {'color': 'orange'}})
-    # sns.scatterplot(x=x_coordinates_list, y=y_coordinates_list,
-    # marker='o', color="skyblue")
+    # sns.jointplot(x=x_coordinates_list, y=y_coordinates_list,
+    #               kind="reg", joint_kws={'line_kws': {'color': 'orange'}})
+    ax = sns.scatterplot(x=x_coordinates_list, y=y_coordinates_list,
+                         marker='+', color="skyblue")
     # plt.xlim(1, 1000)
     # plt.ylim(1, 1000)
     # plt.xticks([1, 100, 1000])
     # plt.yticks([1, 100, 1000])
     # ax.set(xlabel='CFD Rank', ylabel='CRISTA Rank')
-    # ax.invert_xaxis()
-    # ax.invert_yaxis()
+    ax.invert_xaxis()
+    ax.invert_yaxis()
     # ax.margins(0.1)
     # plt.hlines(100, 1, 1000)
-    plt.vlines(1, 1, 2000)
+    # plt.vlines(1, 1, 2000)
 
     plt.tight_layout()
     plt.savefig(sys.argv[2]+f'scatter_rank_CFDvCRISTA_top1000_union.pdf')
