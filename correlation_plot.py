@@ -37,9 +37,10 @@ def plot_correlation(original_df):
 
         original_df_cfd_sort = df_guide.sort_values(
             ['CFD_score_(highest_CFD)'], ascending=False)
-        data_frames_list.append(original_df_cfd_sort)
+        data_frames_list.append(original_df_cfd_sort.head(1000))
 
-    sns.jointplot(data=original_df_cfd_sort.head(1000), x="CFD_score_(highest_CFD)",
+    final_df = pd.concat(data_frames_list)
+    sns.jointplot(data=final_df, x="CFD_score_(highest_CFD)",
                   y="CRISTA_score_(highest_CRISTA)", kind="reg", joint_kws={'line_kws': {'color': 'yellow'}})
     plt.xlim(0, 1)
     plt.ylim(0, 1)
@@ -60,9 +61,10 @@ def plot_correlation(original_df):
 
         original_df_crista_sort = df_guide.sort_values(
             ['CRISTA_score_(highest_CRISTA)'], ascending=False)
-        data_frames_list.append(original_df_crista_sort)
+        data_frames_list.append(original_df_crista_sort.head(1000))
 
-    sns.jointplot(data=original_df_crista_sort.head(1000), x="CFD_score_(highest_CFD)",
+    final_df = pd.concat(data_frames_list)
+    sns.jointplot(data=final_df, x="CFD_score_(highest_CFD)",
                   y="CRISTA_score_(highest_CRISTA)", kind="reg", joint_kws={'line_kws': {'color': 'yellow'}})
     plt.xlim(0, 1)
     plt.ylim(0, 1)
