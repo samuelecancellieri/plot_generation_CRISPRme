@@ -28,7 +28,7 @@ sns.set_context("paper")
 def plot_correlation(original_df_filtered):
 
     # start figure to plot all in one plot (scatter correlation CFD)
-    plt.figure(figsize=(20, 20))
+    plt.figure()
 
     for guide in original_df["Spacer+PAM"].unique():
 
@@ -53,7 +53,7 @@ def plot_correlation(original_df_filtered):
     plt.close('all')
 
     # start figure to plot all in one plot (scatter correlation CRISTA)
-    plt.figure(figsize=(20, 20))
+    plt.figure()
 
     for guide in original_df["Spacer+PAM"].unique():
 
@@ -77,7 +77,7 @@ def plot_correlation(original_df_filtered):
     plt.close('all')
 
     # start figure to plot all in one plot (top1000 union with rank)
-    plt.figure(figsize=(20, 20))
+    plt.figure()
 
     for guide in original_df["Spacer+PAM"].unique():
 
