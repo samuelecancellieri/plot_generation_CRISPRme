@@ -33,6 +33,8 @@ for guide in original_df['Spacer+PAM'].unique():
                          'Annotation_closest_gene_name',
                          'Annotation_ENCODE']]
 
+    guide_df.sort_values('CFD_score_(highest_CFD)',
+                         ascending=False, inplace=True)
     # extract top 1000 rows for each guide
     guide_df = guide_df.head(1000)
 
