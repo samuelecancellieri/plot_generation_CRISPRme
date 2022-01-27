@@ -117,46 +117,13 @@ def plot_correlation(original_df):
         x_coordinates_list.extend(cfd_crista_point_x_coordinates)
         y_coordinates_list.extend(cfd_crista_point_y_coordinates)
 
-        # sns.scatterplot(x=cfd_crista_point_x_coordinates,
-        #                 y=cfd_crista_point_y_coordinates, marker='+', color="skyblue")
-        # sns.jointplot(x=cfd_crista_point_x_coordinates, y=cfd_crista_point_y_coordinates,
-        #               kind="reg", joint_kws={'line_kws': {'color': 'orange'}})
-    # ax1 = sns.scatterplot(
-    #     x=cfd_crista_point_x_coordinates, y=cfd_crista_point_y_coordinates, marker='+', color="skyblue")
-    # ax2 = sns.histplot(x=cfd_crista_point_x_coordinates,
-    #                     y=cfd_crista_point_y_coordinates, kde=True)
-    # ax1.set(xlabel='CFD Rank', ylabel='CRISTA Rank')
-    # ax1.invert_xaxis()
-    # ax1.invert_yaxis()
-    # ax2.set(xlabel='CFD Rank', ylabel='CRISTA Rank')
-    # ax2.invert_xaxis()
-    # ax2.invert_yaxis()
-    # sns.JointGrid(ax1, ax2)
+    # jointplot for x and y coordinates for ranking cfd and crista score
     plot = sns.jointplot(x=x_coordinates_list, y=y_coordinates_list,
                          kind="reg", xlim=(1001, 0), ylim=(1001, 0), joint_kws={'line_kws': {'color': 'orange'}})
-    # ax = sns.scatterplot(x=x_coordinates_list, y=y_coordinates_list,
-    #                      marker='+', color="skyblue")
-    # plt.xlim(1, 1000)
-    # plt.ylim(1, 1000)
-    # plt.xticks([1, 100, 1000])
-    # plt.yticks([1, 100, 1000])
-    # ax.set(xlabel='CFD Rank', ylabel='CRISTA Rank')
-    # ax.invert_xaxis()
-    # ax.invert_yaxis()
-    # plot.ax_marg_x.set_xlim(0, 1000)
-    # plot.ax_marg_y.set_ylim(0, 1000)
+
     plot.ax_joint.axvline(x=100)
     plot.ax_joint.axhline(y=100)
     plot.set_axis_labels('CFD Rank', 'CRISTA Rank')
-    # plot.ax_joint.set_xticks([1, 100, 1000])
-    # plot.ax_joint.set_yticks([1, 100, 1000])
-    # plot.ax_joint.set_xlabels(['1', '100', '>1000'])
-    # plot.ax_joint.set_ylabels(['1', '100', '>1000'])
-
-    # plot.margins(0.1)
-    # ax.margins(0.1)
-    plt.hlines(100, 1, 1000)
-    plt.vlines(100, 1, 1000)
 
     plt.tight_layout()
     plt.savefig(sys.argv[2]+f'scatter_rank_CFDvCRISTA_top1000_union.pdf')
