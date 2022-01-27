@@ -133,7 +133,7 @@ def plot_correlation(original_df):
     # ax2.invert_yaxis()
     # sns.JointGrid(ax1, ax2)
     plot = sns.jointplot(x=x_coordinates_list, y=y_coordinates_list,
-                         kind="reg", joint_kws={'line_kws': {'color': 'orange'}})
+                         kind="reg", xlim=1000, ylim=1000, joint_kws={'line_kws': {'color': 'orange'}})
     # ax = sns.scatterplot(x=x_coordinates_list, y=y_coordinates_list,
     #                      marker='+', color="skyblue")
     # plt.xlim(1, 1000)
@@ -143,13 +143,13 @@ def plot_correlation(original_df):
     # ax.set(xlabel='CFD Rank', ylabel='CRISTA Rank')
     # ax.invert_xaxis()
     # ax.invert_yaxis()
-    plot.ax_marg_x.set_xlim(0, 1000)
-    plot.ax_marg_y.set_ylim(0, 1000)
+    # plot.ax_marg_x.set_xlim(0, 1000)
+    # plot.ax_marg_y.set_ylim(0, 1000)
     plot.set_axis_labels('CFD Rank', 'CRISTA Rank')
-    plot.ax_joint.set_xticks([1, 100, 1000])
-    plot.ax_joint.set_yticks([1, 100, 1000])
-    plot.ax_joint.set_xlabels(['1', '100', '>1000'])
-    plot.ax_joint.set_ylabels(['1', '100', '>1000'])
+    # plot.ax_joint.set_xticks([1, 100, 1000])
+    # plot.ax_joint.set_yticks([1, 100, 1000])
+    # plot.ax_joint.set_xlabels(['1', '100', '>1000'])
+    # plot.ax_joint.set_ylabels(['1', '100', '>1000'])
 
     # plot.margins(0.1)
     # ax.margins(0.1)
