@@ -18,7 +18,7 @@ matplotlib.use('Agg')
 matplotlib.rcParams['pdf.fonttype'] = 42
 matplotlib.rcParams['ps.fonttype'] = 42
 # plt.style.use('seaborn-poster')
-sns.set_context("poster", font_scale=1.5)
+sns.set_context("poster")
 
 
 # INPUT
