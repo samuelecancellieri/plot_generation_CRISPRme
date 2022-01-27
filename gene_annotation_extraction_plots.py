@@ -394,7 +394,7 @@ def crisprme_plot_CFD(title, df, guide, out_folder):
     # plt.rcParams['pdf.fonttype'] = 42
     # plt.rcParams['ps.fonttype'] = 42
 
-    plt.figure(figsize=(25, 20))
+    plt.figure(figsize=(25, 22))
     # plt.figure()
     ax1 = plt.subplot(7, 1, (1, 5))
     # ax1.set_position([0.125, 0.4, 0.9, 0.9])
@@ -532,7 +532,7 @@ def crisprme_plot_CFD(title, df, guide, out_folder):
 
     # Save
     # plt.tight_layout()
-    plt.subplots_adjust(hspace=0.5)
+    plt.subplots_adjust(hspace=0.8)
     # plt.subplots_adjust(left=0, bottom=0, right=1, top=1, wspace=0, hspace=0.5)
 
     plt.savefig(
