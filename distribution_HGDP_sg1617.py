@@ -22,6 +22,12 @@ matplotlib.use('Agg')
 matplotlib.rcParams['pdf.fonttype'] = 42
 matplotlib.rcParams['ps.fonttype'] = 42
 
+
+# INPUT
+# ARGV1 TARGETS
+# ARGV2 SAMPLEFILE
+# ARGV3 OUTPUT_DIR
+
 # original_df = pd.read_csv(sys.argv[1], sep="\t", index_col=False,
 #                           na_values=['n'])
 target_file = open(sys.argv[1], 'r')
