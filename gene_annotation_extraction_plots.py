@@ -422,7 +422,7 @@ def crisprme_plot_CFD(title, df, guide, out_folder):
     ax1.margins(0.05)
     # plt.xlim(1,100)
     plt.xticks([1, 20, 40, 60, 80, 100])
-    # plt.ylim(0, 1)
+    plt.ylim(0, 1)
     plt.yticks([0, 0.2, 0.4, 0.6, 0.8, 1])
 
     # Arrows
