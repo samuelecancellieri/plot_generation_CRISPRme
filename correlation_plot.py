@@ -104,11 +104,13 @@ def plot_correlation(original_df):
         sorted_crista_index_list = list(top1000_union_CFDvCRISTA['index'])
 
         for pos, index in enumerate(sorted_cfd_index_list[:1000]):
-            cfd_crista_point_x_coordinates.append(pos+1)
+            # cfd_crista_point_x_coordinates.append(pos+1)
+            cfd_crista_point_x_coordinates.append(pos)
             try:
                 y_coordinate = sorted_crista_index_list.index(index)
-                if y_coordinate <= 1000:
-                    cfd_crista_point_y_coordinates.append(y_coordinate+1)
+                if y_coordinate < 1000:
+                    # cfd_crista_point_y_coordinates.append(y_coordinate+1)
+                    cfd_crista_point_y_coordinates.append(y_coordinate)
                 else:
                     cfd_crista_point_y_coordinates.append(1001)
             except:
@@ -133,7 +135,7 @@ def plot_correlation(original_df):
     # ax2.invert_yaxis()
     # sns.JointGrid(ax1, ax2)
     plot = sns.jointplot(x=x_coordinates_list, y=y_coordinates_list,
-                         kind="reg", xlim=(1, 1000), ylim=(1, 1000), joint_kws={'line_kws': {'color': 'orange'}})
+                         kind="reg", xlim=(1001, 0), ylim=(1001, 0), joint_kws={'line_kws': {'color': 'orange'}})
     # ax = sns.scatterplot(x=x_coordinates_list, y=y_coordinates_list,
     #                      marker='+', color="skyblue")
     # plt.xlim(1, 1000)
