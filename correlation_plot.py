@@ -117,6 +117,9 @@ def plot_correlation(original_df):
         x_coordinates_list.extend(cfd_crista_point_x_coordinates)
         y_coordinates_list.extend(cfd_crista_point_y_coordinates)
 
+        print(min(x_coordinates_list))
+        print(min(y_coordinates_list))
+
         # sns.scatterplot(x=cfd_crista_point_x_coordinates,
         #                 y=cfd_crista_point_y_coordinates, marker='+', color="skyblue")
         # sns.jointplot(x=cfd_crista_point_x_coordinates, y=cfd_crista_point_y_coordinates,
