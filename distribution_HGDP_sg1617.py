@@ -103,7 +103,7 @@ for index, target in enumerate(target_file):
     if 'CFD' in target:
         continue
     split = target.strip().split('\t')
-    samples = split[26].split(',')
+    samples = split[22].split(',')  # position in old integrated of samples
     for sample in samples:
         pop = pop_dict[sample]
         sample_dict[pop][sample].add(index)
