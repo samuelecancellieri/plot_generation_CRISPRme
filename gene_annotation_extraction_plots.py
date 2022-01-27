@@ -711,7 +711,7 @@ def extraction_with_CFD(guide, df, out_dir, top_10_list, top_100_list, top_1000_
     dff = df_single_guide.loc[df_single_guide["Annotation_GENCODE"].str.contains(
         "CDS", na=False)]
     title = 'CDS'
-    crisprme_plot_CFD(title, dff.head(100), guide+'_CDS_CFD', out_dir)
+    crisprme_plot_CFD(title, dff.head(100), guide+'_ZCDS_CFD', out_dir)
 
     # extract targets with not null encode annotation
     dff = df_single_guide.loc[df_single_guide["Annotation_ENCODE"].notnull()]
