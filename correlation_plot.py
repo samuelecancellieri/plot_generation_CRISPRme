@@ -145,6 +145,8 @@ def plot_correlation(original_df):
     # ax.invert_yaxis()
     plot.ax_marg_x.set_xlim(0, 1000)
     plot.ax_marg_y.set_ylim(0, 1000)
+    plot.set_axis_labels('CFD Rank', 'CRISTA Rank')
+
     # plot.margins(0.1)
     # ax.margins(0.1)
     # plt.hlines(100, 1, 1000)
