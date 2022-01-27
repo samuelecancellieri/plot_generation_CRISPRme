@@ -346,7 +346,7 @@ def crisprme_plot_MMvBUL(df, guide, out_folder, max_mm_bul_value, pam_first_nucl
     plt.close('all')
 
 
-def crisprme_plot_CFD(df, guide, out_folder):
+def crisprme_plot_CFD(title, df, guide, out_folder):
 
     # Make index column that numbers the OTs starting from 0
     df.reset_index(inplace=True)
@@ -415,7 +415,8 @@ def crisprme_plot_CFD(df, guide, out_folder):
         df['REF/ALT_origin_(highest_CFD)'] != 'ref') & (df['Annotation_ENCODE']).notnull()]
 
     # plt.xlabel("Candidate off-target site")
-    plt.ylabel("Score")
+    plt.title(title)
+    plt.ylabel("CFD Score")
 
     # Boundaries
     ax1.margins(0.05)
@@ -700,21 +701,27 @@ def extraction_with_CFD(guide, df, out_dir, top_10_list, top_100_list, top_1000_
 
     # PLOT GENERATION
     # extract top100 targets with CFD>=0.1
-    crisprme_plot_CFD(df_single_guide.head(100), guide+'_CFD01', out_dir)
+    title = 'All OTs'
+    crisprme_plot_CFD(title, df_single_guide.head(100),
+                      guide+'_CFD01', out_dir)
 
     # extract targets with CDS in gencode annotation
     dff = df_single_guide.loc[df_single_guide["Annotation_GENCODE"].str.contains(
         "CDS", na=False)]
-    crisprme_plot_CFD(dff.head(100), guide+'_CDS_CFD', out_dir)
+    title = 'CDS'
+    crisprme_plot_CFD(title, dff.head(100), guide+'_CDS_CFD', out_dir)
 
     # extract targets with not null encode annotation
     dff = df_single_guide.loc[df_single_guide["Annotation_ENCODE"].notnull()]
-    crisprme_plot_CFD(dff.head(100), guide+'_encode_annotated_CFD', out_dir)
+    title = 'cCRE'
+    crisprme_plot_CFD(title, dff.head(100), guide +
+                      '_encode_annotated_CFD', out_dir)
 
     # extract targets with PAM creation
     dff = df_single_guide.loc[df_single_guide["PAM_creation_(highest_CFD)"].notnull(
     )]
-    crisprme_plot_CFD(dff.head(100), guide+'_pam_creation_CFD', out_dir)
+    title = 'PAM creation'
+    crisprme_plot_CFD(title, dff.head(100), guide+'_pam_creation_CFD', out_dir)
 
 
 def extraction_with_total(guide, df, out_dir, max_mm_bul_value, pam_first_nucleotide, pam_len, top_10_list, top_100_list, top_1000_list):
