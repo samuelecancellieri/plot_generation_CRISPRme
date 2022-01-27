@@ -107,7 +107,7 @@ def plot_correlation(original_df):
             cfd_crista_point_x_coordinates.append(pos+1)
             try:
                 y_coordinate = sorted_crista_index_list.index(index)
-                if y_coordinate < 1000:
+                if y_coordinate <= 1000:
                     cfd_crista_point_y_coordinates.append(y_coordinate+1)
                 else:
                     cfd_crista_point_y_coordinates.append(1001)
