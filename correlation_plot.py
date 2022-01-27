@@ -18,7 +18,7 @@ matplotlib.use('Agg')
 matplotlib.rcParams['pdf.fonttype'] = 42
 matplotlib.rcParams['ps.fonttype'] = 42
 # plt.style.use('seaborn-poster')
-sns.set_context("paper")
+sns.set_context("poster", font_scale=1.5)
 
 
 # INPUT
@@ -149,8 +149,8 @@ def plot_correlation(original_df):
 
     # plot.margins(0.1)
     # ax.margins(0.1)
-    # plt.hlines(100, 1, 1000)
-    # plt.vlines(1, 1, 2000)
+    plt.hlines(100, 1, 1000)
+    plt.vlines(100, 1, 1000)
 
     plt.tight_layout()
     plt.savefig(sys.argv[2]+f'scatter_rank_CFDvCRISTA_top1000_union.pdf')
