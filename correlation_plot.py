@@ -146,6 +146,10 @@ def plot_correlation(original_df):
     plot.ax_marg_x.set_xlim(0, 1000)
     plot.ax_marg_y.set_ylim(0, 1000)
     plot.set_axis_labels('CFD Rank', 'CRISTA Rank')
+    plot.ax_joint.set_xticks([1, 100, 1000])
+    plot.ax_joint.set_yticks([1, 100, 1000])
+    plot.ax_joint.set_xlabels(['1', '100', '>1000'])
+    plot.ax_joint.set_ylabels(['1', '100', '>1000'])
 
     # plot.margins(0.1)
     # ax.margins(0.1)
