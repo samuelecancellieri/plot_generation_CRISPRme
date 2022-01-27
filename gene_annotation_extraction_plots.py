@@ -394,8 +394,8 @@ def crisprme_plot_CFD(title, df, guide, out_folder):
     # plt.rcParams['pdf.fonttype'] = 42
     # plt.rcParams['ps.fonttype'] = 42
 
-    plt.figure(figsize=(20, 20))
-    # plt.figure()
+    # plt.figure(figsize=(20, 20))
+    plt.figure()
     ax1 = plt.subplot(7, 1, (1, 5))
     # ax1.set_position([0.125, 0.4, 0.9, 0.9])
     # print('ax1-position', ax1.get_position())
@@ -532,7 +532,10 @@ def crisprme_plot_CFD(title, df, guide, out_folder):
 
     # Save
     # plt.tight_layout()
-    plt.subplots_adjust(hspace=0.8)
+    # plt.subplots_adjust(hspace=0.8)
+    plt.subplots_adjust(left=0.1, bottom=0.1, right=0.1,
+                        top=0.1, wspace=0, hspace=0.5)
+
     plt.savefig(
         out_folder+f"CRISPRme_top_1000_log_for_main_text_{guide}.pdf", transparent=True)
     plt.clf()
