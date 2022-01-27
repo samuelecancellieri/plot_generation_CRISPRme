@@ -534,7 +534,7 @@ def crisprme_plot_CFD(title, df, guide, out_folder):
     # plt.tight_layout()
     plt.subplots_adjust(hspace=2)
     plt.savefig(
-        out_folder+f"CRISPRme_top_1000_log_for_main_text_{guide}.png", transparent=True)
+        out_folder+f"CRISPRme_top_1000_log_for_main_text_{guide}.pdf", transparent=True)
     plt.clf()
     plt.close('all')
 
