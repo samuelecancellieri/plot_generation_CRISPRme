@@ -3,6 +3,7 @@
 import sys
 import time
 import random
+from tokenize import Floatnumber
 from unicodedata import decimal
 import pandas as pd
 from pandas.core.indexes.api import all_indexes_same
@@ -67,6 +68,7 @@ def num_of_decimal_zeros(float_number):
             count_zeros += 1
         else:
             break
+    print('decimal count', count_zeros+1, 'the numeber is', float_number)
     # add 1 to respect the exp representation (10^-1 will have count_zeros=0, but should be 1)
     return math.pow(10, -(count_zeros+1))
 
@@ -192,7 +194,7 @@ def generate_heatmap_CFD(original_df):
         lambda x: min(x))
     df_heatmap["Variant_MAF_(highest_CFD)"] = pd.to_numeric(
         df_heatmap["Variant_MAF_(highest_CFD)"], downcast="float")
-    df_heatmap = df_heatmap.loc[(df_heatmap['Variant_MAF_(highest_CFD)']) >= 0]
+    # df_heatmap = df_heatmap.loc[(df_heatmap['Variant_MAF_(highest_CFD)']) >= 0]
     # conversion to count of decimal zeros
     df_heatmap["Variant_MAF_(highest_CFD)"] = df_heatmap["Variant_MAF_(highest_CFD)"].apply(
         lambda x: num_of_decimal_zeros(x))
@@ -241,7 +243,7 @@ def generate_heatmap_CFD(original_df):
     # plt_heatmap.collections[0].colorbar.ax.tick_params(labelsize=13)
 
     # set labels and position of ticks
-    plt_heatmap.set_xticks(np.arange(0, 6, step=1))
+    # plt_heatmap.set_xticks(np.arange(0, 6, step=1))
     plt_heatmap.set_yticks(np.arange(0, 11, step=1))
     plt_heatmap.set_yticklabels(
         [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1])
