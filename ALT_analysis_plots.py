@@ -241,7 +241,7 @@ def generate_heatmap_CFD(original_df):
     # plt_heatmap.collections[0].colorbar.ax.tick_params(labelsize=13)
 
     # set labels and position of ticks
-    # plt_heatmap.set_xticks(np.arange(0, 6, step=1))
+    plt_heatmap.set_xticks(np.arange(0, 6, step=1))
     plt_heatmap.set_yticks(np.arange(0, 11, step=1))
     plt_heatmap.set_yticklabels(
         [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1])
