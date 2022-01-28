@@ -57,7 +57,6 @@ def keep_one_decimal(float_number):
 
 def num_of_decimal_zeros(float_number):
     if float_number == 0:
-        print('trovato zero sospetto')
         return math.pow(10, -5)  # 0.00001
     if float_number >= 0.1:
         return 1  # messo in categoria 0.1-1
@@ -68,7 +67,6 @@ def num_of_decimal_zeros(float_number):
             count_zeros += 1
         else:
             break
-    print('decimal count', count_zeros+1, 'the numeber is', float_number)
     # add 1 to respect the exp representation (10^-1 will have count_zeros=0, but should be 1)
     return math.pow(10, -(count_zeros+1))
 
