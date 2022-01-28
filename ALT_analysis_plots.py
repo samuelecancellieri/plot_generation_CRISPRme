@@ -3,6 +3,7 @@
 import sys
 import time
 import random
+from unicodedata import decimal
 import pandas as pd
 from pandas.core.indexes.api import all_indexes_same
 import seaborn as sns
@@ -46,8 +47,16 @@ def annotation_analysis(row, on_target_dict):
         return 'empty'
 
 
+def keep_one_decimal(float_number):
+    int_part = str(float_number).strip().split('.')[0]
+    decimal_part = str(float_number).strip().split('.')[1][0]
+    float_return = float(int_part+'.'+decimal_part)
+    return float_return
+
+
 def num_of_decimal_zeros(float_number):
     if float_number == 0:
+        print('trovato zero sospetto')
         return math.pow(10, -5)  # 0.00001
     if float_number >= 0.1:
         return 1  # messo in categoria 0.1-1
@@ -172,10 +181,11 @@ def generate_heatmap_CFD(original_df):
     # filter df to use only heatmap related columns
     df_heatmap = original_df[[
         'CFD_score_(highest_CFD)', 'Variant_MAF_(highest_CFD)']]
-    # df_heatmap = df_heatmap.loc[(df_heatmap["CFD_score_(highest_CFD)"] >= 0.1)]
+    df_heatmap = df_heatmap.loc[(
+        df_heatmap["Variant_MAF_(highest_CFD)"].notnull())]
 
     # MAF conversion and filtering
-    df_heatmap["Variant_MAF_(highest_CFD)"] = df_heatmap["Variant_MAF_(highest_CFD)"].fillna(-1)
+    # df_heatmap["Variant_MAF_(highest_CFD)"] = df_heatmap["Variant_MAF_(highest_CFD)"].fillna(-1)
     df_heatmap["Variant_MAF_(highest_CFD)"] = df_heatmap["Variant_MAF_(highest_CFD)"].astype(
         str).str.split(',')
     df_heatmap["Variant_MAF_(highest_CFD)"] = df_heatmap["Variant_MAF_(highest_CFD)"].apply(
@@ -198,8 +208,10 @@ def generate_heatmap_CFD(original_df):
     # CFD score rounding to 1 decimal
     df_heatmap['CFD_score_(highest_CFD)'] = df_heatmap['CFD_score_(highest_CFD)'].astype(
         float)
+    # df_heatmap['CFD_score_(highest_CFD)'] = df_heatmap['CFD_score_(highest_CFD)'].apply(
+    #     lambda x: round(x, 1))
     df_heatmap['CFD_score_(highest_CFD)'] = df_heatmap['CFD_score_(highest_CFD)'].apply(
-        lambda x: round(x, 1))
+        lambda x: keep_one_decimal(x))
 
     print(df_heatmap)
 
@@ -364,7 +376,7 @@ original_df_read = pd.read_csv(inTargets, sep="\t", index_col=False,
 # call to plot generation CFD with original data
 # generate_distribution_plot_CFD(original_df_read, 'no_filter')
 # generate_distribution_plot_CFD(original_df_read, 'no_filter_log')
-generate_upset_plot_CFD(original_df_read)
+# generate_upset_plot_CFD(original_df_read)
 generate_heatmap_CFD(original_df_read)
 # generate_upset_log_barplot_CFD()
 # call to plot generation MM_BUL
