@@ -40,7 +40,7 @@ def plot_correlation(original_df):
         data_frames_list.append(original_df_cfd_sort.head(1000))
 
     final_df = pd.concat(data_frames_list)
-    sns.jointplot(data=final_df, x="CFD_score_(highest_CFD)",
+    sns.jointplot(data=final_df, x="CFD_score_(highest_CFD)", marginal_ticks=True, space=0.5,
                   y="CRISTA_score_(highest_CRISTA)", kind="reg", joint_kws={'line_kws': {'color': 'orange'}})
     plt.xlim(0, 1)
     plt.ylim(0, 1)
@@ -64,8 +64,8 @@ def plot_correlation(original_df):
         data_frames_list.append(original_df_crista_sort.head(1000))
 
     final_df = pd.concat(data_frames_list)
-    sns.jointplot(data=final_df, x="CFD_score_(highest_CFD)",
-                  y="CRISTA_score_(highest_CRISTA)", kind="reg", joint_kws={'line_kws': {'color': 'orange'}})
+    sns.jointplot(data=final_df, x='CRISTA_score_(highest_CRISTA)', marginal_ticks=True, space=0.5,
+                  y="CFD_score_(highest_CFD)", kind="reg", joint_kws={'line_kws': {'color': 'orange'}})
     plt.xlim(0, 1)
     plt.ylim(0, 1)
 
@@ -119,8 +119,8 @@ def plot_correlation(original_df):
         y_coordinates_list.extend(cfd_crista_point_y_coordinates)
 
     # jointplot for x and y coordinates for ranking cfd and crista score
-    plot = sns.jointplot(x=x_coordinates_list, y=y_coordinates_list, marginal_ticks=True, space=0.1,
-                         kind="reg", xlim=(1001, 0), ylim=(1001, 0), joint_kws={'line_kws': {'color': 'orange'}})
+    plot = sns.jointplot(x=x_coordinates_list, y=y_coordinates_list, marginal_ticks=True, space=0.5,
+                         kind="reg", xlim=(1000, 0), ylim=(1000, 0), joint_kws={'line_kws': {'color': 'orange'}})
 
     plot.ax_joint.axvline(x=100)
     plot.ax_joint.axhline(y=100)
