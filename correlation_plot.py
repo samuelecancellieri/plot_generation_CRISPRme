@@ -112,7 +112,8 @@ def plot_correlation(original_df):
                 cfd_crista_point_y_coordinates.append(y_coordinate+1)
                 cfd_crista_point_x_coordinates.append(pos+1)
             else:
-                continue
+                cfd_crista_point_y_coordinates.append(1000)
+                cfd_crista_point_x_coordinates.append(pos+1)
 
         x_coordinates_list.extend(cfd_crista_point_x_coordinates)
         y_coordinates_list.extend(cfd_crista_point_y_coordinates)

@@ -370,14 +370,17 @@ out_folder = sys.argv[2]  # folder for output images
 
 print('starting generating distribution and upset plots')
 # create dataframe with file
+start = time.time()
 original_df_read = pd.read_csv(inTargets, sep="\t", index_col=False,
                                na_values=['n'])
-
+print('read in time', time.time()-start)
 # call to plot generation CFD with original data
 # generate_distribution_plot_CFD(original_df_read, 'no_filter')
 # generate_distribution_plot_CFD(original_df_read, 'no_filter_log')
 # generate_upset_plot_CFD(original_df_read)
+start = time.time()
 generate_heatmap_CFD(original_df_read)
+print('heatmap generated in time', time.time()-start)
 # generate_upset_log_barplot_CFD()
 # call to plot generation MM_BUL
 # generate_distribution_plot_MMBUL(original_df)
