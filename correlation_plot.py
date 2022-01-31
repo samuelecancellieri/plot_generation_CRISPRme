@@ -119,7 +119,7 @@ def plot_correlation(original_df):
         y_coordinates_list.extend(cfd_crista_point_y_coordinates)
 
     # jointplot for x and y coordinates for ranking cfd and crista score
-    plot = sns.jointplot(x=x_coordinates_list, y=y_coordinates_list,
+    plot = sns.jointplot(x=x_coordinates_list, y=y_coordinates_list, marginal_ticks=True, space=0.1,
                          kind="reg", xlim=(1001, 0), ylim=(1001, 0), joint_kws={'line_kws': {'color': 'orange'}})
 
     plot.ax_joint.axvline(x=100)
