@@ -91,8 +91,16 @@ def plot_correlation(original_df):
         original_df_crista_sort = df_guide.sort_values(
             ['CRISTA_score_(highest_CRISTA)'], ascending=False)
 
+        original_df_cfd_sort.head(1000).to_csv(sys.argv[2]+guide+'_top1000_CFD.tsv',
+                                               sep='\t', na_rep='NA', index=False)
+        original_df_crista_sort.head(1000).to_csv(sys.argv[2]+guide+'_top1000_CRISTA.tsv',
+                                                  sep='\t', na_rep='NA', index=False)
+
         top1000_union_CFDvCRISTA = pd.concat([original_df_cfd_sort.head(
             1000), original_df_crista_sort.head(1000)]).drop_duplicates()
+
+        top1000_union_CFDvCRISTA.head(1000).to_csv(sys.argv[2]+guide+'top1000_union.tsv',
+                                                   sep='\t', na_rep='NA', index=False)
 
         cfd_crista_point_x_coordinates = list()
         cfd_crista_point_y_coordinates = list()
