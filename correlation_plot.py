@@ -77,15 +77,19 @@ def plot_correlation(original_df):
 
     # start figure to plot all in one plot (top1000 union with rank)
     plt.figure()
+    # lists containing the x and y coordinates to build the rank plot for whole file
     x_coordinates_list = list()
     y_coordinates_list = list()
 
     for guide in original_df["Spacer+PAM"].unique():
 
+        # filter the df to obtain single guide targets
         df_guide = original_df.loc[(original_df['Spacer+PAM'] == guide)]
+        # reset index to use as x position for rank
         df_guide.reset_index(inplace=True)
 
         print('plotting for guide:', guide)
+        # sorting the df in CFD and CRISTA order saving in different dfs
         original_df_cfd_sort = df_guide.sort_values(
             ['CFD_score_(highest_CFD)'], ascending=False)
         original_df_crista_sort = df_guide.sort_values(
@@ -96,21 +100,26 @@ def plot_correlation(original_df):
         original_df_crista_sort.head(1000).to_csv(sys.argv[2]+guide+'_top1000_CRISTA.tsv',
                                                   sep='\t', na_rep='NA', index=False)
 
+        # created the df of union, dropping the duplicate targets that appears in both
         top1000_union_CFDvCRISTA = pd.concat([original_df_cfd_sort.head(
             1000), original_df_crista_sort.head(1000)]).drop_duplicates()
 
         top1000_union_CFDvCRISTA.to_csv(sys.argv[2]+guide+'top1000_union.tsv',
                                         sep='\t', na_rep='NA', index=False)
 
+        # create the list for the current analysis
         cfd_crista_point_x_coordinates = list()
         cfd_crista_point_y_coordinates = list()
+        # sort values in the union by CFD, then extract the index list ordered to use as x coordinates
         top1000_union_CFDvCRISTA.sort_values(
             ['CFD_score_(highest_CFD)'], ascending=False, inplace=True)
         sorted_cfd_index_list = list(top1000_union_CFDvCRISTA['index'])
+        # sort values in the union by CRISTA, then extract the index list ordered to use as y coordinates
         top1000_union_CFDvCRISTA.sort_values(
             ['CRISTA_score_(highest_CRISTA)'], ascending=False, inplace=True)
         sorted_crista_index_list = list(top1000_union_CFDvCRISTA['index'])
 
+        # for each target in top1000 list of CFD ordered, find the position of the target if ordered by CRISTA (y coordinate), if not found return 1000 as y
         for pos, index in enumerate(sorted_cfd_index_list[:1000]):
             try:
                 y_coordinate = sorted_crista_index_list.index(index)
@@ -123,9 +132,10 @@ def plot_correlation(original_df):
                 cfd_crista_point_y_coordinates.append(1000)
                 cfd_crista_point_x_coordinates.append(pos+1)
 
-        for index, elem in enumerate(cfd_crista_point_x_coordinates):
-            print(elem, cfd_crista_point_y_coordinates[index])
+        # for index, elem in enumerate(cfd_crista_point_x_coordinates):
+        #     print(elem, cfd_crista_point_y_coordinates[index])
 
+        # extend the list for plotting the whole distribution
         x_coordinates_list.extend(cfd_crista_point_x_coordinates)
         y_coordinates_list.extend(cfd_crista_point_y_coordinates)
 
