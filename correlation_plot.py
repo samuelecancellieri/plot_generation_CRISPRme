@@ -137,6 +137,8 @@ def plot_correlation(original_df):
         union_file = open(sys.argv[2]+'union_file.tsv', 'w')
         union_file.write(
             'Spacer+PAM\tCFD_Score\tCRISTA_Score\tCFD_Rank\tCRISTA_Rank\n')
+
+        print(top1000_union_CFDvCRISTA)
         for index, elem in enumerate(sorted_cfd_index_list):
             try:
                 crista_index = str(top1000_union_CFDvCRISTA.iloc[sorted_crista_index_list.index(elem)
