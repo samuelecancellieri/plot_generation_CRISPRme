@@ -144,11 +144,11 @@ def plot_correlation(original_df):
         print(top1000_union_CFDvCRISTA)
         for pos, rank in enumerate(sorted_cfd_index_list):
             try:
-                crista_rank = str(sorted_crista_index_list.index(rank))
+                crista_rank = str(sorted_crista_index_list.index(rank)+1)
             except:
                 crista_rank = 'out_of_list'
             save = str(guide)+'\t' + str(cfd_score_list[pos])+'\t'+str(crista_score_list[pos])+'\t'+str(
-                rank)+'\t'+crista_rank+'\n'
+                rank+1)+'\t'+crista_rank+'\n'
             union_file.write(save)
 
         # extend the list for plotting the whole distribution
