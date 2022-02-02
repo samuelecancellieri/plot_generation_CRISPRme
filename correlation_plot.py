@@ -110,6 +110,7 @@ def plot_correlation(original_df):
         # create the list for the current analysis
         cfd_crista_point_x_coordinates = list()
         cfd_crista_point_y_coordinates = list()
+        real_y_coordinates = list()
         # sort values in the union by CFD, then extract the index list ordered to use as x coordinates
         top1000_union_CFDvCRISTA.sort_values(
             ['CFD_score_(highest_CFD)'], ascending=False, inplace=True)
@@ -120,9 +121,11 @@ def plot_correlation(original_df):
         sorted_crista_index_list = list(top1000_union_CFDvCRISTA['index'])
 
         # for each target in top1000 list of CFD ordered, find the position of the target if ordered by CRISTA (y coordinate), if not found return 1000 as y
-        for pos, index in enumerate(sorted_cfd_index_list[:1000]):
+        # for pos, index in enumerate(sorted_cfd_index_list[:1000]):
+        for pos, index in enumerate(sorted_cfd_index_list):
             try:
                 y_coordinate = sorted_crista_index_list.index(index)
+                real_y_coordinates.append(y_coordinate)
             except:
                 continue
             if y_coordinate < 1000:
@@ -132,8 +135,13 @@ def plot_correlation(original_df):
                 cfd_crista_point_y_coordinates.append(1000)
                 cfd_crista_point_x_coordinates.append(pos+1)
 
-        # for index, elem in enumerate(cfd_crista_point_x_coordinates):
-        #     print(elem, cfd_crista_point_y_coordinates[index])
+        union_file = open(sys.argv[2]+'union_file.tsv', 'w')
+        union_file.write(
+            'Spacer+PAM\tCFD_Score\tCRISTA_Score\tCFD_Rank\tCRISTA_Rank\n')
+        for index, elem in enumerate(cfd_crista_point_x_coordinates):
+            save = guide+'\t' + '\t' + top1000_union_CFDvCRISTA.iloc[index]['CFD_score_(highest_CFD)']+'\t'+top1000_union_CFDvCRISTA.iloc[real_y_coordinates[index]
+                                                                                                                                          ]['CRISTA_score_(highest_CRISTA)']+'\t'+elem+'\t'+real_y_coordinates[index]
+            union_file.write(save)
 
         # extend the list for plotting the whole distribution
         x_coordinates_list.extend(cfd_crista_point_x_coordinates)
