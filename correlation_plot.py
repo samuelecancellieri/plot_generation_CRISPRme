@@ -137,11 +137,10 @@ def plot_correlation(original_df):
                 cfd_crista_point_y_coordinates.append(1000)
                 cfd_crista_point_x_coordinates.append(pos+1)
 
-        union_file = open(sys.argv[2]+'union_file.tsv', 'w')
+        union_file = open(sys.argv[2]+guide+'_union_file.tsv', 'w')
         union_file.write(
             'Spacer+PAM\tCFD_Score\tCRISTA_Score\tCFD_Rank\tCRISTA_Rank\n')
 
-        print(top1000_union_CFDvCRISTA)
         for pos, rank in enumerate(sorted_cfd_index_list):
             try:
                 crista_rank = str(sorted_crista_index_list.index(rank)+1)
