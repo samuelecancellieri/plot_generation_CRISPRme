@@ -9,6 +9,7 @@ from matplotlib import pyplot as plt
 from matplotlib_venn import venn2
 import warnings
 from scipy import stats
+import numpy as np
 
 # SUPPRESS ALL WARNINGS
 warnings.filterwarnings("ignore")
@@ -80,83 +81,93 @@ def plot_correlation(original_df):
     # lists containing the x and y coordinates to build the rank plot for whole file
     x_coordinates_list = list()
     y_coordinates_list = list()
+    df_guide_list = list()
 
     for guide in original_df["Spacer+PAM"].unique():
 
         # filter the df to obtain single guide targets
         df_guide = original_df.loc[(original_df['Spacer+PAM'] == guide)]
+        df_guide['CFD_Rank'] = np.argsort(df_guide['CFD_score_(highest_CFD)'])
+        df_guide['CRISTA_Rank'] = np.argsort(
+            df_guide['CRISTA_score_(highest_CRISTA)'])
+
+        df_guide_selected = df_guide.loc[(
+            df_guide['CFD_Rank'] <= 1000 or df_guide['CRISTA_Rank'] <= 1000)]
+        df_guide_list.append(df_guide_selected)
         # reset index to use as x position for rank
-        df_guide.reset_index(inplace=True)
+        # df_guide.reset_index(inplace=True)
 
-        print('plotting for guide:', guide)
-        # sorting the df in CFD and CRISTA order saving in different dfs
-        original_df_cfd_sort = df_guide.sort_values(
-            ['CFD_score_(highest_CFD)'], ascending=False)
-        original_df_crista_sort = df_guide.sort_values(
-            ['CRISTA_score_(highest_CRISTA)'], ascending=False)
+        # print('plotting for guide:', guide)
+        # # sorting the df in CFD and CRISTA order saving in different dfs
+        # original_df_cfd_sort = df_guide.sort_values(
+        #     ['CFD_score_(highest_CFD)'], ascending=False)
+        # original_df_crista_sort = df_guide.sort_values(
+        #     ['CRISTA_score_(highest_CRISTA)'], ascending=False)
 
-        original_df_cfd_sort.head(1000).to_csv(sys.argv[2]+guide+'_top1000_CFD.tsv',
-                                               sep='\t', na_rep='NA', index=False)
-        original_df_crista_sort.head(1000).to_csv(sys.argv[2]+guide+'_top1000_CRISTA.tsv',
-                                                  sep='\t', na_rep='NA', index=False)
+        # original_df_cfd_sort.head(1000).to_csv(sys.argv[2]+guide+'_top1000_CFD.tsv',
+        #                                        sep='\t', na_rep='NA', index=False)
+        # original_df_crista_sort.head(1000).to_csv(sys.argv[2]+guide+'_top1000_CRISTA.tsv',
+        #                                           sep='\t', na_rep='NA', index=False)
 
         # created the df of union, dropping the duplicate targets that appears in both
-        top1000_union_CFDvCRISTA = pd.concat([original_df_cfd_sort.head(
-            1000), original_df_crista_sort.head(1000)]).drop_duplicates()
+        # top1000_union_CFDvCRISTA = pd.concat([original_df_cfd_sort.head(
+        #     1000), original_df_crista_sort.head(1000)]).drop_duplicates()
 
-        print('number of target in union', len(top1000_union_CFDvCRISTA.index))
+        # print('number of target in union', len(top1000_union_CFDvCRISTA.index))
 
-        top1000_union_CFDvCRISTA.to_csv(sys.argv[2]+guide+'_top1000_union.tsv',
-                                        sep='\t', na_rep='NA', index=False)
+        # top1000_union_CFDvCRISTA.to_csv(sys.argv[2]+guide+'_top1000_union.tsv',
+        #                                 sep='\t', na_rep='NA', index=False)
 
         # create the list for the current analysis
-        cfd_crista_point_x_coordinates = list()
-        cfd_crista_point_y_coordinates = list()
-        # sort values in the union by CFD, then extract the index list ordered to use as x coordinates
-        top1000_union_CFDvCRISTA.sort_values(
-            ['CFD_score_(highest_CFD)'], ascending=False, inplace=True)
-        sorted_cfd_index_list = list(top1000_union_CFDvCRISTA['index'])
-        cfd_score_list = list(
-            top1000_union_CFDvCRISTA['CFD_score_(highest_CFD)'])
-        crista_score_list = list(
-            top1000_union_CFDvCRISTA['CRISTA_score_(highest_CRISTA)'])
-        # sort values in the union by CRISTA, then extract the index list ordered to use as y coordinates
-        top1000_union_CFDvCRISTA.sort_values(
-            ['CRISTA_score_(highest_CRISTA)'], ascending=False, inplace=True)
-        sorted_crista_index_list = list(top1000_union_CFDvCRISTA['index'])
+        # cfd_crista_point_x_coordinates = list()
+        # cfd_crista_point_y_coordinates = list()
+        # # sort values in the union by CFD, then extract the index list ordered to use as x coordinates
+        # top1000_union_CFDvCRISTA.sort_values(
+        #     ['CFD_score_(highest_CFD)'], ascending=False, inplace=True)
+        # sorted_cfd_index_list = list(top1000_union_CFDvCRISTA['index'])
+        # cfd_score_list = list(
+        #     top1000_union_CFDvCRISTA['CFD_score_(highest_CFD)'])
+        # crista_score_list = list(
+        #     top1000_union_CFDvCRISTA['CRISTA_score_(highest_CRISTA)'])
+        # # sort values in the union by CRISTA, then extract the index list ordered to use as y coordinates
+        # top1000_union_CFDvCRISTA.sort_values(
+        #     ['CRISTA_score_(highest_CRISTA)'], ascending=False, inplace=True)
+        # sorted_crista_index_list = list(top1000_union_CFDvCRISTA['index'])
 
         # for each target in top1000 list of CFD ordered, find the position of the target if ordered by CRISTA (y coordinate), if not found return 1000 as y
-        for pos, index in enumerate(sorted_cfd_index_list[:1000]):
-            try:
-                y_coordinate = sorted_crista_index_list.index(index)
-            except:
-                continue
-            if y_coordinate < 1000:
-                cfd_crista_point_y_coordinates.append(y_coordinate+1)
-                cfd_crista_point_x_coordinates.append(pos+1)
-            else:
-                cfd_crista_point_y_coordinates.append(1000)
-                cfd_crista_point_x_coordinates.append(pos+1)
+        # for pos, index in enumerate(sorted_cfd_index_list[:1000]):
+        #     try:
+        #         y_coordinate = sorted_crista_index_list.index(index)
+        #     except:
+        #         continue
+        #     if y_coordinate < 1000:
+        #         cfd_crista_point_y_coordinates.append(y_coordinate+1)
+        #         cfd_crista_point_x_coordinates.append(pos+1)
+        #     else:
+        #         cfd_crista_point_y_coordinates.append(1000)
+        #         cfd_crista_point_x_coordinates.append(pos+1)
 
-        union_file = open(sys.argv[2]+guide+'_ranked_file_by_CFD.tsv', 'w')
-        union_file.write(
-            'Spacer+PAM\tCFD_Score\tCRISTA_Score\tCFD_Rank\tCRISTA_Rank\n')
+        # union_file = open(sys.argv[2]+guide+'_ranked_file_by_CFD.tsv', 'w')
+        # union_file.write(
+        #     'Spacer+PAM\tCFD_Score\tCRISTA_Score\tCFD_Rank\tCRISTA_Rank\n')
 
-        for pos, rank in enumerate(sorted_cfd_index_list):
-            try:
-                crista_rank = str(sorted_crista_index_list.index(rank)+1)
-            except:
-                crista_rank = 'out_of_list'
-            save = str(guide)+'\t' + str(cfd_score_list[pos])+'\t'+str(
-                crista_score_list[pos])+'\t'+str(pos+1)+'\t'+crista_rank+'\n'
-            union_file.write(save)
+        # for pos, rank in enumerate(sorted_cfd_index_list):
+        #     try:
+        #         crista_rank = str(sorted_crista_index_list.index(rank)+1)
+        #     except:
+        #         crista_rank = 'out_of_list'
+        #     save = str(guide)+'\t' + str(cfd_score_list[pos])+'\t'+str(
+        #         crista_score_list[pos])+'\t'+str(pos+1)+'\t'+crista_rank+'\n'
+        #     union_file.write(save)
 
-        # extend the list for plotting the whole distribution
-        x_coordinates_list.extend(cfd_crista_point_x_coordinates)
-        y_coordinates_list.extend(cfd_crista_point_y_coordinates)
+        # # extend the list for plotting the whole distribution
+        # x_coordinates_list.extend(cfd_crista_point_x_coordinates)
+        # y_coordinates_list.extend(cfd_crista_point_y_coordinates)
+
+    final_df = pd.concat(df_guide_list)
 
     # jointplot for x and y coordinates for ranking cfd and crista score
-    plot = sns.jointplot(x=x_coordinates_list, y=y_coordinates_list, marginal_ticks=True, space=0.5,
+    plot = sns.jointplot(data=final_df, x='CFD_Rank', y='CRISTA_Rank', marginal_ticks=True, space=0.5,
                          kind="reg", xlim=(1000, 0), ylim=(1000, 0), joint_kws={'line_kws': {'color': 'orange'}})
 
     plot.ax_joint.axvline(x=100)
