@@ -112,7 +112,7 @@ def plot_correlation(original_df):
         cfd_crista_point_y_coordinates = list()
         # sort values in the union by CFD, then extract the index list ordered to use as x coordinates
         top1000_union_CFDvCRISTA.sort_values(
-            ['CFD_score_(highest_CFD)'], ascending=False, inplace=True)
+            ['CFD_score_(highest_CFD)', 'CRISTA_score_(highest_CRISTA)'], ascending=[False, False], inplace=True)
         # reset index to use as x position for CFD rank
         top1000_union_CFDvCRISTA.reset_index(inplace=True)
         sorted_cfd_index_list = list(top1000_union_CFDvCRISTA['index'])
