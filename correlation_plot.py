@@ -125,7 +125,6 @@ def plot_correlation(original_df):
         for pos, index in enumerate(sorted_cfd_index_list):
             try:
                 y_coordinate = sorted_crista_index_list.index(index)
-                real_y_coordinates.append(y_coordinate)
             except:
                 continue
             if y_coordinate < 1000:
@@ -138,9 +137,9 @@ def plot_correlation(original_df):
         union_file = open(sys.argv[2]+'union_file.tsv', 'w')
         union_file.write(
             'Spacer+PAM\tCFD_Score\tCRISTA_Score\tCFD_Rank\tCRISTA_Rank\n')
-        for index, elem in enumerate(cfd_crista_point_x_coordinates):
-            save = str(guide)+'\t' + str(top1000_union_CFDvCRISTA.iloc[index]['CFD_score_(highest_CFD)'])+'\t'+str(top1000_union_CFDvCRISTA.iloc[real_y_coordinates[index]
-                                                                                                                                                 ]['CRISTA_score_(highest_CRISTA)'])+'\t'+str(elem)+'\t'+str(real_y_coordinates[index])
+        for index, elem in enumerate(sorted_cfd_index_list):
+            save = str(guide)+'\t' + str(top1000_union_CFDvCRISTA.iloc[elem]['CFD_score_(highest_CFD)'])+'\t'+str(top1000_union_CFDvCRISTA.iloc[sorted_crista_index_list.index(elem)
+                                                                                                                                                ]['CRISTA_score_(highest_CRISTA)'])+'\t'+str(elem)+'\t'+str(sorted_crista_index_list.index(elem))+'\n'
             union_file.write(save)
 
         # extend the list for plotting the whole distribution
