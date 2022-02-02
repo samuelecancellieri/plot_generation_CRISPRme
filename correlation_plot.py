@@ -143,7 +143,7 @@ def plot_correlation(original_df):
                                                                  ]['CRISTA_score_(highest_CRISTA)'])
             except:
                 crista_index = 'out_of_list'
-            save = str(guide)+'\t' + str(top1000_union_CFDvCRISTA.iloc[elem]['CFD_score_(highest_CFD)'])+'\t'+crista_index+'\t'+str(
+            save = str(guide)+'\t' + str(top1000_union_CFDvCRISTA.iloc[elem+1]['CFD_score_(highest_CFD)'])+'\t'+crista_index+'\t'+str(
                 elem)+'\t'+crista_index+'\n'
             union_file.write(save)
 
