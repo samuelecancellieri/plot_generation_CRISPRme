@@ -144,7 +144,7 @@ def plot_correlation(original_df):
             except:
                 crista_index = 'out_of_list'
             save = str(guide)+'\t' + str(top1000_union_CFDvCRISTA.iloc[elem]['CFD_score_(highest_CFD)'])+'\t'+crista_index+'\t'+str(
-                elem)+'\t'+str(sorted_crista_index_list.index(elem))+'\n'
+                elem)+'\t'+crista_index+'\n'
             union_file.write(save)
 
         # extend the list for plotting the whole distribution
