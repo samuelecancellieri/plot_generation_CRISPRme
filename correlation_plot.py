@@ -114,7 +114,7 @@ def plot_correlation(original_df):
         top1000_union_CFDvCRISTA.sort_values(
             ['CFD_score_(highest_CFD)'], ascending=False, inplace=True)
         # reset index to use as x position for CFD rank
-        df_guide.reset_index(inplace=True)
+        top1000_union_CFDvCRISTA.reset_index(inplace=True)
         sorted_cfd_index_list = list(top1000_union_CFDvCRISTA['index'])
         cfd_score_list = list(
             top1000_union_CFDvCRISTA['CFD_score_(highest_CFD)'])
