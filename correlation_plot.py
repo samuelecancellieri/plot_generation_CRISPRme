@@ -110,11 +110,14 @@ def plot_correlation(original_df):
         # create the list for the current analysis
         cfd_crista_point_x_coordinates = list()
         cfd_crista_point_y_coordinates = list()
-        real_y_coordinates = list()
         # sort values in the union by CFD, then extract the index list ordered to use as x coordinates
         top1000_union_CFDvCRISTA.sort_values(
             ['CFD_score_(highest_CFD)'], ascending=False, inplace=True)
         sorted_cfd_index_list = list(top1000_union_CFDvCRISTA['index'])
+        cfd_score_list = list(
+            top1000_union_CFDvCRISTA['CFD_score_(highest_CFD)'])
+        crista_score_list = list(
+            top1000_union_CFDvCRISTA['CRISTA_score_(highest_CRISTA)'])
         # sort values in the union by CRISTA, then extract the index list ordered to use as y coordinates
         top1000_union_CFDvCRISTA.sort_values(
             ['CRISTA_score_(highest_CRISTA)'], ascending=False, inplace=True)
@@ -139,14 +142,13 @@ def plot_correlation(original_df):
             'Spacer+PAM\tCFD_Score\tCRISTA_Score\tCFD_Rank\tCRISTA_Rank\n')
 
         print(top1000_union_CFDvCRISTA)
-        for index, elem in enumerate(sorted_cfd_index_list):
+        for pos, rank in enumerate(sorted_cfd_index_list):
             try:
-                crista_index = str(top1000_union_CFDvCRISTA.iloc[sorted_crista_index_list.index(elem)
-                                                                 ]['CRISTA_score_(highest_CRISTA)'])
+                crista_rank = str(sorted_crista_index_list.index(rank))
             except:
-                crista_index = 'out_of_list'
-            save = str(guide)+'\t' + str(top1000_union_CFDvCRISTA.iloc[elem+1]['CFD_score_(highest_CFD)'])+'\t'+crista_index+'\t'+str(
-                elem)+'\t'+crista_index+'\n'
+                crista_rank = 'out_of_list'
+            save = str(guide)+'\t' + str(cfd_score_list[pos])+'\t'+str(crista_score_list[pos])+'\t'+str(
+                rank)+'\t'+crista_rank+'\n'
             union_file.write(save)
 
         # extend the list for plotting the whole distribution
