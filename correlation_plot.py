@@ -139,8 +139,8 @@ def plot_correlation(original_df):
         union_file.write(
             'Spacer+PAM\tCFD_Score\tCRISTA_Score\tCFD_Rank\tCRISTA_Rank\n')
         for index, elem in enumerate(cfd_crista_point_x_coordinates):
-            save = guide+'\t' + '\t' + top1000_union_CFDvCRISTA.iloc[index]['CFD_score_(highest_CFD)']+'\t'+top1000_union_CFDvCRISTA.iloc[real_y_coordinates[index]
-                                                                                                                                          ]['CRISTA_score_(highest_CRISTA)']+'\t'+elem+'\t'+real_y_coordinates[index]
+            save = str(guide)+'\t' + str(top1000_union_CFDvCRISTA.iloc[index]['CFD_score_(highest_CFD)'])+'\t'+str(top1000_union_CFDvCRISTA.iloc[real_y_coordinates[index]
+                                                                                                                                                 ]['CRISTA_score_(highest_CRISTA)'])+'\t'+str(elem)+'\t'+str(real_y_coordinates[index])
             union_file.write(save)
 
         # extend the list for plotting the whole distribution
