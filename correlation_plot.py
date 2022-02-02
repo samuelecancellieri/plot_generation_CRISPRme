@@ -93,10 +93,15 @@ def plot_correlation(original_df):
 
         df_guide_selected = df_guide.loc[(
             df_guide['CFD_Rank'] <= 1000) | (df_guide['CRISTA_Rank'] <= 1000)]
-        df_guide_selected[df_guide_selected['CFD_Rank']
-                          > 1000]['CFD_Rank'] = 1000
-        df_guide_selected[df_guide_selected['CRISTA_Rank']
-                          > 1000]['CRISTA_Rank'] = 1000
+        # df_guide_selected[df_guide_selected['CFD_Rank']
+        #                   > 1000]['CFD_Rank'] = 1000
+        # df_guide_selected[df_guide_selected['CRISTA_Rank']
+        #                   > 1000]['CRISTA_Rank'] = 1000
+
+        df_guide_selected.loc[df_guide_selected['CFD_Rank']
+                              > 1000, 'CFD_Rank'] = 1000
+        df_guide_selected.loc[df_guide_selected['CRISTA_Rank']
+                              > 1000, 'CRISTA_Rank'] = 1000
 
         print(df_guide_selected)
 
