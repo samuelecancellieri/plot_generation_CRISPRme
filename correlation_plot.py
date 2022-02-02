@@ -104,7 +104,7 @@ def plot_correlation(original_df):
         top1000_union_CFDvCRISTA = pd.concat([original_df_cfd_sort.head(
             1000), original_df_crista_sort.head(1000)]).drop_duplicates()
 
-        top1000_union_CFDvCRISTA.to_csv(sys.argv[2]+guide+'top1000_union.tsv',
+        top1000_union_CFDvCRISTA.to_csv(sys.argv[2]+guide+'_top1000_union.tsv',
                                         sep='\t', na_rep='NA', index=False)
 
         # create the list for the current analysis
