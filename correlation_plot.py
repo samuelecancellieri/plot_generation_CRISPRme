@@ -124,8 +124,7 @@ def plot_correlation(original_df):
         sorted_crista_index_list = list(top1000_union_CFDvCRISTA['index'])
 
         # for each target in top1000 list of CFD ordered, find the position of the target if ordered by CRISTA (y coordinate), if not found return 1000 as y
-        # for pos, index in enumerate(sorted_cfd_index_list[:1000]):
-        for pos, index in enumerate(sorted_cfd_index_list):
+        for pos, index in enumerate(sorted_cfd_index_list[:1000]):
             try:
                 y_coordinate = sorted_crista_index_list.index(index)
             except:
