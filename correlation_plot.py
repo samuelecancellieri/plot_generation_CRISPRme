@@ -113,8 +113,6 @@ def plot_correlation(original_df):
         # sort values in the union by CFD, then extract the index list ordered to use as x coordinates
         top1000_union_CFDvCRISTA.sort_values(
             ['CFD_score_(highest_CFD)'], ascending=False, inplace=True)
-        # reset index to use as x position for CFD rank
-        top1000_union_CFDvCRISTA.reset_index(inplace=True)
         sorted_cfd_index_list = list(top1000_union_CFDvCRISTA['index'])
         cfd_score_list = list(
             top1000_union_CFDvCRISTA['CFD_score_(highest_CFD)'])
@@ -148,7 +146,7 @@ def plot_correlation(original_df):
             except:
                 crista_rank = 'out_of_list'
             save = str(guide)+'\t' + str(cfd_score_list[pos])+'\t'+str(
-                crista_score_list[pos])+'\t'+str(rank+1)+'\t'+crista_rank+'\n'
+                crista_score_list[pos])+'\t'+str(pos+1)+'\t'+crista_rank+'\n'
             union_file.write(save)
 
         # extend the list for plotting the whole distribution
