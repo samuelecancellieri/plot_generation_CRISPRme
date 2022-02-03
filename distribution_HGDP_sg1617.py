@@ -13,6 +13,8 @@ import matplotlib.pyplot as plt
 # from upsetplot import from_memberships
 import warnings
 import matplotlib
+import matplotlib.patches as mpatches
+
 # import math
 # SUPPRESS ALL WARNINGS
 warnings.filterwarnings("ignore")
@@ -92,14 +94,27 @@ def printDensityPlot():
         # allMedie.append(media)
         plt.plot(media, label=str(pop), color=color_dict[pop_dict[sample][1]])
         plt.fill_between(range(len(media)), lowerbound,
-                         upperbound, alpha=0.10)
+                         upperbound, alpha=0.10, color=color_dict[pop_dict[sample][1]])
 
     plt.title('populations_with diffCFD >=' + str(0.1) +
               ' and CI '+str(95)+'%'+' and CFD score >='+str(0.2))
     plt.xlabel('# Individuals')
     plt.ylabel('# Cumulative Targets')
+
+    # legend handles
+    AFR = mpatches.Patch(color='tab:orange', label="AFR")
+    AMR = mpatches.Patch(color='tab:brown', label="AMR")
+    CSA = mpatches.Patch(color='tab:blue', label="CSA")
+    EAS = mpatches.Patch(color='tab:pink', label="EAS")
+    EUR = mpatches.Patch(color='tab:red', label="EUR")
+    MEA = mpatches.Patch(color='tab:purple', label="MEA")
+    OCE = mpatches.Patch(color='tab:green', label="OCE")
+
+    plt.gca().add_artist(plt.legend(
+        handles=[AFR, AMR, CSA, EAS, EUR, MEA, OCE], title='Super Populations'))
+
     plt.tight_layout()
-    plt.savefig(sys.argv[3]+'_allpop_with_diffCFD_'+str(0.1) +
+    plt.savefig(sys.argv[3]+'allpop_with_diffCFD_'+str(0.1) +
                 'and_CI_95_and_CFD_score_'+str(0.2)+'.pdf')
 
 
