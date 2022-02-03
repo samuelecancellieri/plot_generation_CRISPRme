@@ -606,7 +606,7 @@ def plot_legend(guide: str, out_folder: str):
 def plot_title_figure(guide: str, mm: int, bul: int, cas_protein: str, genome: str, out_folder: str):
     gene_target = gene_target_dict[guide]
 
-    fig = plt.figure(figsize=(8.5, 0.2))
+    fig = plt.figure(figsize=(8.5, 11))
     fig.suptitle(guide+' '+gene_target+' '+cas_protein+' '+genome +
                  ' '+str(mm)+' mismatches'+' + '+str(bul)+' bulges', fontsize=12)
     plt.savefig(
