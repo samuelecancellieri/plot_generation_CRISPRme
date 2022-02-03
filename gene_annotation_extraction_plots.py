@@ -607,8 +607,8 @@ def plot_title_figure(guide: str, mm: int, bul: int, cas_protein: str, genome: s
     gene_target = gene_target_dict[guide]
 
     fig = plt.figure(figsize=(8.5, 0.2))
-    fig.suptitle(guide+' '+gene_target+' '+cas_protein+' '+genome +
-                 ' '+str(mm)+' mismatches'+' + '+str(bul)+' bulges', fontsize=12)
+    fig.suptitle(guide+', '+gene_target+', '+cas_protein+', '+genome +
+                 ','+str(mm)+' mismatches'+' + '+str(bul)+' bulges', fontsize=12)
     plt.savefig(
         out_folder+f"Atitle_{guide}.pdf", transparent=True)
     plt.clf()
