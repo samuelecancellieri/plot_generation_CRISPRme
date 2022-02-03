@@ -98,10 +98,10 @@ def printDensityPlot():
         ax.fill_between(range(len(media)), lowerbound,
                         upperbound, alpha=0.10, color=color_dict[pop_dict[sample][1]])
 
-    ax.title('populations_with diffCFD >=' + str(0.1) +
-             ' and CI '+str(95)+'%'+' and CFD score >='+str(0.2))
-    ax.xlabel('# Individuals')
-    ax.ylabel('# Cumulative Targets')
+    plt.title('populations_with diffCFD >=' + str(0.1) +
+              ' and CI '+str(95)+'%'+' and CFD score >='+str(0.2))
+    plt.xlabel('# Individuals')
+    plt.ylabel('# Cumulative Targets')
 
     # legend handles
     AFR = mpatches.Patch(color='tab:orange', label="AFR")
