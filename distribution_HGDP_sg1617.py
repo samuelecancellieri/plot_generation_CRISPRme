@@ -114,7 +114,7 @@ def printDensityPlot():
 
     box = ax.get_position()
     ax.set_position([box.x0, box.y0 + box.height * 0.1,
-                     box.width, box.height * 0.9])
+                     box.width, box.height * 0.85])
 
     # Put a legend below current axis
     ax.legend(loc='upper center')
