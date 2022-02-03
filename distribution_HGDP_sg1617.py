@@ -111,7 +111,7 @@ def printDensityPlot():
     OCE = mpatches.Patch(color='tab:green', label="OCE")
 
     plt.gca().add_artist(plt.legend(
-        handles=[AFR, AMR, CSA, EAS, EUR, MEA, OCE], title='Super Populations'), bbox_to_anchor=(1, 0.5))
+        handles=[AFR, AMR, CSA, EAS, EUR, MEA, OCE], title='Super Populations', bbox_to_anchor=(1, 0.5)))
 
     plt.tight_layout()
     plt.savefig(sys.argv[3]+'allpop_with_diffCFD_'+str(0.1) +
