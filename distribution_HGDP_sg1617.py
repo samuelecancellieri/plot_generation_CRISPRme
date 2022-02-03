@@ -45,9 +45,9 @@ for line in sample_file:
     split = line.strip().split('\t')
     if '#' in line:
         continue
-    #split[0] = sample
-    #split[1] = pop
-    #split[2] = super_pop
+    # split[0] = sample
+    # split[1] = pop
+    # split[2] = super_pop
     if split[1] not in sample_dict:
         sample_dict[split[1]] = dict()
 
@@ -113,10 +113,14 @@ def printDensityPlot():
     OCE = mpatches.Patch(color='tab:green', label="OCE")
 
     box = ax.get_position()
-    ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+    ax.set_position([box.x0, box.y0 + box.height * 0.1,
+                     box.width, box.height * 0.9])
 
-    plt.gca().add_artist(plt.legend(loc='center left',                                   handles=[
-        AFR, AMR, CSA, EAS, EUR, MEA, OCE], title='Super Populations', bbox_to_anchor=(1, 0.5)))
+    # Put a legend below current axis
+    ax.legend(loc='upper center')
+
+    plt.gca().add_artist(plt.legend(loc='upper center', handles=[AFR, AMR, CSA, EAS, EUR, MEA, OCE], title='Super Populations', bbox_to_anchor=(0.5, -0.05),
+                                    fancybox=True, shadow=True, ncol=len(color_dict.keys())))
 
     # ax.tight_layout()
     plt.savefig(sys.argv[3]+'allpop_with_diffCFD_'+str(0.1) +
