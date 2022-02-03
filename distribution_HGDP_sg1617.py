@@ -1,19 +1,19 @@
 import sys
-import time
-import random
-import pandas as pd
-from pandas.core.indexes.api import all_indexes_same
-import seaborn as sns
+# import time
+# import random
+# import pandas as pd
+# from pandas.core.indexes.api import all_indexes_same
+# import seaborn as sns
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.colors import LogNorm
+# from matplotlib.colors import LogNorm
 # from upsetplot import generate_counts
-from upsetplot import UpSet
+# from upsetplot import UpSet
 # import matplotlib as mpl
-from upsetplot import from_memberships
+# from upsetplot import from_memberships
 import warnings
 import matplotlib
-import math
+# import math
 # SUPPRESS ALL WARNINGS
 warnings.filterwarnings("ignore")
 # do not use X11
