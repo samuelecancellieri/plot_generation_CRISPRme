@@ -25,6 +25,23 @@ matplotlib.rcParams['ps.fonttype'] = 42
 sns.set_context("poster", font_scale=0.8)
 
 
+gene_target_dict = {
+    "AAAGGCTGCTGATGACACCTNNN": "TTR",
+    "CCCAGAAGGGGACAGTAAGANNN": "CCR5",
+    "CCCGCACCTTGGCGCAGCGGNNN": "PCSK9",
+    "CTAACAGTTGCTTTTATCACNNN": "BCL11A",
+    "CTTGCCCCACAGGGCAGTAANNN": "HBB",
+    "CTTGTCAAGGCTATTGGTCANNN": "HGB1",
+    "GAGTCCGAGCAGAAGAAGAANNN": "EMX1",
+    "GGAATCCCTTCTGCAGCACCNNN": "FANFC",
+    "GGAGAATGACGAGTGGACCCNNN": "TRBC",
+    "GGCGCCCTGGCCAGTCGTCTNNN": "PDCD1",
+    "GGGTGGGAAAATAGACTAATNNN": "HBB",
+    "TCACTATGCTGCCGCCCAGTNNN": "CCR5",
+    "TGTGCTAGACATGAGGTCTANNN": "TRAC1_TRAC2",
+    "TTTATCACAGGCTCCAGGAANNN": "BCL11A"
+}
+
 iupac_code_set = {
     "R": {"A", "G"},
     "Y": {"C", "T"},
@@ -543,6 +560,18 @@ def crisprme_plot_CFD(title, df, guide, out_folder):
     plt.close('all')
 
 
+def plot_title_figure(guide: str, mm: int, bul: int, cas_protein: str, genome: str, out_folder: str):
+    gene_target = gene_target_dict[guide]
+
+    fig = plt.figure()
+    fig.suptitle(guide+'_'+gene_target+'_'+cas_protein+'_'+genome +
+                 '_'+str(mm)+' mismatches'+' + '+str(bul)+' bulges')
+    plt.savefig(
+        out_folder+f"Atitle_{guide}.pdf", transparent=True)
+    plt.clf()
+    plt.close('all')
+
+
 def extraction_with_CFD(guide, df, out_dir, top_10_list, top_100_list, top_1000_list):
     # select the current analyzed guide and filter for CFD>=0.1
     df_single_guide = df.loc[(df["Spacer+PAM"] == guide)
@@ -887,6 +916,10 @@ def extraction_with_total(guide, df, out_dir, max_mm_bul_value, pam_first_nucleo
     top_1000_list.append(str(MAF_std))
     top_1000_list.append(str(MAF_min)+'-'+str(MAF_max))
 
+    # TITLE PLOT
+    plot_title_figure(guide, 6, 2,
+                      'SpCas9', 'hg38+1000G+HGDP', out_dir)
+
     # PLOT GENERATION
     crisprme_plot_MMvBUL(df_single_guide.head(
         100), guide+'_top100', out_dir, max_mm_bul_value, pam_first_nucleotide, pam_len)
@@ -913,6 +946,7 @@ in_targets_raw = sys.argv[1]
 in_targets_raw_open = open(in_targets_raw, 'r')
 in_humanTSGs = open(sys.argv[2], 'r')
 outdir = sys.argv[3]
+
 out_top10_counters = open(
     outdir+str(outdir.split('/')[1])+'_top10_counter.tsv', 'w')
 out_top100_counters = open(
