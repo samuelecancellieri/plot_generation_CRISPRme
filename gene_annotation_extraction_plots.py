@@ -565,7 +565,7 @@ def plot_title_figure(guide: str, mm: int, bul: int, cas_protein: str, genome: s
 
     fig = plt.figure()
     fig.suptitle(guide+'_'+gene_target+'_'+cas_protein+'_'+genome +
-                 '_'+str(mm)+' mismatches'+' + '+str(bul)+' bulges')
+                 '_'+str(mm)+' mismatches'+' + '+str(bul)+' bulges', fontsize=14)
     plt.savefig(
         out_folder+f"Atitle_{guide}.pdf", transparent=True)
     plt.clf()
