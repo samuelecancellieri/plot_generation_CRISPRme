@@ -804,7 +804,7 @@ def extraction_with_CFD(guide, df, out_dir, top_10_list, top_100_list, top_1000_
     crisprme_plot_CFD(title, dff.head(100), guide+'_pam_creation_CFD', out_dir)
 
     # PLOT LEGEND PER PLOT
-    plot_legend(guide, out_dir)
+    # plot_legend(guide, out_dir)
 
 
 def extraction_with_total(guide, df, out_dir, max_mm_bul_value, pam_first_nucleotide, pam_len, top_10_list, top_100_list, top_1000_list):
