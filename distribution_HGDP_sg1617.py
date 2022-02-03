@@ -115,8 +115,8 @@ def printDensityPlot():
     box = ax.get_position()
     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
 
-    plt.gca().add_artist(plt.legend(
-        handles=[AFR, AMR, CSA, EAS, EUR, MEA, OCE], title='Super Populations', bbox_to_anchor=(1, 0.5)))
+    plt.gca().add_artist(plt.legend(loc='center left',                                   handles=[
+        AFR, AMR, CSA, EAS, EUR, MEA, OCE], title='Super Populations', bbox_to_anchor=(1, 0.5)))
 
     # ax.tight_layout()
     plt.savefig(sys.argv[3]+'allpop_with_diffCFD_'+str(0.1) +
