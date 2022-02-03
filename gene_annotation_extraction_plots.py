@@ -560,10 +560,53 @@ def crisprme_plot_CFD(title, df, guide, out_folder):
     plt.close('all')
 
 
+def plot_legend(guide: str, out_folder: str):
+
+    fig = plt.figure(figsize=(8.5, 0.5))
+    # Color legend
+    transparent_red = mcolors.colorConverter.to_rgba("red", alpha=0.5)
+    transparent_blue = mcolors.colorConverter.to_rgba("blue", alpha=0.5)
+    s1 = mlines.Line2D([], [], marker='o', label='1', linestyle='None',
+                       markersize=math.sqrt(math.sqrt((1+0.001)*1000)), color='black')
+    s01 = mlines.Line2D([], [], marker='o', label='0.1', linestyle='None',
+                        markersize=math.sqrt(math.sqrt((0.1+0.001)*1000)), color='black')
+    s001 = mlines.Line2D([], [], marker='o', label='0.01', linestyle='None',
+                         markersize=math.sqrt(math.sqrt((0.01+0.001)*1000)), color='black')
+    s0001 = mlines.Line2D([], [], marker='o', label='0.001', linestyle='None',
+                          markersize=math.sqrt(math.sqrt((0.001+0.001)*1000)), color='black')
+    s1_red = mlines.Line2D([], [], marker='o', label='Reference', linestyle='None',
+                           markersize=math.sqrt(math.sqrt((1+0.001)*1000)), color=transparent_red)
+    s1_blue = mlines.Line2D([], [], marker='o', label='Alternative', linestyle='None',
+                            markersize=math.sqrt(math.sqrt((1+0.001)*1000)), color=transparent_blue)
+    green_PLS = mpatches.Patch(color='tab:green', label="PLS")
+    blue_pELS = mpatches.Patch(color='tab:blue', label="pELS")
+    gray_dELS = mpatches.Patch(color='tab:gray', label="dELS")
+    purple_CTCFonly = mpatches.Patch(color='tab:purple', label="CTCF-only")
+    olive_DNaseH3K4me3 = mpatches.Patch(
+        color='tab:olive', label="DNase-H3K4me3")
+    cyan_CDS = mpatches.Patch(color='tab:cyan', label="CDS")
+    red_TSG = mpatches.Patch(color='tab:red', label="TSG")
+
+    # legend for allele frequency
+    plt.gca().add_artist(plt.legend(handles=[s1, s01, s001, s0001], title='Allele frequency', bbox_to_anchor=(
+        0.01, 1.03), loc='lower left', borderaxespad=0, ncol=4))
+    # legend for target origin
+    plt.gca().add_artist(plt.legend(handles=[s1_red, s1_blue], title='Target genome', bbox_to_anchor=(
+        0.30, 1.03), loc='lower left', borderaxespad=0, ncol=3))
+    # legend for encode annotation
+    plt.gca().add_artist(plt.legend(handles=[green_PLS, cyan_CDS, blue_pELS, red_TSG, gray_dELS, purple_CTCFonly, olive_DNaseH3K4me3],
+                                    loc='lower left', bbox_to_anchor=(0.54, 1.02), title='Annotations', borderaxespad=0, ncol=5))
+
+    plt.savefig(
+        out_folder+f"Zlegend_{guide}.pdf", transparent=True)
+    plt.clf()
+    plt.close('all')
+
+
 def plot_title_figure(guide: str, mm: int, bul: int, cas_protein: str, genome: str, out_folder: str):
     gene_target = gene_target_dict[guide]
 
-    fig = plt.figure(figsize=(8.5, 0.3))
+    fig = plt.figure(figsize=(8.5, 0.2))
     fig.suptitle(guide+' '+gene_target+' '+cas_protein+' '+genome +
                  ' '+str(mm)+' mismatches'+' + '+str(bul)+' bulges', fontsize=12)
     plt.savefig(
@@ -759,6 +802,9 @@ def extraction_with_CFD(guide, df, out_dir, top_10_list, top_100_list, top_1000_
     )]
     title = 'PAM creation'
     crisprme_plot_CFD(title, dff.head(100), guide+'_pam_creation_CFD', out_dir)
+
+    # PLOT LEGEND PER PLOT
+    plot_legend(guide, out_dir)
 
 
 def extraction_with_total(guide, df, out_dir, max_mm_bul_value, pam_first_nucleotide, pam_len, top_10_list, top_100_list, top_1000_list):
