@@ -412,7 +412,7 @@ def crisprme_plot_CFD(title, df, guide, out_folder):
     # plt.rcParams['ps.fonttype'] = 42
 
     # plt.figure(figsize=(25, 22))
-    plt.figure(figsize=(8.5, 11))
+    plt.figure(figsize=(8.5, 10))
     # plt.figure()
     ax1 = plt.subplot(7, 1, (1, 5))
     # ax1.set_position([0.125, 0.4, 0.9, 0.9])
@@ -606,7 +606,7 @@ def plot_legend(guide: str, out_folder: str):
 def plot_title_figure(guide: str, mm: int, bul: int, cas_protein: str, genome: str, out_folder: str):
     gene_target = gene_target_dict[guide]
 
-    fig = plt.figure(figsize=(8.5, 11))
+    fig = plt.figure(figsize=(8.5, 0.2))
     fig.suptitle(guide+' '+gene_target+' '+cas_protein+' '+genome +
                  ' '+str(mm)+' mismatches'+' + '+str(bul)+' bulges', fontsize=12)
     plt.savefig(
