@@ -732,6 +732,10 @@ def extraction_with_CFD(guide, df, out_dir, top_10_list, top_100_list, top_1000_
     top_1000_list.append(str(MAF_std))
     top_1000_list.append(str(MAF_min)+'-'+str(MAF_max))
 
+    # TITLE PLOT
+    plot_title_figure(guide, 6, 2,
+                      'SpCas9', 'hg38+1000G+HGDP', out_dir)
+
     # PLOT GENERATION
     # extract top100 targets with CFD>=0.1
     title = 'All OTs'
@@ -915,10 +919,6 @@ def extraction_with_total(guide, df, out_dir, max_mm_bul_value, pam_first_nucleo
     top_1000_list.append(str(MAF_mean))
     top_1000_list.append(str(MAF_std))
     top_1000_list.append(str(MAF_min)+'-'+str(MAF_max))
-
-    # TITLE PLOT
-    plot_title_figure(guide, 6, 2,
-                      'SpCas9', 'hg38+1000G+HGDP', out_dir)
 
     # PLOT GENERATION
     crisprme_plot_MMvBUL(df_single_guide.head(
