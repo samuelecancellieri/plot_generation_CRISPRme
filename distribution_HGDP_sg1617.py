@@ -34,6 +34,10 @@ target_file = open(sys.argv[1], 'r')
 sample_file = open(sys.argv[2], 'r')
 sample_dict = dict()
 pop_dict = dict()
+color_dict = dict()
+color_dict = {'AFR': 'tab:orange', 'AMR': 'tab:brown', 'CSA': 'tab:blue',
+              'EAS': 'tab:pink', 'EUR': 'tab:red', 'MEA': 'tab:purple', 'OCE': 'tab:green'}
+
 
 for line in sample_file:
     split = line.strip().split('\t')
@@ -41,11 +45,12 @@ for line in sample_file:
         continue
     #split[0] = sample
     #split[1] = pop
+    #split[2] = super_pop
     if split[1] not in sample_dict:
         sample_dict[split[1]] = dict()
 
     sample_dict[split[1]][split[0]] = set()
-    pop_dict[split[0]] = split[1]
+    pop_dict[split[0]] = [split[1], split[2]]
 
 
 # sg1617 = 'CTAACAGTTGCTTTTATCACNNN'
@@ -85,7 +90,7 @@ def printDensityPlot():
         lowerbound = media-(z_score*standarderr)
         upperbound = media+(z_score*standarderr)
         # allMedie.append(media)
-        plt.plot(media, label=str(pop))
+        plt.plot(media, label=str(pop), color=color_dict[pop_dict[sample][1]])
         plt.fill_between(range(len(media)), lowerbound,
                          upperbound, alpha=0.10)
 
@@ -93,7 +98,6 @@ def printDensityPlot():
               ' and CI '+str(95)+'%'+' and CFD score >='+str(0.2))
     plt.xlabel('# Individuals')
     plt.ylabel('# Cumulative Targets')
-    # plt.legend()
     plt.tight_layout()
     plt.savefig(sys.argv[3]+'_allpop_with_diffCFD_'+str(0.1) +
                 'and_CI_95_and_CFD_score_'+str(0.2)+'.pdf')
@@ -105,7 +109,7 @@ for index, target in enumerate(target_file):
     split = target.strip().split('\t')
     samples = split[22].split(',')  # position in old integrated of samples
     for sample in samples:
-        pop = pop_dict[sample]
+        pop = pop_dict[sample][0]
         sample_dict[pop][sample].add(index)
 
 # print(sample_dict)
