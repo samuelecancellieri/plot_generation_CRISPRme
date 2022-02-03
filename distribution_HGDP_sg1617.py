@@ -66,7 +66,9 @@ for line in sample_file:
 
 def printDensityPlot():
     # create figure and set axis
-    plt.figure()
+    # plt.figure()
+    fig = plt.figure()
+    ax = plt.subplot(111)
     for pop in sample_dict:  # for each superpopulation
         andamenti = list()
         permutationList = list()
@@ -92,14 +94,14 @@ def printDensityPlot():
         lowerbound = media-(z_score*standarderr)
         upperbound = media+(z_score*standarderr)
         # allMedie.append(media)
-        plt.plot(media, label=str(pop), color=color_dict[pop_dict[sample][1]])
-        plt.fill_between(range(len(media)), lowerbound,
-                         upperbound, alpha=0.10, color=color_dict[pop_dict[sample][1]])
+        ax.plot(media, label=str(pop), color=color_dict[pop_dict[sample][1]])
+        ax.fill_between(range(len(media)), lowerbound,
+                        upperbound, alpha=0.10, color=color_dict[pop_dict[sample][1]])
 
-    plt.title('populations_with diffCFD >=' + str(0.1) +
-              ' and CI '+str(95)+'%'+' and CFD score >='+str(0.2))
-    plt.xlabel('# Individuals')
-    plt.ylabel('# Cumulative Targets')
+    ax.title('populations_with diffCFD >=' + str(0.1) +
+             ' and CI '+str(95)+'%'+' and CFD score >='+str(0.2))
+    ax.xlabel('# Individuals')
+    ax.ylabel('# Cumulative Targets')
 
     # legend handles
     AFR = mpatches.Patch(color='tab:orange', label="AFR")
@@ -110,10 +112,13 @@ def printDensityPlot():
     MEA = mpatches.Patch(color='tab:purple', label="MEA")
     OCE = mpatches.Patch(color='tab:green', label="OCE")
 
+    box = ax.get_position()
+    ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+
     plt.gca().add_artist(plt.legend(
         handles=[AFR, AMR, CSA, EAS, EUR, MEA, OCE], title='Super Populations', bbox_to_anchor=(1, 0.5)))
 
-    plt.tight_layout()
+    # ax.tight_layout()
     plt.savefig(sys.argv[3]+'allpop_with_diffCFD_'+str(0.1) +
                 'and_CI_95_and_CFD_score_'+str(0.2)+'.pdf')
 
