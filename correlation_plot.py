@@ -177,6 +177,8 @@ def plot_correlation(original_df):
 
     final_df = pd.concat(df_guide_list)
 
+    print(len(final_df.index))
+
     count_list = list()
     # CFD<100 & CRISTA<100
     count_list.append('CFD<100 & CRISTA<100')
