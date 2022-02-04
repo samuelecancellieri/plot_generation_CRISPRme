@@ -202,9 +202,9 @@ def plot_correlation(original_df):
     # plot = sns.jointplot(data=final_df, x='CFD_Rank', y='CRISTA_Rank', marginal_ticks=True, space=0.5, xlim=(
     #     1010, -10), ylim=(1010, -10), joint_kws={'scatter_kws': dict(alpha=0.2)})
 
-    plot = sns.JointGrid(data=final_df, x='CFD_Rank', y='CRISTA_Rank')
-    plot.plot_joint(sns.scatterplot, alpha=.5, xlim=(
-        1010, -10), ylim=(1010, -10))
+    plot = sns.JointGrid(data=final_df, x='CFD_Rank',
+                         y='CRISTA_Rank', xlim=(1010, -10), ylim=(1010, -10))
+    plot.plot_joint(sns.scatterplot, alpha=.5)
     plot.plot_marginals(sns.histplot)
 
     plot.ax_joint.axvline(x=100)
