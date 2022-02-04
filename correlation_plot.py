@@ -194,7 +194,7 @@ def plot_correlation(original_df):
 
     # jointplot for x and y coordinates for ranking cfd and crista score
     plot = sns.jointplot(data=final_df, x='CFD_Rank', y='CRISTA_Rank', marginal_ticks=True, space=0.5, xlim=(
-        1000, -5), ylim=(1000, -5))
+        1000, -10), ylim=(1000, -10))
 
     plot.ax_joint.axvline(x=100)
     plot.ax_joint.axhline(y=100)
