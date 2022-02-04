@@ -185,20 +185,20 @@ def plot_correlation(original_df):
     # CFD<100 & CRISTA>100
     count_list.append('CFD<100 & CRISTA>100')
     count_list.append(final_df[(final_df.CFD_Rank <= 100) & (
-        final_df.CRISTA_Rank > 100) & (final_df.CRISTA_Rank < 1000)].count())
+        final_df.CRISTA_Rank > 100)].count())
     # CFD>100 & CRISTA<100
     count_list.append('CFD>100 & CRISTA<100')
-    count_list.append(final_df[(final_df.CFD_Rank > 100) & (final_df.CFD_Rank < 1000) & (
+    count_list.append(final_df[(final_df.CFD_Rank > 100) & (
         final_df.CRISTA_Rank <= 100)].count())
-    # CFD>100(<1000) & CRISTA>100(<1000)
-    count_list.append('CFD>100(<1000) & CRISTA>100(<1000)')
-    count_list.append(final_df[(final_df.CFD_Rank > 100) & (final_df.CFD_Rank < 1000) & (
-        final_df.CRISTA_Rank > 100) & (final_df.CRISTA_Rank < 1000)].count())
+    # CFD>100 & CRISTA>100
+    count_list.append('CFD>100 & CRISTA>100')
+    count_list.append(final_df[(final_df.CFD_Rank > 100) & (
+        final_df.CRISTA_Rank > 100)].count())
     print(count_list)
 
     # jointplot for x and y coordinates for ranking cfd and crista score
     plot = sns.jointplot(data=final_df, x='CFD_Rank', y='CRISTA_Rank', marginal_ticks=True, space=0.5, xlim=(
-        1000, -10), ylim=(1000, -10))
+        1010, -10), ylim=(1010, -10))
 
     plot.ax_joint.axvline(x=100)
     plot.ax_joint.axhline(y=100)
