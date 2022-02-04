@@ -179,9 +179,11 @@ def plot_correlation(original_df):
 
     count_list = list()
     # CFD<100 & CRISTA<100
+    count_list.append('CFD<100 & CRISTA<100')
     count_list.append(final_df[(final_df.CFD_Rank <= 100) & (
         final_df.CRISTA_Rank <= 100)].count())
     # CFD<100 & CRISTA>100
+    count_list.append('CFD<100 & CRISTA>100')
     count_list.append(final_df[(final_df.CFD_Rank <= 100) & (
         final_df.CRISTA_Rank > 100) & (final_df.CRISTA_Rank < 1000)].count())
     # CFD>100 & CRISTA<100
