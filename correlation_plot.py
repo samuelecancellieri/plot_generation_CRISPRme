@@ -91,19 +91,35 @@ def plot_correlation(original_df):
         df_guide['CRISTA_Rank'] = np.argsort(
             df_guide['CRISTA_score_(highest_CRISTA)'])
 
+        # df_guide['CFD_Rank'] += 1
+        # df_guide['CRISTA_Rank'] += 1
+
         df_guide_selected = df_guide.loc[(
             df_guide['CFD_Rank'] <= 1000) | (df_guide['CRISTA_Rank'] <= 1000)]
-        # df_guide_selected[df_guide_selected['CFD_Rank']
-        #                   > 1000]['CFD_Rank'] = 1000
-        # df_guide_selected[df_guide_selected['CRISTA_Rank']
-        #                   > 1000]['CRISTA_Rank'] = 1000
+
+        count_list = list()
+
+        # CFD<100 & CRISTA<100
+        count_list.append(df_guide_selected[(df_guide_selected.CFD_Rank <= 100) & (
+            df_guide_selected.CRISTA_Rank <= 100)].count())
+        # CFD<100 & CRISTA>100
+        count_list.append(df_guide_selected[(df_guide_selected.CFD_Rank <= 100) & (
+            df_guide_selected.CRISTA_Rank > 100)].count())
+        # CFD>100 & CRISTA<100
+        count_list.append(df_guide_selected[(df_guide_selected.CFD_Rank > 100) & (
+            df_guide_selected.CRISTA_Rank <= 100)].count())
+        # CFD>100(<1000) & CRISTA>100(<1000)
+        count_list.append(df_guide_selected[(df_guide_selected.CFD_Rank > 100) & (df_guide_selected.CFD_Rank < 1000) & (
+            df_guide_selected.CRISTA_Rank > 100) & (df_guide_selected.CRISTA_Rank < 1000)].count())
+
+        print(count_list)
 
         df_guide_selected.loc[df_guide_selected['CFD_Rank']
                               > 1000, 'CFD_Rank'] = 1000
         df_guide_selected.loc[df_guide_selected['CRISTA_Rank']
                               > 1000, 'CRISTA_Rank'] = 1000
 
-        print(df_guide_selected)
+        # print(df_guide_selected)
 
         df_guide_list.append(df_guide_selected)
         # reset index to use as x position for rank
@@ -179,8 +195,8 @@ def plot_correlation(original_df):
     final_df = pd.concat(df_guide_list)
 
     # jointplot for x and y coordinates for ranking cfd and crista score
-    plot = sns.jointplot(data=final_df, x='CFD_Rank', y='CRISTA_Rank', marginal_ticks=True, space=0.5,
-                         kind="reg", xlim=(1000, 0), ylim=(1000, 0), joint_kws={'line_kws': {'color': 'orange'}})
+    plot = sns.jointplot(data=final_df, x='CFD_Rank', y='CRISTA_Rank', marginal_ticks=True, space=0.5, xlim=(
+        1000, -1), ylim=(1000, -1), joint_kws={'line_kws': {'color': 'orange'}})
 
     plot.ax_joint.axvline(x=100)
     plot.ax_joint.axhline(y=100)
