@@ -205,7 +205,7 @@ def plot_correlation(original_df):
     plot = sns.JointGrid(data=final_df, x='CFD_Rank',
                          y='CRISTA_Rank', xlim=(1010, -10), ylim=(1010, -10))
     plot.plot_joint(sns.scatterplot, alpha=.5)
-    plot.plot_marginals(sns.histplot)
+    plot.plot_marginals(sns.histplot, marginal_ticks=True)
 
     plot.ax_joint.axvline(x=100)
     plot.ax_joint.axhline(y=100)
