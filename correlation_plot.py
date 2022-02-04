@@ -97,23 +97,6 @@ def plot_correlation(original_df):
         df_guide_selected = df_guide.loc[(
             df_guide['CFD_Rank'] <= 1000) | (df_guide['CRISTA_Rank'] <= 1000)]
 
-        count_list = list()
-
-        # CFD<100 & CRISTA<100
-        count_list.append(df_guide_selected[(df_guide_selected.CFD_Rank <= 100) & (
-            df_guide_selected.CRISTA_Rank <= 100)].count())
-        # CFD<100 & CRISTA>100
-        count_list.append(df_guide_selected[(df_guide_selected.CFD_Rank <= 100) & (
-            df_guide_selected.CRISTA_Rank > 100) & (df_guide_selected.CRISTA_Rank < 1000)].count())
-        # CFD>100 & CRISTA<100
-        count_list.append(df_guide_selected[(df_guide_selected.CFD_Rank > 100) & (df_guide_selected.CFD_Rank < 1000) & (
-            df_guide_selected.CRISTA_Rank <= 100)].count())
-        # CFD>100(<1000) & CRISTA>100(<1000)
-        count_list.append(df_guide_selected[(df_guide_selected.CFD_Rank > 100) & (df_guide_selected.CFD_Rank < 1000) & (
-            df_guide_selected.CRISTA_Rank > 100) & (df_guide_selected.CRISTA_Rank < 1000)].count())
-
-        print(count_list)
-
         df_guide_selected.loc[df_guide_selected['CFD_Rank']
                               > 1000, 'CFD_Rank'] = 1000
         df_guide_selected.loc[df_guide_selected['CRISTA_Rank']
@@ -193,6 +176,21 @@ def plot_correlation(original_df):
         # y_coordinates_list.extend(cfd_crista_point_y_coordinates)
 
     final_df = pd.concat(df_guide_list)
+
+    count_list = list()
+    # CFD<100 & CRISTA<100
+    count_list.append(final_df[(final_df.CFD_Rank <= 100) & (
+        final_df.CRISTA_Rank <= 100)].count())
+    # CFD<100 & CRISTA>100
+    count_list.append(final_df[(final_df.CFD_Rank <= 100) & (
+        final_df.CRISTA_Rank > 100) & (final_df.CRISTA_Rank < 1000)].count())
+    # CFD>100 & CRISTA<100
+    count_list.append(final_df[(final_df.CFD_Rank > 100) & (final_df.CFD_Rank < 1000) & (
+        final_df.CRISTA_Rank <= 100)].count())
+    # CFD>100(<1000) & CRISTA>100(<1000)
+    count_list.append(final_df[(final_df.CFD_Rank > 100) & (final_df.CFD_Rank < 1000) & (
+        final_df.CRISTA_Rank > 100) & (final_df.CRISTA_Rank < 1000)].count())
+    print(count_list)
 
     # jointplot for x and y coordinates for ranking cfd and crista score
     plot = sns.jointplot(data=final_df, x='CFD_Rank', y='CRISTA_Rank', marginal_ticks=True, space=0.5, xlim=(
