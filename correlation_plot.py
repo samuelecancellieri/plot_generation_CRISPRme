@@ -91,9 +91,6 @@ def plot_correlation(original_df):
         df_guide['CRISTA_Rank'] = np.argsort(
             df_guide['CRISTA_score_(highest_CRISTA)'])
 
-        # df_guide['CFD_Rank'] += 1
-        # df_guide['CRISTA_Rank'] += 1
-
         df_guide_selected = df_guide.loc[(
             df_guide['CFD_Rank'] <= 1000) | (df_guide['CRISTA_Rank'] <= 1000)]
 
@@ -102,83 +99,48 @@ def plot_correlation(original_df):
         df_guide_selected.loc[df_guide_selected['CRISTA_Rank']
                               > 1000, 'CRISTA_Rank'] = 1000
 
-        # print(df_guide_selected)
-
         df_guide_list.append(df_guide_selected)
-        # reset index to use as x position for rank
-        # df_guide.reset_index(inplace=True)
 
-        # print('plotting for guide:', guide)
-        # # sorting the df in CFD and CRISTA order saving in different dfs
-        # original_df_cfd_sort = df_guide.sort_values(
-        #     ['CFD_score_(highest_CFD)'], ascending=False)
-        # original_df_crista_sort = df_guide.sort_values(
-        #     ['CRISTA_score_(highest_CRISTA)'], ascending=False)
+        print('count for guide', guide)
+        count_list = list()
+        # CFD<100 & CRISTA<100
+        count_list.append('CFD<100 & CRISTA<100')
+        count_list.append(df_guide_selected[(df_guide_selected.CFD_Rank <= 100) & (
+            df_guide_selected.CRISTA_Rank <= 100)].count())
+        # CFD<100 & CRISTA>100
+        count_list.append('CFD<100 & CRISTA>100')
+        count_list.append(df_guide_selected[(df_guide_selected.CFD_Rank <= 100) & (
+            df_guide_selected.CRISTA_Rank > 100)].count())
+        # CFD>100 & CRISTA<100
+        count_list.append('CFD>100 & CRISTA<100')
+        count_list.append(df_guide_selected[(df_guide_selected.CFD_Rank > 100) & (
+            df_guide_selected.CRISTA_Rank <= 100)].count())
+        # CFD>100 & CRISTA>100
+        count_list.append('CFD>100 & CRISTA>100')
+        count_list.append(df_guide_selected[(df_guide_selected.CFD_Rank > 100) & (
+            df_guide_selected.CRISTA_Rank > 100)].count())
+        print(count_list)
 
-        # original_df_cfd_sort.head(1000).to_csv(sys.argv[2]+guide+'_top1000_CFD.tsv',
-        #                                        sep='\t', na_rep='NA', index=False)
-        # original_df_crista_sort.head(1000).to_csv(sys.argv[2]+guide+'_top1000_CRISTA.tsv',
-        #                                           sep='\t', na_rep='NA', index=False)
+        plot = sns.JointGrid(data=df_guide_selected, x='CFD_Rank',
+                             y='CRISTA_Rank', xlim=(1010, -10), ylim=(1010, -10), marginal_ticks=True)
+        plot.plot_joint(sns.scatterplot, alpha=0.5)
+        plot.plot_marginals(sns.histplot)
 
-        # created the df of union, dropping the duplicate targets that appears in both
-        # top1000_union_CFDvCRISTA = pd.concat([original_df_cfd_sort.head(
-        #     1000), original_df_crista_sort.head(1000)]).drop_duplicates()
+        plot.ax_joint.axvline(x=100)
+        plot.ax_joint.axhline(y=100)
+        plot.set_axis_labels('CFD Rank', 'CRISTA Rank')
 
-        # print('number of target in union', len(top1000_union_CFDvCRISTA.index))
+        plt.tight_layout()
+        # single guide figure
+        plt.savefig(
+            sys.argv[2]+f'scatter_rank_CFDvCRISTA_top1000_union_{guide}.pdf')
+        plt.clf()
+        plt.close('all')
 
-        # top1000_union_CFDvCRISTA.to_csv(sys.argv[2]+guide+'_top1000_union.tsv',
-        #                                 sep='\t', na_rep='NA', index=False)
-
-        # create the list for the current analysis
-        # cfd_crista_point_x_coordinates = list()
-        # cfd_crista_point_y_coordinates = list()
-        # # sort values in the union by CFD, then extract the index list ordered to use as x coordinates
-        # top1000_union_CFDvCRISTA.sort_values(
-        #     ['CFD_score_(highest_CFD)'], ascending=False, inplace=True)
-        # sorted_cfd_index_list = list(top1000_union_CFDvCRISTA['index'])
-        # cfd_score_list = list(
-        #     top1000_union_CFDvCRISTA['CFD_score_(highest_CFD)'])
-        # crista_score_list = list(
-        #     top1000_union_CFDvCRISTA['CRISTA_score_(highest_CRISTA)'])
-        # # sort values in the union by CRISTA, then extract the index list ordered to use as y coordinates
-        # top1000_union_CFDvCRISTA.sort_values(
-        #     ['CRISTA_score_(highest_CRISTA)'], ascending=False, inplace=True)
-        # sorted_crista_index_list = list(top1000_union_CFDvCRISTA['index'])
-
-        # for each target in top1000 list of CFD ordered, find the position of the target if ordered by CRISTA (y coordinate), if not found return 1000 as y
-        # for pos, index in enumerate(sorted_cfd_index_list[:1000]):
-        #     try:
-        #         y_coordinate = sorted_crista_index_list.index(index)
-        #     except:
-        #         continue
-        #     if y_coordinate < 1000:
-        #         cfd_crista_point_y_coordinates.append(y_coordinate+1)
-        #         cfd_crista_point_x_coordinates.append(pos+1)
-        #     else:
-        #         cfd_crista_point_y_coordinates.append(1000)
-        #         cfd_crista_point_x_coordinates.append(pos+1)
-
-        # union_file = open(sys.argv[2]+guide+'_ranked_file_by_CFD.tsv', 'w')
-        # union_file.write(
-        #     'Spacer+PAM\tCFD_Score\tCRISTA_Score\tCFD_Rank\tCRISTA_Rank\n')
-
-        # for pos, rank in enumerate(sorted_cfd_index_list):
-        #     try:
-        #         crista_rank = str(sorted_crista_index_list.index(rank)+1)
-        #     except:
-        #         crista_rank = 'out_of_list'
-        #     save = str(guide)+'\t' + str(cfd_score_list[pos])+'\t'+str(
-        #         crista_score_list[pos])+'\t'+str(pos+1)+'\t'+crista_rank+'\n'
-        #     union_file.write(save)
-
-        # # extend the list for plotting the whole distribution
-        # x_coordinates_list.extend(cfd_crista_point_x_coordinates)
-        # y_coordinates_list.extend(cfd_crista_point_y_coordinates)
-
+    # whole figure
     final_df = pd.concat(df_guide_list)
 
-    print(len(final_df.index))
-
+    print('whole figure')
     count_list = list()
     # CFD<100 & CRISTA<100
     count_list.append('CFD<100 & CRISTA<100')
