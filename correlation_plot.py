@@ -237,26 +237,6 @@ def plot_correlation(original_df):
     count_df.to_csv(sys.argv[2]+'count_list_top10000_union.tsv',
                     sep='\t', na_rep='NA', index=False)
 
-    print('whole figure')
-    print('count of targets in union top10000',
-          len(final_df.index))
-    # CFD<100 & CRISTA<100
-    print('CFD<=100 & CRISTA<=100')
-    print(len(final_df[(final_df.CFD_Rank <= 100) & (
-        final_df.CRISTA_Rank <= 100)].index))
-    # CFD<100 & CRISTA>100
-    print('CFD<=100 & CRISTA>100')
-    print(len(final_df[(final_df.CFD_Rank <= 100) & (
-        final_df.CRISTA_Rank > 100)].index))
-    # CFD>100 & CRISTA<100
-    print('CFD>100 & CRISTA<=100')
-    print(len(final_df[(final_df.CFD_Rank > 100) & (
-        final_df.CRISTA_Rank <= 100)].index))
-    # CFD>100 & CRISTA>100
-    print('CFD>100 & CRISTA>100')
-    print(len(final_df[(final_df.CFD_Rank > 100) & (
-        final_df.CRISTA_Rank > 100)].index))
-
     plot = sns.JointGrid(data=final_df, x='CFD_Rank',
                          y='CRISTA_Rank', marginal_ticks=True)
     plot.plot_joint(sns.scatterplot, alpha=0.5)
