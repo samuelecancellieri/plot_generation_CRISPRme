@@ -154,7 +154,7 @@ def plot_correlation(original_df):
     # whole figure
     final_df = pd.concat(df_guide_list)
     count_df = pd.DataFrame(count_list, columns=[
-                            'sgRNA', 'CFD<=100&CRISTA<=100', 'CFD<=100 & CRISTA>100', 'CFD>100&CRISTA<=100', 'CFD>100&CRISTA>100'])
+                            'sgRNA', 'total_targets_union', 'CFD<=100&CRISTA<=100', 'CFD<=100 & CRISTA>100', 'CFD>100&CRISTA<=100', 'CFD>100&CRISTA>100'])
     count_df.to_csv(sys.argv[2]+'count_list_top1000_union.tsv',
                     sep='\t', na_rep='NA', index=False)
 
