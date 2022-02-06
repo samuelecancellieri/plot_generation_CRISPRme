@@ -141,7 +141,6 @@ def plot_correlation(original_df):
     final_df = pd.concat(df_guide_list)
 
     print('whole figure')
-    print('count for guide', guide)
     print('count of targets in union top1000',
           len(final_df.index))
     # CFD<100 & CRISTA<100
