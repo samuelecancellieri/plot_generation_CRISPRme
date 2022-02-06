@@ -88,6 +88,8 @@ def plot_correlation(original_df):
         df_guide['CFD_Rank'] = np.argsort(df_guide['CFD_score_(highest_CFD)'])
         df_guide['CRISTA_Rank'] = np.argsort(
             df_guide['CRISTA_score_(highest_CRISTA)'])
+        df_guide['CFD_Rank'] += 1
+        df_guide['CRISTA_Rank'] += 1
 
         df_guide_selected = df_guide.loc[(
             df_guide['CFD_Rank'] <= 1000) | (df_guide['CRISTA_Rank'] <= 1000)]
@@ -111,16 +113,16 @@ def plot_correlation(original_df):
             df_guide_selected.CRISTA_Rank <= 100)].index))
         # CFD<100 & CRISTA>100
         print('CFD<100 & CRISTA>100')
-        print(df_guide_selected[(df_guide_selected.CFD_Rank <= 100) & (
-            df_guide_selected.CRISTA_Rank > 100)].index)
+        print(len(df_guide_selected[(df_guide_selected.CFD_Rank <= 100) & (
+            df_guide_selected.CRISTA_Rank > 100)].index))
         # CFD>100 & CRISTA<100
         print('CFD>100 & CRISTA<100')
-        print(df_guide_selected[(df_guide_selected.CFD_Rank > 100) & (
-            df_guide_selected.CRISTA_Rank <= 100)].index)
+        print(len(df_guide_selected[(df_guide_selected.CFD_Rank > 100) & (
+            df_guide_selected.CRISTA_Rank <= 100)].index))
         # CFD>100 & CRISTA>100
         print('CFD>100 & CRISTA>100')
-        print(df_guide_selected[(df_guide_selected.CFD_Rank > 100) & (
-            df_guide_selected.CRISTA_Rank > 100)].index)
+        print(len(df_guide_selected[(df_guide_selected.CFD_Rank > 100) & (
+            df_guide_selected.CRISTA_Rank > 100)].index))
 
         plot = sns.JointGrid(data=df_guide_selected, x='CFD_Rank',
                              y='CRISTA_Rank', xlim=(1010, -10), ylim=(1010, -10), marginal_ticks=True)
