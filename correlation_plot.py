@@ -160,10 +160,6 @@ def plot_correlation(original_df):
     print(len(final_df[(final_df.CFD_Rank > 100) & (
         final_df.CRISTA_Rank > 100)].index))
 
-    # jointplot for x and y coordinates for ranking cfd and crista score
-    # plot = sns.jointplot(data=final_df, x='CFD_Rank', y='CRISTA_Rank', marginal_ticks=True, space=0.5, xlim=(
-    #     1010, -10), ylim=(1010, -10))
-
     plot = sns.JointGrid(data=final_df, x='CFD_Rank',
                          y='CRISTA_Rank', xlim=(1010, -10), ylim=(1010, -10), marginal_ticks=True)
     plot.plot_joint(sns.scatterplot, alpha=0.5)
