@@ -105,31 +105,22 @@ def plot_correlation(original_df):
         print('count for guide', guide)
         guide_list = list()
         guide_list.append(guide)
-        print('count of targets in union top1000',
-              len(df_guide_selected.index))
+
         guide_list.append(len(df_guide_selected.index))
         # CFD<100 & CRISTA<100
-        print('CFD<=100 & CRISTA<=100')
-        print(len(df_guide_selected[(df_guide_selected.CFD_Rank <= 100) & (
-            df_guide_selected.CRISTA_Rank <= 100)].index))
+
         guide_list.append(len(df_guide_selected[(df_guide_selected.CFD_Rank <= 100) & (
             df_guide_selected.CRISTA_Rank <= 100)].index))
         # CFD<100 & CRISTA>100
-        print('CFD<=100 & CRISTA>100')
-        print(len(df_guide_selected[(df_guide_selected.CFD_Rank <= 100) & (
-            df_guide_selected.CRISTA_Rank > 100)].index))
+
         guide_list.append(len(df_guide_selected[(df_guide_selected.CFD_Rank <= 100) & (
             df_guide_selected.CRISTA_Rank > 100)].index))
         # CFD>100 & CRISTA<100
-        print('CFD>100 & CRISTA<=100')
-        print(len(df_guide_selected[(df_guide_selected.CFD_Rank > 100) & (
-            df_guide_selected.CRISTA_Rank <= 100)].index))
+
         guide_list.append(len(df_guide_selected[(df_guide_selected.CFD_Rank > 100) & (
             df_guide_selected.CRISTA_Rank <= 100)].index))
         # CFD>100 & CRISTA>100
-        print('CFD>100 & CRISTA>100')
-        print(len(df_guide_selected[(df_guide_selected.CFD_Rank > 100) & (
-            df_guide_selected.CRISTA_Rank > 100)].index))
+
         guide_list.append(len(df_guide_selected[(df_guide_selected.CFD_Rank > 100) & (
             df_guide_selected.CRISTA_Rank > 100)].index))
         # append all counts to single list
@@ -154,29 +145,9 @@ def plot_correlation(original_df):
     # whole figure
     final_df = pd.concat(df_guide_list)
     count_df = pd.DataFrame(count_list, columns=[
-                            'sgRNA', 'total_targets_union', 'CFD<=100&CRISTA<=100', 'CFD<=100 & CRISTA>100', 'CFD>100&CRISTA<=100', 'CFD>100&CRISTA>100'])
+                            'sgRNA', 'total_targets_union', 'CFD<=100&CRISTA<=100', 'CFD<=100&CRISTA>100', 'CFD>100&CRISTA<=100', 'CFD>100&CRISTA>100'])
     count_df.to_csv(sys.argv[2]+'count_list_top1000_union.tsv',
                     sep='\t', na_rep='NA', index=False)
-
-    print('whole figure')
-    print('count of targets in union top1000',
-          len(final_df.index))
-    # CFD<100 & CRISTA<100
-    print('CFD<=100 & CRISTA<=100')
-    print(len(final_df[(final_df.CFD_Rank <= 100) & (
-        final_df.CRISTA_Rank <= 100)].index))
-    # CFD<100 & CRISTA>100
-    print('CFD<=100 & CRISTA>100')
-    print(len(final_df[(final_df.CFD_Rank <= 100) & (
-        final_df.CRISTA_Rank > 100)].index))
-    # CFD>100 & CRISTA<100
-    print('CFD>100 & CRISTA<=100')
-    print(len(final_df[(final_df.CFD_Rank > 100) & (
-        final_df.CRISTA_Rank <= 100)].index))
-    # CFD>100 & CRISTA>100
-    print('CFD>100 & CRISTA>100')
-    print(len(final_df[(final_df.CFD_Rank > 100) & (
-        final_df.CRISTA_Rank > 100)].index))
 
     plot = sns.JointGrid(data=final_df, x='CFD_Rank',
                          y='CRISTA_Rank', xlim=(1010, -10), ylim=(1010, -10), marginal_ticks=True)
@@ -196,6 +167,7 @@ def plot_correlation(original_df):
     plt.figure()
     # df list with all guides dfs
     df_guide_list = list()
+    count_list = list()
 
     for guide in original_df["Spacer+PAM"].unique():
 
@@ -218,24 +190,25 @@ def plot_correlation(original_df):
         df_guide_list.append(df_guide_selected)
 
         print('count for guide', guide)
-        print('count of targets in union top10000',
-              len(df_guide_selected.index))
+        guide_list = list()
+        guide_list.append(guide)
+        # count total targets in union
+        guide_list.append(len(df_guide_selected.index))
+
         # CFD<100 & CRISTA<100
-        print('CFD<=100 & CRISTA<=100')
-        print(len(df_guide_selected[(df_guide_selected.CFD_Rank <= 100) & (
+        guide_list.append(len(df_guide_selected[(df_guide_selected.CFD_Rank <= 100) & (
             df_guide_selected.CRISTA_Rank <= 100)].index))
         # CFD<100 & CRISTA>100
-        print('CFD<=100 & CRISTA>100')
-        print(len(df_guide_selected[(df_guide_selected.CFD_Rank <= 100) & (
+        guide_list.append(len(df_guide_selected[(df_guide_selected.CFD_Rank <= 100) & (
             df_guide_selected.CRISTA_Rank > 100)].index))
         # CFD>100 & CRISTA<100
-        print('CFD>100 & CRISTA<=100')
-        print(len(df_guide_selected[(df_guide_selected.CFD_Rank > 100) & (
+        guide_list.append(len(df_guide_selected[(df_guide_selected.CFD_Rank > 100) & (
             df_guide_selected.CRISTA_Rank <= 100)].index))
         # CFD>100 & CRISTA>100
-        print('CFD>100 & CRISTA>100')
-        print(len(df_guide_selected[(df_guide_selected.CFD_Rank > 100) & (
+        guide_list.append(len(df_guide_selected[(df_guide_selected.CFD_Rank > 100) & (
             df_guide_selected.CRISTA_Rank > 100)].index))
+        # append all counts to single list
+        count_list.append(guide_list)
 
         plot = sns.JointGrid(data=df_guide_selected, x='CFD_Rank',
                              y='CRISTA_Rank', marginal_ticks=True)
@@ -259,6 +232,10 @@ def plot_correlation(original_df):
 
     # whole figure
     final_df = pd.concat(df_guide_list)
+    count_df = pd.DataFrame(count_list, columns=[
+                            'sgRNA', 'total_targets_union', 'CFD<=100&CRISTA<=100', 'CFD<=100&CRISTA>100', 'CFD>100&CRISTA<=100', 'CFD>100&CRISTA>100'])
+    count_df.to_csv(sys.argv[2]+'count_list_top10000_union.tsv',
+                    sep='\t', na_rep='NA', index=False)
 
     print('whole figure')
     print('count of targets in union top10000',
