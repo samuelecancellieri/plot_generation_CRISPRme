@@ -102,7 +102,7 @@ def plot_correlation(original_df):
 
         df_guide_list.append(df_guide_selected)
 
-        print('count for guide', guide)
+        print('count for guide top1000', guide)
         guide_list = list()
         guide_list.append(guide)
 
@@ -189,7 +189,7 @@ def plot_correlation(original_df):
 
         df_guide_list.append(df_guide_selected)
 
-        print('count for guide', guide)
+        print('count for guide top10000', guide)
         guide_list = list()
         guide_list.append(guide)
         # count total targets in union
