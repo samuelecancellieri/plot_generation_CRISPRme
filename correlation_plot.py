@@ -78,9 +78,7 @@ def plot_correlation(original_df):
 
     # start figure to plot all in one plot (top1000 union with rank)
     plt.figure()
-    # lists containing the x and y coordinates to build the rank plot for whole file
-    x_coordinates_list = list()
-    y_coordinates_list = list()
+    # df list with all guides dfs
     df_guide_list = list()
 
     for guide in original_df["Spacer+PAM"].unique():
@@ -100,13 +98,15 @@ def plot_correlation(original_df):
                               > 1000, 'CRISTA_Rank'] = 1000
 
         df_guide_list.append(df_guide_selected)
+        print('count of targets in union top1000',
+              len(df_guide_selected.index))
 
         print('count for guide', guide)
         count_list = list()
         # CFD<100 & CRISTA<100
         count_list.append('CFD<100 & CRISTA<100')
-        count_list.append(df_guide_selected[(df_guide_selected.CFD_Rank <= 100) & (
-            df_guide_selected.CRISTA_Rank <= 100)].count())
+        count_list.append(len(df_guide_selected[(df_guide_selected.CFD_Rank <= 100) & (
+            df_guide_selected.CRISTA_Rank <= 100)].index))
         # CFD<100 & CRISTA>100
         count_list.append('CFD<100 & CRISTA>100')
         count_list.append(df_guide_selected[(df_guide_selected.CFD_Rank <= 100) & (
