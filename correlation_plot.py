@@ -100,23 +100,20 @@ def plot_correlation(original_df):
                               > 1000, 'CRISTA_Rank'] = 1000
 
         df_guide_list.append(df_guide_selected)
-        print('count of targets in union top1000',
-              len(df_guide_selected.index))
-
-        print('min rank', df_guide_selected['CFD_Rank'].min())
 
         print('count for guide', guide)
-        count_list = list()
+        print('count of targets in union top1000',
+              len(df_guide_selected.index))
         # CFD<100 & CRISTA<100
-        print('CFD<100 & CRISTA<100')
+        print('CFD<=100 & CRISTA<=100')
         print(len(df_guide_selected[(df_guide_selected.CFD_Rank <= 100) & (
             df_guide_selected.CRISTA_Rank <= 100)].index))
         # CFD<100 & CRISTA>100
-        print('CFD<100 & CRISTA>100')
+        print('CFD<=100 & CRISTA>100')
         print(len(df_guide_selected[(df_guide_selected.CFD_Rank <= 100) & (
             df_guide_selected.CRISTA_Rank > 100)].index))
         # CFD>100 & CRISTA<100
-        print('CFD>100 & CRISTA<100')
+        print('CFD>100 & CRISTA<=100')
         print(len(df_guide_selected[(df_guide_selected.CFD_Rank > 100) & (
             df_guide_selected.CRISTA_Rank <= 100)].index))
         # CFD>100 & CRISTA>100
@@ -144,24 +141,25 @@ def plot_correlation(original_df):
     final_df = pd.concat(df_guide_list)
 
     print('whole figure')
-    count_list = list()
+    print('count for guide', guide)
+    print('count of targets in union top1000',
+          len(final_df.index))
     # CFD<100 & CRISTA<100
-    count_list.append('CFD<100 & CRISTA<100')
-    count_list.append(final_df[(final_df.CFD_Rank <= 100) & (
-        final_df.CRISTA_Rank <= 100)].count())
+    print('CFD<=100 & CRISTA<=100')
+    print(len(final_df[(final_df.CFD_Rank <= 100) & (
+        final_df.CRISTA_Rank <= 100)].index))
     # CFD<100 & CRISTA>100
-    count_list.append('CFD<100 & CRISTA>100')
-    count_list.append(final_df[(final_df.CFD_Rank <= 100) & (
-        final_df.CRISTA_Rank > 100)].count())
+    print('CFD<=100 & CRISTA>100')
+    print(len(final_df[(final_df.CFD_Rank <= 100) & (
+        final_df.CRISTA_Rank > 100)].index))
     # CFD>100 & CRISTA<100
-    count_list.append('CFD>100 & CRISTA<100')
-    count_list.append(final_df[(final_df.CFD_Rank > 100) & (
-        final_df.CRISTA_Rank <= 100)].count())
+    print('CFD>100 & CRISTA<=100')
+    print(len(final_df[(final_df.CFD_Rank > 100) & (
+        final_df.CRISTA_Rank <= 100)].index))
     # CFD>100 & CRISTA>100
-    count_list.append('CFD>100 & CRISTA>100')
-    count_list.append(final_df[(final_df.CFD_Rank > 100) & (
-        final_df.CRISTA_Rank > 100)].count())
-    print(count_list)
+    print('CFD>100 & CRISTA>100')
+    print(len(final_df[(final_df.CFD_Rank > 100) & (
+        final_df.CRISTA_Rank > 100)].index))
 
     # jointplot for x and y coordinates for ranking cfd and crista score
     # plot = sns.jointplot(data=final_df, x='CFD_Rank', y='CRISTA_Rank', marginal_ticks=True, space=0.5, xlim=(
