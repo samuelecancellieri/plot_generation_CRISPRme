@@ -229,7 +229,7 @@ def plot_correlation(original_df):
         plot.ax_joint.set_xscale('log')
         plot.ax_joint.set_yscale('log')
         plot.ax_joint.invert_yaxis()
-        # plot.ax.invert_xaxis()
+        plot.ax_joint.invert_xaxis()
         plot.set_axis_labels('CFD Rank', 'CRISTA Rank')
 
         plt.tight_layout()
@@ -271,6 +271,8 @@ def plot_correlation(original_df):
     plot.ax_joint.axhline(y=100)
     plot.ax_joint.set_xscale('log')
     plot.ax_joint.set_yscale('log')
+    plot.ax_joint.invert_yaxis()
+    plot.ax_joint.invert_xaxis()
     plot.set_axis_labels('CFD Rank', 'CRISTA Rank')
 
     plt.tight_layout()
