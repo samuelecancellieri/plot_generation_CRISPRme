@@ -193,9 +193,9 @@ def plot_correlation(original_df):
             df_guide['CFD_Rank'] <= 10000) | (df_guide['CRISTA_Rank'] <= 10000)]
 
         df_guide_selected.loc[df_guide_selected['CFD_Rank']
-                              > 10000, 'CFD_Rank'] = 1000
+                              > 10000, 'CFD_Rank'] = 10000
         df_guide_selected.loc[df_guide_selected['CRISTA_Rank']
-                              > 10000, 'CRISTA_Rank'] = 1000
+                              > 10000, 'CRISTA_Rank'] = 10000
 
         df_guide_list.append(df_guide_selected)
 
@@ -259,14 +259,14 @@ def plot_correlation(original_df):
         final_df.CRISTA_Rank > 100)].index))
 
     plot = sns.JointGrid(data=final_df, x='CFD_Rank',
-                         y='CRISTA_Rank', xlim=(10010, 0), ylim=(10010, 0), marginal_ticks=True)
+                         y='CRISTA_Rank', xlim=(10010, -10), ylim=(10010, -10), marginal_ticks=True)
     plot.plot_joint(sns.scatterplot, alpha=0.5)
     plot.plot_marginals(sns.histplot)
 
     plot.ax_joint.axvline(x=100)
     plot.ax_joint.axhline(y=100)
-    plot.ax_joint.set_xscale('log')
-    plot.ax_joint.set_yscale('log')
+    # plot.ax_joint.set_xscale('log')
+    # plot.ax_joint.set_yscale('log')
     plot.set_axis_labels('CFD Rank', 'CRISTA Rank')
 
     plt.tight_layout()
