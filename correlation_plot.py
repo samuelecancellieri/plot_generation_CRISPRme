@@ -1,14 +1,10 @@
-from operator import truediv
 import sys
-from traceback import print_tb
-from turtle import color
 import pandas as pd
 import matplotlib
 import seaborn as sns
 from matplotlib import pyplot as plt
-from matplotlib_venn import venn2
+# from matplotlib_venn import venn2
 import warnings
-from scipy import stats
 import numpy as np
 
 # SUPPRESS ALL WARNINGS
@@ -26,8 +22,12 @@ sns.set_context("paper")
 # ARGV1 INTEGRATED FILE
 # ARGV2 OUTPUT FOLDER
 
-def plot_correlation(original_df):
 
+def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
+
+    # filter out targets with bulges > max_bulges
+    original_df = original_df.loc[(
+        original_df['Bulges_(highest_CFD)'] <= max_bulges & original_df['Bulges_(highest_CRISTA)'] <= max_bulges)]
     # start figure to plot all in one plot (scatter correlation CFD)
     plt.figure()
     data_frames_list = list()
@@ -38,7 +38,8 @@ def plot_correlation(original_df):
 
         original_df_cfd_sort = df_guide.sort_values(
             ['CFD_score_(highest_CFD)'], ascending=False)
-        data_frames_list.append(original_df_cfd_sort.head(1000))
+        # data_frames_list.append(original_df_cfd_sort.head(1000))
+        data_frames_list.append(original_df_cfd_sort)
 
     final_df = pd.concat(data_frames_list)
     sns.jointplot(data=final_df, x="CFD_score_(highest_CFD)", marginal_ticks=True, space=0.5,
@@ -62,7 +63,8 @@ def plot_correlation(original_df):
 
         original_df_crista_sort = df_guide.sort_values(
             ['CRISTA_score_(highest_CRISTA)'], ascending=False)
-        data_frames_list.append(original_df_crista_sort.head(1000))
+        # data_frames_list.append(original_df_crista_sort.head(1000))
+        data_frames_list.append(original_df_crista_sort)
 
     final_df = pd.concat(data_frames_list)
     sns.jointplot(data=final_df, x='CRISTA_score_(highest_CRISTA)', marginal_ticks=True, space=0.5,
@@ -258,15 +260,10 @@ def plot_correlation(original_df):
 
 print('start processing')
 original_df = pd.read_csv(sys.argv[1], sep="\t", index_col=False,
-                          na_values=['n'], usecols=['Spacer+PAM', 'CFD_score_(highest_CFD)', 'CRISTA_score_(highest_CRISTA)'])
+                          na_values=['n'], usecols=['Spacer+PAM', 'Bulges_(highest_CFD)', 'Bulges_(highest_CRISTA)', 'CFD_score_(highest_CFD)', 'CRISTA_score_(highest_CRISTA)'])
 # filter df to remove on-targets and mutant on-targets
 # original_df = original_df.loc[(
 #     original_df['Mismatches+bulges_(fewest_mm+b)'] > 1)]
-plot_correlation(original_df)
-# correlation plot exec
-# for guide in original_df["Spacer+PAM"].unique():
-#     df_guide = original_df.loc[(original_df['Spacer+PAM'] == guide)]
-#     # reset index after guide extraction
-#     df_guide.reset_index(inplace=True)
-#     # start correlation plots
-#     plot_correlation(guide, df_guide)
+pam_filter = False
+max_bulges = 0
+plot_correlation(original_df, max_bulges)
