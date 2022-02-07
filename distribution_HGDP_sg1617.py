@@ -99,9 +99,9 @@ def printDensityPlot(superpop_dict: dict, superpo: str):
         lowerbound = media-(z_score*standarderr)
         upperbound = media+(z_score*standarderr)
         # allMedie.append(media)
-        ax.plot(media, label=str(pop), color=color_dict[superpop])
+        ax.plot(media, label=str(pop))
         ax.fill_between(range(len(media)), lowerbound,
-                        upperbound, alpha=0.10, color=color_dict[superpop])
+                        upperbound, alpha=0.10)
 
     plt.title(superpop+'_with diffCFD >=' + str(0.1) +
               ' and CI '+str(95)+'%'+' and CFD score >='+str(0.2))
@@ -109,13 +109,13 @@ def printDensityPlot(superpop_dict: dict, superpo: str):
     plt.ylabel('# Cumulative Targets')
 
     # legend handles
-    AFR = mpatches.Patch(color='tab:orange', label="AFR")
-    AMR = mpatches.Patch(color='tab:brown', label="AMR")
-    CSA = mpatches.Patch(color='tab:blue', label="CSA")
-    EAS = mpatches.Patch(color='tab:pink', label="EAS")
-    EUR = mpatches.Patch(color='tab:red', label="EUR")
-    MEA = mpatches.Patch(color='tab:purple', label="MEA")
-    OCE = mpatches.Patch(color='tab:green', label="OCE")
+    # AFR = mpatches.Patch(color='tab:orange', label="AFR")
+    # AMR = mpatches.Patch(color='tab:brown', label="AMR")
+    # CSA = mpatches.Patch(color='tab:blue', label="CSA")
+    # EAS = mpatches.Patch(color='tab:pink', label="EAS")
+    # EUR = mpatches.Patch(color='tab:red', label="EUR")
+    # MEA = mpatches.Patch(color='tab:purple', label="MEA")
+    # OCE = mpatches.Patch(color='tab:green', label="OCE")
 
     # box = ax.get_position()
     # ax.set_position([box.x0, box.y0 + box.height * 0.1,
