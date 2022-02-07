@@ -28,6 +28,9 @@ def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
     # filter out targets with bulges > max_bulges
     original_df = original_df.loc[(
         original_df['Bulges_(highest_CFD)'] <= max_bulges) & (original_df['Bulges_(highest_CRISTA)'] <= max_bulges)]
+
+    print('start plotting data')
+
     # start figure to plot all in one plot (scatter correlation CFD)
     plt.figure()
     data_frames_list = list()
@@ -261,9 +264,7 @@ def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
 print('start processing')
 original_df = pd.read_csv(sys.argv[1], sep="\t", index_col=False,
                           na_values=['n'], usecols=['Spacer+PAM', 'Bulges_(highest_CFD)', 'Bulges_(highest_CRISTA)', 'CFD_score_(highest_CFD)', 'CRISTA_score_(highest_CRISTA)'])
-# filter df to remove on-targets and mutant on-targets
-# original_df = original_df.loc[(
-#     original_df['Mismatches+bulges_(fewest_mm+b)'] > 1)]
-pam_filter = False
+
+# select the max number of bulges allowed in targets
 max_bulges = 0
 plot_correlation(original_df, max_bulges)
