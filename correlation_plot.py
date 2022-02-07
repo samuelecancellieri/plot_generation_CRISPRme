@@ -27,7 +27,7 @@ def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
 
     # filter out targets with bulges > max_bulges
     original_df = original_df.loc[(
-        original_df['Bulges_(highest_CFD)'] <= max_bulges & original_df['Bulges_(highest_CRISTA)'] <= max_bulges)]
+        original_df['Bulges_(highest_CFD)'] <= max_bulges) & (original_df['Bulges_(highest_CRISTA)'] <= max_bulges)]
     # start figure to plot all in one plot (scatter correlation CFD)
     plt.figure()
     data_frames_list = list()
