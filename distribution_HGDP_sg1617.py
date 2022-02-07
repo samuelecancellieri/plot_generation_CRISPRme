@@ -123,8 +123,8 @@ def printDensityPlot(superpop_dict: dict, superpo: str):
                      box.width, box.height * 0.9])
 
     # # Put a legend below current axis
-    ax.legend(loc='upper center', bbox_to_anchor=(
-        0.5, -0.05), ncol=len(list(superpop_dict[pop])))
+    ax.legend(loc='upper center', fontsize=8, bbox_to_anchor=(
+        0.5, -0.05), ncol=(len(list(superpop_dict[pop]))/2))
 
     # plt.gca().add_artist(plt.legend(fontsize=8, loc='upper center', handles=[
     #     AFR, AMR, CSA, EAS, EUR, MEA, OCE], title='Super Populations', bbox_to_anchor=(0.5, -0.05), ncol=len(color_dict.keys())))
