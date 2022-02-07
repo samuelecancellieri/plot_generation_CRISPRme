@@ -30,13 +30,10 @@ matplotlib.rcParams['ps.fonttype'] = 42
 # ARGV2 SAMPLEFILE
 # ARGV3 OUTPUT_DIR
 
-# original_df = pd.read_csv(sys.argv[1], sep="\t", index_col=False,
-#                           na_values=['n'])
 target_file = open(sys.argv[1], 'r')
 sample_file = open(sys.argv[2], 'r')
 sample_dict = dict()
 pop_dict = dict()
-color_dict = dict()
 color_dict = {'AFR': 'tab:orange', 'AMR': 'tab:brown', 'CSA': 'tab:blue',
               'EAS': 'tab:pink', 'EUR': 'tab:red', 'MEA': 'tab:purple', 'OCE': 'tab:green'}
 
@@ -48,31 +45,39 @@ for line in sample_file:
     # split[0] = sample
     # split[1] = pop
     # split[2] = super_pop
-    if split[1] not in sample_dict:
-        sample_dict[split[1]] = dict()
+    if split[2] not in sample_dict:
+        sample_dict[split[2]] = dict()
+    if split[1] not in sample_dict[split[2]]:
+        sample_dict[split[2]][split[1]] = dict()
+    # sampledict[superpop][pop][sample]=set() will contain the indices of targets for the samples
+    sample_dict[split[2]][split[1]][split[0]] = set()
+    # pop_dict[split[0]] = [split[1], split[2]]
 
-    sample_dict[split[1]][split[0]] = set()
-    pop_dict[split[0]] = [split[1], split[2]]
+for index, target in enumerate(target_file):
+    if 'CFD' in target:
+        continue
+    split = target.strip().split('\t')
+    samples = split[22].split(',')  # position in old integrated of samples
+    for sample in samples:
+        # pop = pop_dict[sample][0]
+        for superpop in sample_dict:
+            for pop in sample_dict[superpop]:
+                try:
+                    # try inserting index in correct dict, if not continue and try again
+                    sample_dict[superpop][pop][sample].add(index)
+                except:
+                    continue
 
 
-# sg1617 = 'CTAACAGTTGCTTTTATCACNNN'
-
-# sg1617_df = original_df.loc[original_df['Spacer+PAM'] == sg1617]
-# sg1617_df = sg1617_df.loc[(sg1617_df['CFD_score_(highest_CFD)']
-#                           >= 0.2 & sg1617_df['CFD_risk_score_(highest_CFD)'] >= 0.1)]
-# sg1617_df = sg1617_df.loc[(sg1617_df['Variant_samples_(highest_CFD)'].str.contains(
-#     'HGDP') & ~sg1617_df['Variant_samples_(highest_CFD)'].str.contains('NA'))]
-
-
-def printDensityPlot():
+def printDensityPlot(superpop_dict: dict, superpo: str):
     # create figure and set axis
     # plt.figure()
     fig = plt.figure()
     ax = plt.subplot(111)
-    for pop in sample_dict:  # for each superpopulation
+    for pop in superpop_dict:  # for each population in superpopulation
         andamenti = list()
         permutationList = list()
-        for sample in sample_dict[pop]:
+        for sample in superpop_dict[pop]:
             # append samples to list to permute
             permutationList.append(sample)
         print('DOING POP PLOT FOR: ', pop)
@@ -82,23 +87,23 @@ def printDensityPlot():
             alreadyAddedTargets = set()
             for sample in permutationList:
                 alreadyAddedTargets = alreadyAddedTargets.union(
-                    sample_dict[pop][sample])
+                    superpop_dict[pop][sample])
                 andamento.append(len(alreadyAddedTargets))
             andamenti.append(andamento)
         # read values to generate plot
         andamentiArray = np.array(andamenti)
         media = np.mean(andamentiArray, axis=0)
         standarddev = np.std(andamentiArray, axis=0)
-        standarderr = standarddev/np.sqrt(len(list(sample_dict[pop])))
+        standarderr = standarddev/np.sqrt(len(list(superpop_dict[pop])))
         z_score = 1.96  # for confidence 95%
         lowerbound = media-(z_score*standarderr)
         upperbound = media+(z_score*standarderr)
         # allMedie.append(media)
-        ax.plot(media, label=str(pop), color=color_dict[pop_dict[sample][1]])
+        ax.plot(media, label=str(pop), color=color_dict[superpop])
         ax.fill_between(range(len(media)), lowerbound,
-                        upperbound, alpha=0.10, color=color_dict[pop_dict[sample][1]])
+                        upperbound, alpha=0.10, color=color_dict[superpop])
 
-    plt.title('populations_with diffCFD >=' + str(0.1) +
+    plt.title(superpop+'_with diffCFD >=' + str(0.1) +
               ' and CI '+str(95)+'%'+' and CFD score >='+str(0.2))
     plt.xlabel('# Individuals')
     plt.ylabel('# Cumulative Targets')
@@ -112,29 +117,23 @@ def printDensityPlot():
     MEA = mpatches.Patch(color='tab:purple', label="MEA")
     OCE = mpatches.Patch(color='tab:green', label="OCE")
 
-    box = ax.get_position()
-    ax.set_position([box.x0, box.y0 + box.height * 0.1,
-                     box.width, box.height * 0.9])
+    # box = ax.get_position()
+    # ax.set_position([box.x0, box.y0 + box.height * 0.1,
+    #                  box.width, box.height * 0.9])
 
-    # Put a legend below current axis
-    ax.legend(loc='upper center')
+    # # Put a legend below current axis
+    # ax.legend(loc='upper center')
 
-    plt.gca().add_artist(plt.legend(fontsize=8, loc='upper center', handles=[
-        AFR, AMR, CSA, EAS, EUR, MEA, OCE], title='Super Populations', bbox_to_anchor=(0.5, -0.05), ncol=len(color_dict.keys())))
+    # plt.gca().add_artist(plt.legend(fontsize=8, loc='upper center', handles=[
+    #     AFR, AMR, CSA, EAS, EUR, MEA, OCE], title='Super Populations', bbox_to_anchor=(0.5, -0.05), ncol=len(color_dict.keys())))
 
     # ax.tight_layout()
-    plt.savefig(sys.argv[3]+'allpop_with_diffCFD_'+str(0.1) +
+    plt.legend()
+    plt.savefig(sys.argv[3]+superpop+'_with_diffCFD_'+str(0.1) +
                 'and_CI_95_and_CFD_score_'+str(0.2)+'.pdf')
 
 
-for index, target in enumerate(target_file):
-    if 'CFD' in target:
-        continue
-    split = target.strip().split('\t')
-    samples = split[22].split(',')  # position in old integrated of samples
-    for sample in samples:
-        pop = pop_dict[sample][0]
-        sample_dict[pop][sample].add(index)
-
 # print(sample_dict)
-printDensityPlot()
+for superpop in sample_dict:
+    superpop_dict = sample_dict[superpop]
+    printDensityPlot(superpop_dict, superpop)
