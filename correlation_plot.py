@@ -220,25 +220,25 @@ def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
         # append all counts to single list
         count_list.append(guide_list)
 
-        plot = sns.JointGrid(data=df_guide_selected, x='CFD_Rank',
-                             y='CRISTA_Rank', hue='Bulge_color', marginal_ticks=True)
-        plot.plot_joint(sns.scatterplot, alpha=0.5)
-        plot.plot_marginals(sns.histplot)
+        # plot = sns.JointGrid(data=df_guide_selected, x='CFD_Rank',
+        #                      y='CRISTA_Rank', hue='Bulge_color', marginal_ticks=True)
+        # plot.plot_joint(sns.scatterplot, alpha=0.5)
+        # plot.plot_marginals(sns.histplot)
 
-        plot.ax_joint.axvline(x=100)
-        plot.ax_joint.axhline(y=100)
-        plot.ax_joint.set_xscale('log')
-        plot.ax_joint.set_yscale('log')
-        # plot.ax_joint.invert_yaxis()
-        # plot.ax_joint.invert_xaxis()
-        plot.set_axis_labels('CFD Rank', 'CRISTA Rank')
+        # plot.ax_joint.axvline(x=100)
+        # plot.ax_joint.axhline(y=100)
+        # plot.ax_joint.set_xscale('log')
+        # plot.ax_joint.set_yscale('log')
+        # # plot.ax_joint.invert_yaxis()
+        # # plot.ax_joint.invert_xaxis()
+        # plot.set_axis_labels('CFD Rank', 'CRISTA Rank')
 
-        plt.tight_layout()
-        # single guide figure
-        plt.savefig(
-            sys.argv[2]+f'scatter_rank_CFDvCRISTA_top10000_union_{guide}_with_up_to_{max_bulges}.pdf')
-        plt.clf()
-        plt.close('all')
+        # plt.tight_layout()
+        # # single guide figure
+        # plt.savefig(
+        #     sys.argv[2]+f'scatter_rank_CFDvCRISTA_top10000_union_{guide}_with_up_to_{max_bulges}.pdf')
+        # plt.clf()
+        # plt.close('all')
 
     # whole figure
     final_df = pd.concat(df_guide_list)
