@@ -202,10 +202,10 @@ def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
                                                       df_guide['CFD_score_(highest_CFD)'])
         df_guide["CRISTA_score_negate_(highest_CRISTA)"] = (
             -1*df_guide['CRISTA_score_(highest_CRISTA)'])
-        df_guide['CFD_Rank'] = np.argsort(-1 *
-                                          df_guide['CFD_score_negate_(highest_CFD)'])
-        df_guide['CRISTA_Rank'] = np.argsort(-1 *
-                                             df_guide['CRISTA_score_negate_(highest_CRISTA)'])
+        df_guide['CFD_Rank'] = np.argsort(
+            df_guide['CFD_score_negate_(highest_CFD)'])
+        df_guide['CRISTA_Rank'] = np.argsort(
+            df_guide['CRISTA_score_negate_(highest_CRISTA)'])
         df_guide['CFD_Rank'] += 1
         df_guide['CRISTA_Rank'] += 1
 
