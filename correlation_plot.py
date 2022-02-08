@@ -126,7 +126,7 @@ def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
 
     plt.figure()
     sns.lmplot(data=final_df, x='CRISTA_score_(highest_CRISTA)',
-               y="CFD_score_(highest_CFD)", hue='Bulge_count', palette=palette, alpha=0.5)
+               y="CFD_score_(highest_CFD)", hue='Bulge_count', palette=palette, scatter_kws={'alpha': 0.5})
 
     plt.xlim(0, 1)
     plt.ylim(0, 1)
