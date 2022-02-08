@@ -25,6 +25,7 @@ sns.set_context("paper")
 
 
 palette = {
+    'mixed': 'tab:purple',
     '=0': 'tab:blue',
     '<=1': 'tab:green',
     '<=2': 'tab:orange'
@@ -32,12 +33,12 @@ palette = {
 
 
 def bulge_color(row):
-    if row['Bulges_(highest_CFD)'] == 1 or row['Bulges_(highest_CRISTA)'] == 1:
+    if row['Bulges_(highest_CFD)'] == 1 and row['Bulges_(highest_CRISTA)'] == 1:
         return '<=1'
-    elif row['Bulges_(highest_CFD)'] == 2 or row['Bulges_(highest_CRISTA)'] == 2:
+    elif row['Bulges_(highest_CFD)'] == 2 and row['Bulges_(highest_CRISTA)'] == 2:
         return '<=2'
     else:
-        return '=0'
+        return 'mixed'
 
 
 def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
