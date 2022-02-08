@@ -32,7 +32,7 @@ palette = {
 }
 
 
-def bulge_color(row):
+def bulge_color(row: pd.Series):
     if row['Bulges_(highest_CFD)'] == 1 and row['Bulges_(highest_CRISTA)'] == 1:
         return '1'
     elif row['Bulges_(highest_CFD)'] == 2 and row['Bulges_(highest_CRISTA)'] == 2:
