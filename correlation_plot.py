@@ -1,3 +1,4 @@
+from scipy import stats
 import sys
 import pandas as pd
 import matplotlib
@@ -267,8 +268,9 @@ def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
     plt.close('all')
 
     plt.figure()
-    sns.scatterplot(data=final_df, x='CRISTA_score_(highest_CRISTA)',
-                    y="CFD_score_(highest_CFD)", kind="reg")
+    sns.lmplot(data=final_df, x='CRISTA_score_(highest_CFD)',
+               y="CFD_score_(highest_CRISTA)", hue='Bulge_color')
+
     plt.xlim(0, 1)
     plt.ylim(0, 1)
     plt.tight_layout()
@@ -276,6 +278,12 @@ def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
         sys.argv[2]+f'correlation_CFDvCRISTA_top10000_union_with_up_to_{max_bulges}.pdf')
     plt.clf()
     plt.close('all')
+
+    corr = stats.pearsonr(final_df['CFD_score_(highest_CFD)'],
+                          final_df['CRISTA_score_(highest_CRISTA)'])
+    outfile = open(sys.argv[2]+'pearson_corr.txt', 'w')
+    outfile.write(str(corr[0])+'\t'+str(corr[1]))
+    outfile.close()
 
 
 print('start processing')
