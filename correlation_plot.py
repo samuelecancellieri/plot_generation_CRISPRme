@@ -199,7 +199,7 @@ def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
 
         df_guide_list.append(df_guide_selected)
 
-        print('count for guide top10000', guide)
+        print('plot for guide top10000', guide)
         guide_list = list()
         guide_list.append(guide)
         # count total targets in union
@@ -284,6 +284,7 @@ original_df = pd.read_csv(sys.argv[1], sep="\t", index_col=False,
 
 # select the max number of bulges allowed in targets
 max_bulges = 0
+print('bulge 0')
 # filter out targets with bulges > max_bulges
 filter_bulges = original_df.loc[(
     original_df['Bulges_(highest_CFD)'] <= max_bulges) & (original_df['Bulges_(highest_CRISTA)'] <= max_bulges)]
@@ -292,6 +293,8 @@ plot_correlation(filter_bulges, max_bulges)
 
 #bulge <=1
 max_bulges = 1
+print('bulge 1')
+# filter out targets with bulges > max_bulges
 filter_bulges = original_df.loc[(
     original_df['Bulges_(highest_CFD)'] <= max_bulges) & (original_df['Bulges_(highest_CRISTA)'] <= max_bulges)]
 filter_bulges['Bulge_color'] = filter_bulges.apply(bulge_color, axis=1)
@@ -299,6 +302,8 @@ plot_correlation(filter_bulges, max_bulges)
 
 # bulge<=2
 max_bulges = 2
+print('bulge 2')
+# filter out targets with bulges > max_bulges
 filter_bulges = original_df.loc[(
     original_df['Bulges_(highest_CFD)'] <= max_bulges) & (original_df['Bulges_(highest_CRISTA)'] <= max_bulges)]
 filter_bulges['Bulge_color'] = filter_bulges.apply(bulge_color, axis=1)
