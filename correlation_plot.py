@@ -37,7 +37,7 @@ def bulge_color(row):
     elif row['Bulges_(highest_CFD)'] == 2 or row['Bulges_(highest_CRISTA)'] == 2:
         return '<=2'
     else:
-        return '<=0'
+        return '=0'
 
 
 def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
