@@ -192,9 +192,9 @@ def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
 
         # filter the df to obtain single guide targets
         df_guide = original_df.loc[(original_df['Spacer+PAM'] == guide)]
-        df_guide['CFD_Rank'] = np.argsort(df_guide['CFD_score_(highest_CFD)'])
+        df_guide['CFD_Rank'] = np.argsort(-df_guide['CFD_score_(highest_CFD)'])
         df_guide['CRISTA_Rank'] = np.argsort(
-            df_guide['CRISTA_score_(highest_CRISTA)'])
+            -df_guide['CRISTA_score_(highest_CRISTA)'])
         df_guide['CFD_Rank'] += 1
         df_guide['CRISTA_Rank'] += 1
 
