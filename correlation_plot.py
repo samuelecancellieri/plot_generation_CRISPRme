@@ -251,6 +251,8 @@ def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
 
     # whole figure
     final_df = pd.concat(df_guide_list)
+    final_df.to_csv(
+        sys.argv[2], f'final_df_ranks_with_up_to_{max_bulges}.tsv', sep='\t', na_rep='NA', index=False)
     count_df = pd.DataFrame(count_list, columns=[
                             'sgRNA', 'total_targets_union', 'CFD<=100&CRISTA<=100', 'CFD<=100&CRISTA>100', 'CFD>100&CRISTA<=100', 'CFD>100&CRISTA>100'])
     count_df.to_csv(sys.argv[2]+f'count_list_top10000_union_with_up_to_{max_bulges}.tsv',
