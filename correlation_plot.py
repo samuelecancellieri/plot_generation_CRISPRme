@@ -249,7 +249,7 @@ def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
                     sep='\t', na_rep='NA', index=False)
 
     plot = sns.JointGrid(data=final_df, x='CFD_Rank',
-                         y='CRISTA_Rank', hue='Bulge_color', xlim={0, 10000}, ylim={0, 10000}, marginal_ticks=True)
+                         y='CRISTA_Rank', hue='Bulge_color', marginal_ticks=True)
     plot.plot_joint(sns.scatterplot, alpha=0.5)
     plot.plot_marginals(sns.histplot)
 
