@@ -192,22 +192,12 @@ def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
 
         # filter the df to obtain single guide targets
         df_guide = original_df.loc[(original_df['Spacer+PAM'] == guide)]
-        df_guide.to_csv(sys.argv[2]+f'original_{guide}_{max_bulges}.tsv',
-                        sep='\t', na_rep='NA', index=False)
-        df_guide["CFD_score_(highest_CFD)"] = pd.to_numeric(
-            df_guide["CFD_score_(highest_CFD)"], downcast="float")
-        df_guide["CRISTA_score_(highest_CRISTA)"] = pd.to_numeric(
-            df_guide["CRISTA_score_(highest_CRISTA)"], downcast="float")
-        df_guide["CFD_score_negate_(highest_CFD)"] = (-1 *
-                                                      df_guide['CFD_score_(highest_CFD)'])
-        df_guide["CRISTA_score_negate_(highest_CRISTA)"] = (
-            -1*df_guide['CRISTA_score_(highest_CRISTA)'])
-        df_guide['CFD_Rank'] = np.argsort(
-            df_guide['CFD_score_negate_(highest_CFD)'])
-        df_guide['CRISTA_Rank'] = np.argsort(
-            df_guide['CRISTA_score_negate_(highest_CRISTA)'])
-        df_guide['CFD_Rank'] += 1
-        df_guide['CRISTA_Rank'] += 1
+        df_guide['CFD_Rank'] = df_guide['CFD_score_(highest_CFD)'].rank(
+            method='first', ascending=False)
+        df_guide['CRISTA_Rank'] = df_guide['CRISTA_score_(highest_CRISTA)'].rank(
+            method='first', ascending=False)
+        # df_guide['CFD_Rank'] += 1
+        # df_guide['CRISTA_Rank'] += 1
 
         df_guide_selected = df_guide.loc[(
             df_guide['CFD_Rank'] <= 10000) | (df_guide['CRISTA_Rank'] <= 10000)]
