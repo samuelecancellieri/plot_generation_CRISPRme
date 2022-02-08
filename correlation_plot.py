@@ -1,3 +1,4 @@
+from textwrap import fill
 from scipy import stats
 import sys
 import pandas as pd
@@ -106,9 +107,9 @@ def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
                     sep='\t', na_rep='NA', index=False)
 
     plot = sns.JointGrid(data=final_df, x='CFD_Rank',
-                         y='CRISTA_Rank', hue='Bulge_count', marginal_kws=dict(bins=1000, fill=False), marginal_ticks=True, palette=palette)
+                         y='CRISTA_Rank', hue='Bulge_count', marginal_ticks=True, palette=palette)
     plot.plot_joint(sns.scatterplot, alpha=0.5)
-    plot.plot_marginals(sns.histplot)
+    plot.plot_marginals(sns.histplot, bins=1000, fill=False)
 
     plot.ax_joint.axvline(x=100)
     plot.ax_joint.axhline(y=100)
