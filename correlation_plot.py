@@ -25,11 +25,11 @@ sns.set_context("paper")
 
 def bulge_color(row):
     if row['Bulges_(highest_CFD)'] == 1 or row['Bulges_(highest_CRISTA)'] == 1:
-        return 'tab:green'
+        return 1
     elif row['Bulges_(highest_CFD)'] == 2 or row['Bulges_(highest_CRISTA)'] == 2:
-        return 'tab:red'
+        return 2
     else:
-        return 'tab:blue'
+        return 0
 
 
 def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
