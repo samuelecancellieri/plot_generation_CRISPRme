@@ -266,6 +266,17 @@ def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
     plt.clf()
     plt.close('all')
 
+    plt.figure()
+    sns.jointplot(data=final_df, x='CRISTA_score_(highest_CRISTA)', marginal_ticks=True, space=0.5,
+                  y="CFD_score_(highest_CFD)", hue='Bulge_color', kind="reg", joint_kws={'line_kws': {'color': 'orange'}})
+    plt.xlim(0, 1)
+    plt.ylim(0, 1)
+    plt.tight_layout()
+    plt.savefig(
+        sys.argv[2]+f'correlation_CFDvCRISTA_top10000_union_with_up_to_{max_bulges}.pdf')
+    plt.clf()
+    plt.close('all')
+
 
 print('start processing')
 original_df = pd.read_csv(sys.argv[1], sep="\t", index_col=False,
