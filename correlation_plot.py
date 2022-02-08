@@ -25,19 +25,19 @@ sns.set_context("paper")
 
 
 palette = {
-    '0': 'tab:blue',
-    '1': 'tab:green',
-    '2': 'tab:orange'
+    '=0': 'tab:blue',
+    '<=1': 'tab:green',
+    '<=2': 'tab:orange'
 }
 
 
 def bulge_color(row):
     if row['Bulges_(highest_CFD)'] == 1 or row['Bulges_(highest_CRISTA)'] == 1:
-        return '1'
+        return '<=1'
     elif row['Bulges_(highest_CFD)'] == 2 or row['Bulges_(highest_CRISTA)'] == 2:
-        return '2'
+        return '<=2'
     else:
-        return '0'
+        return '<=0'
 
 
 def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
@@ -304,7 +304,7 @@ print('bulge 0')
 # filter out targets with bulges > max_bulges
 filter_bulges = original_df.loc[(
     original_df['Bulges_(highest_CFD)'] <= max_bulges) & (original_df['Bulges_(highest_CRISTA)'] <= max_bulges)]
-filter_bulges['Bulge_count'] = 0
+filter_bulges['Bulge_count'] = '=0'
 plot_correlation(filter_bulges, max_bulges)
 
 #bulge <=1
