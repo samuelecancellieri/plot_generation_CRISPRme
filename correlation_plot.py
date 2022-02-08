@@ -26,17 +26,17 @@ sns.set_context("paper")
 
 palette = {
     'mixed': 'tab:purple',
-    '=0': 'tab:blue',
-    '<=1': 'tab:green',
-    '<=2': 'tab:orange'
+    '0': 'tab:blue',
+    '1': 'tab:green',
+    '2': 'tab:orange'
 }
 
 
 def bulge_color(row):
     if row['Bulges_(highest_CFD)'] == 1 and row['Bulges_(highest_CRISTA)'] == 1:
-        return '<=1'
+        return '1'
     elif row['Bulges_(highest_CFD)'] == 2 and row['Bulges_(highest_CRISTA)'] == 2:
-        return '<=2'
+        return '2'
     else:
         return 'mixed'
 
@@ -126,7 +126,7 @@ def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
 
     plt.figure()
     sns.lmplot(data=final_df, x='CRISTA_score_(highest_CRISTA)',
-               y="CFD_score_(highest_CFD)", hue='Bulge_count', palette=palette)
+               y="CFD_score_(highest_CFD)", hue='Bulge_count', palette=palette, alpha=0.5)
 
     plt.xlim(0, 1)
     plt.ylim(0, 1)
@@ -161,7 +161,7 @@ print('bulge 0')
 # filter out targets with bulges > max_bulges
 filter_bulges = original_df.loc[(
     original_df['Bulges_(highest_CFD)'] <= max_bulges) & (original_df['Bulges_(highest_CRISTA)'] <= max_bulges)]
-filter_bulges['Bulge_count'] = '=0'
+filter_bulges['Bulge_count'] = '0'
 plot_correlation(filter_bulges, max_bulges)
 
 # bulge <=1
