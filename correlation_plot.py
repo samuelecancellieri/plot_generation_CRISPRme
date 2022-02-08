@@ -24,13 +24,20 @@ sns.set_context("paper")
 # ARGV2 OUTPUT FOLDER
 
 
+palette = {
+    '0': 'tab:blue',
+    '1': 'tab:green',
+    '2': 'tab:orange'
+}
+
+
 def bulge_color(row):
     if row['Bulges_(highest_CFD)'] == 1 or row['Bulges_(highest_CRISTA)'] == 1:
-        return 1
+        return '1'
     elif row['Bulges_(highest_CFD)'] == 2 or row['Bulges_(highest_CRISTA)'] == 2:
-        return 2
+        return '2'
     else:
-        return 0
+        return '0'
 
 
 def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
@@ -249,7 +256,7 @@ def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
                     sep='\t', na_rep='NA', index=False)
 
     plot = sns.JointGrid(data=final_df, x='CFD_Rank',
-                         y='CRISTA_Rank', hue='Bulge_count', marginal_ticks=True)
+                         y='CRISTA_Rank', hue='Bulge_count', marginal_ticks=True, palette=palette)
     plot.plot_joint(sns.scatterplot, alpha=0.5)
     plot.plot_marginals(sns.histplot)
 
@@ -269,7 +276,7 @@ def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
 
     plt.figure()
     sns.lmplot(data=final_df, x='CRISTA_score_(highest_CRISTA)',
-               y="CFD_score_(highest_CFD)", hue='Bulge_count')
+               y="CFD_score_(highest_CFD)", hue='Bulge_count', palette=palette)
 
     plt.xlim(0, 1)
     plt.ylim(0, 1)
