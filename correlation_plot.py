@@ -38,6 +38,8 @@ def bulge_color(row: pd.Series):
         return '1'
     elif row['Bulges_(highest_CFD)'] == 2 and row['Bulges_(highest_CRISTA)'] == 2:
         return '2'
+    elif row['Bulges_(highest_CFD)'] == 0 and row['Bulges_(highest_CRISTA)'] == 0:
+        return '0'
     else:
         return 'mixed'
 
