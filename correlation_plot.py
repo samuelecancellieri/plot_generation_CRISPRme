@@ -289,7 +289,14 @@ def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
     corr = stats.pearsonr(final_df['CFD_score_(highest_CFD)'],
                           final_df['CRISTA_score_(highest_CRISTA)'])
     outfile = open(
-        sys.argv[2]+f'pearson_corr_with_up_to_{max_bulges}.txt', 'w')
+        sys.argv[2]+f'pearson_corr_scores_with_up_to_{max_bulges}.txt', 'w')
+    outfile.write(str(corr[0])+'\t'+str(corr[1]))
+    outfile.close()
+
+    corr = stats.pearsonr(final_df['CFD_Rank'],
+                          final_df['CRISTA_Rank'])
+    outfile = open(
+        sys.argv[2]+f'pearson_corr_ranks_with_up_to_{max_bulges}.txt', 'w')
     outfile.write(str(corr[0])+'\t'+str(corr[1]))
     outfile.close()
 
