@@ -128,11 +128,11 @@ def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
     plt.close('all')
 
     plt.figure()
-    sns.lmplot(data=final_df, x='CRISTA_score_(highest_CRISTA)',
-               y="CFD_score_(highest_CFD)", hue='Bulge_count', palette=palette, scatter_kws={'alpha': 0.5})
+    sns.scatterplot(data=final_df, x='CRISTA_score_(highest_CRISTA)',
+                    y="CFD_score_(highest_CFD)", hue='Bulge_count', rasterized=True, palette=palette, alpha=0.5)
 
-    plt.xlim(0, 1)
-    plt.ylim(0, 1)
+    plt.xlim(0, 1.1)
+    plt.ylim(0, 1.1)
     plt.tight_layout()
     plt.savefig(
         sys.argv[2]+f'correlation_CFDvCRISTA_top10000_union_with_up_to_{max_bulges}.pdf')
