@@ -70,7 +70,7 @@ for index, target in enumerate(target_file):
                     continue
 
 
-def printDensityPlot(superpop_dict: dict, superpo: str):
+def printDensityPlot(superpop_dict: dict, superpop: str):
     # create figure and set axis
     # plt.figure()
     fig = plt.figure()
