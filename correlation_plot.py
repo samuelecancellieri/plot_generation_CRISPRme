@@ -49,7 +49,7 @@ def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
     print('start plotting data')
 
     # start figure to plot all in one plot (top10000 union with rank)
-    plt.figure(figsize=(8.5, 11))
+    plt.figure()
     # df list with all guides dfs
     df_guide_list = list()
     count_list = list()
@@ -122,20 +122,18 @@ def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
     plot.set_axis_labels('CFD Rank', 'CRISTA Rank')
 
     plt.tight_layout()
-    plt.legend()
     plt.savefig(
         sys.argv[2]+f'scatter_rank_CFDvCRISTA_top10000_union_with_up_to_{max_bulges}.pdf', dpi=300)
     plt.clf()
     plt.close('all')
 
-    plt.figure(figsize=(8.5, 11))
+    plt.figure()
     sns.scatterplot(data=final_df, x='CRISTA_score_(highest_CRISTA)',
                     y="CFD_score_(highest_CFD)", hue='Bulge_count', rasterized=True, palette=palette, alpha=0.5)
 
     plt.xlim(0, 1.1)
     plt.ylim(0, 1.1)
     plt.tight_layout()
-    plt.legend()
     plt.savefig(
         sys.argv[2]+f'correlation_CFDvCRISTA_top10000_union_with_up_to_{max_bulges}.pdf', dpi=300)
     plt.clf()
