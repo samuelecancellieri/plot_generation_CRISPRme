@@ -13,8 +13,8 @@ import numpy as np
 warnings.filterwarnings("ignore")
 # do not use X11
 matplotlib.use('Agg')
-# set matplotlib for pdf editing
-matplotlib.rcParams['pdf.fonttype'] = 42
+# set matplotlib for svg editing
+matplotlib.rcParams['svg.fonttype'] = 42
 matplotlib.rcParams['ps.fonttype'] = 42
 # plt.style.use('seaborn-poster')
 sns.set_context("paper")
@@ -123,7 +123,7 @@ def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
 
     plt.tight_layout()
     plt.savefig(
-        sys.argv[2]+f'scatter_rank_CFDvCRISTA_top10000_union_with_up_to_{max_bulges}.pdf')
+        sys.argv[2]+f'scatter_rank_CFDvCRISTA_top10000_union_with_up_to_{max_bulges}.svg')
     plt.clf()
     plt.close('all')
 
@@ -135,7 +135,7 @@ def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
     plt.ylim(0, 1)
     plt.tight_layout()
     plt.savefig(
-        sys.argv[2]+f'correlation_CFDvCRISTA_top10000_union_with_up_to_{max_bulges}.pdf')
+        sys.argv[2]+f'correlation_CFDvCRISTA_top10000_union_with_up_to_{max_bulges}.svg')
     plt.clf()
     plt.close('all')
 
