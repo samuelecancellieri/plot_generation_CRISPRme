@@ -26,7 +26,6 @@ sns.set_context("paper")
 
 
 palette = {
-    'mixed': 'tab:purple',
     '0': 'tab:blue',
     '1': 'tab:green',
     '2': 'tab:orange'
@@ -34,14 +33,8 @@ palette = {
 
 
 def bulge_color(row: pd.Series):
-    if row['Bulges_(highest_CFD)'] == 1 and row['Bulges_(highest_CRISTA)'] == 1:
-        return '1'
-    elif row['Bulges_(highest_CFD)'] == 2 and row['Bulges_(highest_CRISTA)'] == 2:
-        return '2'
-    elif row['Bulges_(highest_CFD)'] == 0 and row['Bulges_(highest_CRISTA)'] == 0:
-        return '0'
-    else:
-        return 'mixed'
+    lower_bulge = min(row['Bulges_(highest_CFD)'], row['Bulges_(highest_CFD)'])
+    return str(lower_bulge)
 
 
 def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
@@ -180,7 +173,7 @@ max_bulges = 0
 print('bulge 0')
 # filter out targets with bulges > max_bulges
 filter_bulges = original_df.loc[(
-    original_df['Bulges_(highest_CFD)'] <= max_bulges) & (original_df['Bulges_(highest_CRISTA)'] <= max_bulges)]
+    original_df['Bulges_(highest_CFD)'] == max_bulges) | (original_df['Bulges_(highest_CRISTA)'] == max_bulges)]
 filter_bulges['Bulge_count'] = '0'
 plot_correlation(filter_bulges, max_bulges)
 
@@ -189,7 +182,7 @@ max_bulges = 1
 print('bulge 1')
 # filter out targets with bulges > max_bulges
 filter_bulges = original_df.loc[(
-    original_df['Bulges_(highest_CFD)'] <= max_bulges) & (original_df['Bulges_(highest_CRISTA)'] <= max_bulges)]
+    original_df['Bulges_(highest_CFD)'] == max_bulges) | (original_df['Bulges_(highest_CRISTA)'] == max_bulges)]
 filter_bulges['Bulge_count'] = filter_bulges.apply(bulge_color, axis=1)
 plot_correlation(filter_bulges, max_bulges)
 
@@ -198,6 +191,6 @@ max_bulges = 2
 print('bulge 2')
 # filter out targets with bulges > max_bulges
 filter_bulges = original_df.loc[(
-    original_df['Bulges_(highest_CFD)'] <= max_bulges) & (original_df['Bulges_(highest_CRISTA)'] <= max_bulges)]
+    original_df['Bulges_(highest_CFD)'] == max_bulges) | (original_df['Bulges_(highest_CRISTA)'] == max_bulges)]
 filter_bulges['Bulge_count'] = filter_bulges.apply(bulge_color, axis=1)
 plot_correlation(filter_bulges, max_bulges)
