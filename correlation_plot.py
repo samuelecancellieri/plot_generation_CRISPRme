@@ -174,8 +174,8 @@ max_bulges = 0
 print('bulge 0')
 # filter out targets with bulges > max_bulges
 filter_bulges = original_df.loc[(
-    original_df['Bulges_(highest_CFD)'] == max_bulges) | (original_df['Bulges_(highest_CRISTA)'] == max_bulges)]
-filter_bulges['Bulge_count'] = '0'
+    original_df['Bulges_(highest_CFD)'] == max_bulges) & (original_df['Bulges_(highest_CRISTA)'] == max_bulges)]
+filter_bulges['Bulge_count'] = filter_bulges.apply(bulge_color, axis=1)
 plot_correlation(filter_bulges, max_bulges)
 
 # bulge <=1
@@ -183,7 +183,7 @@ max_bulges = 1
 print('bulge 1')
 # filter out targets with bulges > max_bulges
 filter_bulges = original_df.loc[(
-    original_df['Bulges_(highest_CFD)'] == max_bulges) | (original_df['Bulges_(highest_CRISTA)'] == max_bulges)]
+    original_df['Bulges_(highest_CFD)'] == max_bulges) & (original_df['Bulges_(highest_CRISTA)'] == max_bulges)]
 filter_bulges['Bulge_count'] = filter_bulges.apply(bulge_color, axis=1)
 plot_correlation(filter_bulges, max_bulges)
 
@@ -192,6 +192,6 @@ max_bulges = 2
 print('bulge 2')
 # filter out targets with bulges > max_bulges
 filter_bulges = original_df.loc[(
-    original_df['Bulges_(highest_CFD)'] == max_bulges) | (original_df['Bulges_(highest_CRISTA)'] == max_bulges)]
+    original_df['Bulges_(highest_CFD)'] == max_bulges) & (original_df['Bulges_(highest_CRISTA)'] == max_bulges)]
 filter_bulges['Bulge_count'] = filter_bulges.apply(bulge_color, axis=1)
 plot_correlation(filter_bulges, max_bulges)
