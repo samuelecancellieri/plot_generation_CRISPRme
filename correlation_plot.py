@@ -101,18 +101,23 @@ def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
     }
 
     plt.figure(figsize=(5, 5))
-    plot = sns.JointGrid(data=final_df, x='CFD_Rank',
-                         y='CRISTA_Rank', hue='Bulge_count', marginal_ticks=True, palette=palette)
-    plot.plot_joint(sns.scatterplot, alpha=0.5, rasterized=True, legend=False)
+    # plot = sns.JointGrid(data=final_df, x='CFD_Rank',
+    #                      y='CRISTA_Rank', hue='Bulge_count', marginal_ticks=True, palette=palette)
+    # plot.plot_joint(sns.scatterplot, alpha=0.5, rasterized=True, legend=False)
     # plot.plot_marginals(sns.histplot)
-
-    plot.ax_joint.axvline(x=100)
-    plot.ax_joint.axhline(y=100)
-    plot.ax_joint.set_xscale('log')
-    plot.ax_joint.set_yscale('log')
-    # plot.ax_joint.invert_yaxis()
-    # plot.ax_joint.invert_xaxis()
-    plot.set_axis_labels('CFD Rank', 'CRISTA Rank')
+    sns.scatterplot(data=final_df, x='CFD_Rank', y='CRISTA_Rank',
+                    hue='Bulge_count', rasterized=True, palette=palette, alpha=0.5, legend=False)
+    plt.hlines(100, 0, 10000)
+    plt.vlines(100, 0, 10000)
+    plt.yscale('log')
+    plt.xscale('log')
+    # plot.ax_joint.axvline(x=100)
+    # plot.ax_joint.axhline(y=100)
+    # plot.ax_joint.set_xscale('log')
+    # plot.ax_joint.set_yscale('log')
+    # # plot.ax_joint.invert_yaxis()
+    # # plot.ax_joint.invert_xaxis()
+    # plot.set_axis_labels('CFD Rank', 'CRISTA Rank')
 
     plt.tight_layout()
     plt.savefig(
