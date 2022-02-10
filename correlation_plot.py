@@ -33,7 +33,8 @@ palette = {
 
 
 def bulge_color(row: pd.Series):
-    lower_bulge = min(row['Bulges_(highest_CFD)'], row['Bulges_(highest_CFD)'])
+    lower_bulge = min(int(row['Bulges_(highest_CFD)']),
+                      int(row['Bulges_(highest_CFD)']))
     return str(lower_bulge)
 
 
