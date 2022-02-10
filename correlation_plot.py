@@ -128,17 +128,18 @@ def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
     plt.close('all')
 
     plt.figure()
-    sns.scatterplot(data=final_df, x='CRISTA_score_(highest_CRISTA)',
-                    y="CFD_score_(highest_CFD)", hue='Bulge_count', rasterized=True, palette=palette, alpha=0.5)
+    sns.scatterplot(data=final_df, x="CFD_score_(highest_CFD)", y='CRISTA_score_(highest_CRISTA)',
+                    hue='Bulge_count', rasterized=True, palette=palette, alpha=0.5)
 
-    plt.xlim(0, 1.1)
-    plt.ylim(0, 1.1)
+    plt.xlim(-0.1, 1.1)
+    plt.ylim(-0.1, 1.1)
     plt.tight_layout()
     plt.savefig(
         sys.argv[2]+f'correlation_CFDvCRISTA_top10000_union_with_up_to_{max_bulges}.pdf', dpi=300)
     plt.clf()
     plt.close('all')
 
+    # pearson corr
     corr = stats.pearsonr(final_df['CFD_score_(highest_CFD)'],
                           final_df['CRISTA_score_(highest_CRISTA)'])
     outfile = open(
@@ -150,6 +151,22 @@ def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
                           final_df['CRISTA_Rank'])
     outfile = open(
         sys.argv[2]+f'pearson_corr_ranks_with_up_to_{max_bulges}.txt', 'w')
+    outfile.write(str(corr[0])+'\t'+str(corr[1]))
+    outfile.close()
+
+    # sperman corr
+    corr = stats.spearmanr(final_df['CFD_score_(highest_CFD)'],
+                           final_df['CRISTA_score_(highest_CRISTA)'])
+
+    outfile = open(
+        sys.argv[2]+f'spearman_corr_scores_with_up_to_{max_bulges}.txt', 'w')
+    outfile.write(str(corr[0])+'\t'+str(corr[1]))
+    outfile.close()
+
+    corr = stats.spearmanr(final_df['CFD_Rank'],
+                           final_df['CRISTA_Rank'])
+    outfile = open(
+        sys.argv[2]+f'spearman_corr_ranks_with_up_to_{max_bulges}.txt', 'w')
     outfile.write(str(corr[0])+'\t'+str(corr[1]))
     outfile.close()
 
