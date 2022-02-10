@@ -25,13 +25,6 @@ sns.set_context("paper")
 # ARGV2 OUTPUT FOLDER
 
 
-palette = {
-    '0': 'tab:blue',
-    '1': 'tab:green',
-    '2': 'tab:orange'
-}
-
-
 def bulge_color(row: pd.Series):
     lower_bulge = min(int(row['Bulges_(highest_CFD)']),
                       int(row['Bulges_(highest_CRISTA)']))
@@ -99,6 +92,13 @@ def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
                             'sgRNA', 'total_targets_union', 'CFD<=100&CRISTA<=100', 'CFD<=100&CRISTA>100', 'CFD>100&CRISTA<=100', 'CFD>100&CRISTA>100'])
     count_df.to_csv(sys.argv[2]+f'count_list_top10000_union_with_up_to_{max_bulges}.tsv',
                     sep='\t', na_rep='NA', index=False)
+
+    # color palette for hue
+    palette = {
+        '0': 'tab:blue',
+        '1': 'tab:green',
+        '2': 'tab:orange'
+    }
 
     plt.figure(figsize=(5, 5))
     plot = sns.JointGrid(data=final_df, x='CFD_Rank',
