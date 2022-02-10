@@ -106,7 +106,7 @@ def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
     # plot.plot_joint(sns.scatterplot, alpha=0.5, rasterized=True, legend=False)
     # plot.plot_marginals(sns.histplot)
     sns.scatterplot(data=final_df, x='CFD_Rank', y='CRISTA_Rank',
-                    hue='Bulge_count', rasterized=True, palette=palette, alpha=0.5, legend=False)
+                    hue='Bulge_count', rasterized=True, palette=palette, alpha=0.5, legend=False, linewidth=0)
     plt.hlines(100, 0, 10000)
     plt.vlines(100, 0, 10000)
     plt.yscale('log')
@@ -127,7 +127,7 @@ def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
 
     plt.figure(figsize=(5, 5))
     sns.scatterplot(data=final_df, x="CFD_score_(highest_CFD)", y='CRISTA_score_(highest_CRISTA)',
-                    hue='Bulge_count', rasterized=True, palette=palette, alpha=0.5, legend=False)
+                    hue='Bulge_count', rasterized=True, palette=palette, alpha=0.5, legend=False, linewidth=0)
 
     plt.xlim(-0.1, 1.1)
     plt.ylim(-0.1, 1.1)
