@@ -108,7 +108,7 @@ def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
     count_df.to_csv(sys.argv[2]+f'count_list_top10000_union_with_up_to_{max_bulges}.tsv',
                     sep='\t', na_rep='NA', index=False)
 
-    plot = sns.JointGrid(data=final_df, x='CFD_Rank',
+    plot = sns.JointGrid(data=final_df, x='CFD_Rank', xlim={0, 10000}, ylim={0, 10000},
                          y='CRISTA_Rank', hue='Bulge_count', marginal_ticks=True, palette=palette)
     plot.plot_joint(sns.scatterplot, alpha=0.5, rasterized=True)
     plot.plot_marginals(sns.histplot)
