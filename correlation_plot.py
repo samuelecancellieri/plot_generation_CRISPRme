@@ -52,36 +52,49 @@ def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
         df_guide['CRISTA_Rank'] = df_guide['CRISTA_Rank'].astype(int)
 
         # select only the top10000 for CFD and CRISTA ranks
-        df_guide_selected = df_guide.loc[(
+        df_guide = df_guide.loc[(
             df_guide['CFD_Rank'] <= 10000) | (df_guide['CRISTA_Rank'] <= 10000)]
+        # pair all ranks >10000 to 10000
+        df_guide.loc[df_guide['CFD_Rank']
+                     > 10000, 'CFD_Rank'] = 10000
+        df_guide.loc[df_guide['CRISTA_Rank']
+                     > 10000, 'CRISTA_Rank'] = 10000
 
-        df_guide_selected.loc[df_guide_selected['CFD_Rank']
-                              > 10000, 'CFD_Rank'] = 10000
-        df_guide_selected.loc[df_guide_selected['CRISTA_Rank']
-                              > 10000, 'CRISTA_Rank'] = 10000
-
+        # save the guide df to file
         df_guide.to_csv(
             sys.argv[2]+f'original_{guide}_{max_bulges}_bulges.tsv', sep='\t', na_rep='NA', index=False)
+        # append dfguide to df_guide list to generate the final df with all guides
+        df_guide_list.append(df_guide)
 
-        df_guide_list.append(df_guide_selected)
+        plt.figure(figsize=(5, 5))
+        sns.scatterplot(data=df_guide, x="CFD_score_(highest_CFD)", y='CRISTA_score_(highest_CRISTA)',
+                        hue='Bulge_count', rasterized=True, palette=palette, alpha=0.5, legend=False, linewidth=0)
+
+        plt.xlim(-0.1, 1.1)
+        plt.ylim(-0.1, 1.1)
+        plt.tight_layout()
+        plt.savefig(
+            sys.argv[2]+f'correlation_CFDvCRISTA_top10000_union_for_{guide}_with_{max_bulges}_bulges.pdf', dpi=300)
+        plt.clf()
+        plt.close('all')
 
         print('plot for guide top10000', guide)
         guide_list = list()
         guide_list.append(guide)
         # count total targets in union
-        guide_list.append(len(df_guide_selected.index))
+        guide_list.append(len(df_guide.index))
         # CFD<100 & CRISTA<100
-        guide_list.append(len(df_guide_selected[(df_guide_selected.CFD_Rank <= 100) & (
-            df_guide_selected.CRISTA_Rank <= 100)].index))
+        guide_list.append(len(df_guide[(df_guide.CFD_Rank <= 100) & (
+            df_guide.CRISTA_Rank <= 100)].index))
         # CFD<100 & CRISTA>100
-        guide_list.append(len(df_guide_selected[(df_guide_selected.CFD_Rank <= 100) & (
-            df_guide_selected.CRISTA_Rank > 100)].index))
+        guide_list.append(len(df_guide[(df_guide.CFD_Rank <= 100) & (
+            df_guide.CRISTA_Rank > 100)].index))
         # CFD>100 & CRISTA<100
-        guide_list.append(len(df_guide_selected[(df_guide_selected.CFD_Rank > 100) & (
-            df_guide_selected.CRISTA_Rank <= 100)].index))
+        guide_list.append(len(df_guide[(df_guide.CFD_Rank > 100) & (
+            df_guide.CRISTA_Rank <= 100)].index))
         # CFD>100 & CRISTA>100
-        guide_list.append(len(df_guide_selected[(df_guide_selected.CFD_Rank > 100) & (
-            df_guide_selected.CRISTA_Rank > 100)].index))
+        guide_list.append(len(df_guide[(df_guide.CFD_Rank > 100) & (
+            df_guide.CRISTA_Rank > 100)].index))
         # append all counts to single list
         count_list.append(guide_list)
 
