@@ -43,8 +43,6 @@ def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
 
         # filter the df to obtain single guide targets
         df_guide = original_df.loc[(original_df['Spacer+PAM'] == guide)]
-        df_guide.to_csv(
-            sys.argv[2]+f'original_{guide}_up_to_{max_bulges}.tsv', sep='\t', na_rep='NA', index=False)
         # rank scores in df
         df_guide['CFD_Rank'] = df_guide['CFD_score_(highest_CFD)'].rank(
             method='first', ascending=False)
@@ -53,6 +51,7 @@ def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
         df_guide['CFD_Rank'] = df_guide['CFD_Rank'].astype(int)
         df_guide['CRISTA_Rank'] = df_guide['CRISTA_Rank'].astype(int)
 
+        # select only the top10000 for CFD and CRISTA ranks
         df_guide_selected = df_guide.loc[(
             df_guide['CFD_Rank'] <= 10000) | (df_guide['CRISTA_Rank'] <= 10000)]
 
@@ -61,6 +60,9 @@ def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
         df_guide_selected.loc[df_guide_selected['CRISTA_Rank']
                               > 10000, 'CRISTA_Rank'] = 10000
 
+        df_guide.to_csv(
+            sys.argv[2]+f'original_{guide}_{max_bulges}_bulges.tsv', sep='\t', na_rep='NA', index=False)
+
         df_guide_list.append(df_guide_selected)
 
         print('plot for guide top10000', guide)
@@ -68,7 +70,6 @@ def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
         guide_list.append(guide)
         # count total targets in union
         guide_list.append(len(df_guide_selected.index))
-
         # CFD<100 & CRISTA<100
         guide_list.append(len(df_guide_selected[(df_guide_selected.CFD_Rank <= 100) & (
             df_guide_selected.CRISTA_Rank <= 100)].index))
@@ -87,10 +88,10 @@ def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
     # whole figure
     final_df = pd.concat(df_guide_list)
     final_df.to_csv(
-        sys.argv[2] + f'final_df_ranks_with_up_to_{max_bulges}.tsv', sep='\t', na_rep='NA', index=False)
+        sys.argv[2] + f'final_df_ranks_with_{max_bulges}_bulges.tsv', sep='\t', na_rep='NA', index=False)
     count_df = pd.DataFrame(count_list, columns=[
                             'sgRNA', 'total_targets_union', 'CFD<=100&CRISTA<=100', 'CFD<=100&CRISTA>100', 'CFD>100&CRISTA<=100', 'CFD>100&CRISTA>100'])
-    count_df.to_csv(sys.argv[2]+f'count_list_top10000_union_with_up_to_{max_bulges}.tsv',
+    count_df.to_csv(sys.argv[2]+f'count_list_top10000_union_with_{max_bulges}_bulges.tsv',
                     sep='\t', na_rep='NA', index=False)
 
     # color palette for hue
@@ -121,7 +122,7 @@ def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
 
     plt.tight_layout()
     plt.savefig(
-        sys.argv[2]+f'scatter_rank_CFDvCRISTA_top10000_union_with_up_to_{max_bulges}.pdf', dpi=300)
+        sys.argv[2]+f'scatter_rank_CFDvCRISTA_top10000_union_with_{max_bulges}_bulges.pdf', dpi=300)
     plt.clf()
     plt.close('all')
 
@@ -133,7 +134,7 @@ def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
     plt.ylim(-0.1, 1.1)
     plt.tight_layout()
     plt.savefig(
-        sys.argv[2]+f'correlation_CFDvCRISTA_top10000_union_with_up_to_{max_bulges}.pdf', dpi=300)
+        sys.argv[2]+f'correlation_CFDvCRISTA_top10000_union_with_{max_bulges}_bulges.pdf', dpi=300)
     plt.clf()
     plt.close('all')
 
@@ -141,14 +142,14 @@ def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
     corr = stats.pearsonr(final_df['CFD_score_(highest_CFD)'],
                           final_df['CRISTA_score_(highest_CRISTA)'])
     outfile = open(
-        sys.argv[2]+f'pearson_corr_scores_with_up_to_{max_bulges}.txt', 'w')
+        sys.argv[2]+f'pearson_corr_scores_with_{max_bulges}_bulges.txt', 'w')
     outfile.write(str(corr[0])+'\t'+str(corr[1]))
     outfile.close()
 
     corr = stats.pearsonr(final_df['CFD_Rank'],
                           final_df['CRISTA_Rank'])
     outfile = open(
-        sys.argv[2]+f'pearson_corr_ranks_with_up_to_{max_bulges}.txt', 'w')
+        sys.argv[2]+f'pearson_corr_ranks_with_{max_bulges}_bulges.txt', 'w')
     outfile.write(str(corr[0])+'\t'+str(corr[1]))
     outfile.close()
 
@@ -157,14 +158,14 @@ def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
                            final_df['CRISTA_score_(highest_CRISTA)'])
 
     outfile = open(
-        sys.argv[2]+f'spearman_corr_scores_with_up_to_{max_bulges}.txt', 'w')
+        sys.argv[2]+f'spearman_corr_scores_with_{max_bulges}_bulges.txt', 'w')
     outfile.write(str(corr[0])+'\t'+str(corr[1]))
     outfile.close()
 
     corr = stats.spearmanr(final_df['CFD_Rank'],
                            final_df['CRISTA_Rank'])
     outfile = open(
-        sys.argv[2]+f'spearman_corr_ranks_with_up_to_{max_bulges}.txt', 'w')
+        sys.argv[2]+f'spearman_corr_ranks_with_{max_bulges}_bulges.txt', 'w')
     outfile.write(str(corr[0])+'\t'+str(corr[1]))
     outfile.close()
 
