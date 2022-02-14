@@ -104,14 +104,14 @@ def printDensityPlot(superpop_dict: dict):
             upperbound = media+(z_score*standarderr)
             ax.plot(media, color=color_dict[superpop])
             ax.fill_between(range(len(media)), lowerbound,
-                            upperbound, alpha=0.10)
+                            upperbound, alpha=0.10, color=color_dict[superpop])
 
     plt.title('_with diffCFD >=' + str(0.1) +
               ' and CI '+str(95)+'%'+' and CFD score >='+str(0.2))
     plt.xlabel('# Individuals')
     plt.ylabel('# Cumulative Targets')
 
-    plt.legend(fontsize=8)
+    plt.legend([])
     plt.savefig(sys.argv[3]+'_with_diffCFD_'+str(0.1) +
                 'and_CI_95_and_CFD_score_'+str(0.2)+'.pdf')
 
