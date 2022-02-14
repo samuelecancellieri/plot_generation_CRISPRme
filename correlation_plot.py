@@ -51,6 +51,7 @@ def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
 
         # filter the df to obtain single guide targets
         df_guide = original_df.loc[(original_df['Spacer+PAM'] == guide)]
+        df_guide.sort_values(['Chromosome'], inplace=True)
         # rank scores in df
         df_guide['CFD_Rank'] = df_guide['CFD_score_(highest_CFD)'].rank(
             method='first', ascending=False)
@@ -58,6 +59,34 @@ def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
             method='first', ascending=False)
         df_guide['CFD_Rank'] = df_guide['CFD_Rank'].astype(int)
         df_guide['CRISTA_Rank'] = df_guide['CRISTA_Rank'].astype(int)
+
+        df_CFD_top10000 = df_guide.loc[(
+            df_guide['CFD_Rank'] <= 10000)]
+        df_CFD_top10000.to_csv(
+            sys.argv[2]+f'top10000_CFD_{guide}_{max_bulges}_bulges.tsv', sep='\t', na_rep='NA', index=False)
+
+        df_CRISTA_top10000 = df_guide.loc[(
+            df_guide['CRISTA_Rank'] <= 10000)]
+        df_CRISTA_top10000.to_csv(
+            sys.argv[2]+f'top10000_CRISTA_{guide}_{max_bulges}_bulges.tsv', sep='\t', na_rep='NA', index=False)
+
+        plt.figure(figsize=(5, 5))
+        sns.scatterplot(data=df_CFD_top10000, x="CFD_score_(highest_CFD)", y='CRISTA_score_(highest_CRISTA)',
+                        hue='Bulge_count', rasterized=True, palette=palette, alpha=0.5, legend=False, linewidth=0)
+        plt.tight_layout()
+        plt.savefig(
+            sys.argv[2]+f'corr_plot_top10000CFD_{guide}_{max_bulges}_bulges.pdf', dpi=300)
+        plt.clf()
+        plt.close('all')
+
+        plt.figure(figsize=(5, 5))
+        sns.scatterplot(data=df_CRISTA_top10000, x="CFD_score_(highest_CFD)", y='CRISTA_score_(highest_CRISTA)',
+                        hue='Bulge_count', rasterized=True, palette=palette, alpha=0.5, legend=False, linewidth=0)
+        plt.tight_layout()
+        plt.savefig(
+            sys.argv[2]+f'corr_plot_top10000CRISTA_{guide}_{max_bulges}_bulges.pdf', dpi=300)
+        plt.clf()
+        plt.close('all')
 
         # select only the top10000 for CFD and CRISTA ranks
         df_guide = df_guide.loc[(
@@ -193,7 +222,7 @@ max_bulges = 0
 print('bulge 0')
 # filter out targets with bulges > max_bulges
 filter_bulges = original_df.loc[(
-    original_df['Bulges_(highest_CFD)'] == max_bulges) | (original_df['Bulges_(highest_CRISTA)'] == max_bulges)]
+    original_df['Bulges_(highest_CFD)'] == max_bulges) & (original_df['Bulges_(highest_CRISTA)'] == max_bulges)]
 filter_bulges['Bulge_count'] = filter_bulges.apply(bulge_color, axis=1)
 plot_correlation(filter_bulges, max_bulges)
 
@@ -202,7 +231,8 @@ max_bulges = 1
 print('bulge 1')
 # filter out targets with bulges > max_bulges
 filter_bulges = original_df.loc[(
-    original_df['Bulges_(highest_CFD)'] == max_bulges) | (original_df['Bulges_(highest_CRISTA)'] == max_bulges)]
+    original_df['Bulges_(highest_CFD)'] == max_bulges) | (original_df['Bulges_(highest_CRISTA)'] == max_bulges) & (
+    original_df['Bulges_(highest_CFD)'] != 2) & (original_df['Bulges_(highest_CRISTA)'] != 2)]
 filter_bulges['Bulge_count'] = filter_bulges.apply(bulge_color, axis=1)
 plot_correlation(filter_bulges, max_bulges)
 
