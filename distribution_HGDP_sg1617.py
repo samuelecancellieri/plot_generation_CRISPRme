@@ -102,7 +102,7 @@ def printDensityPlot(superpop_dict: dict):
             z_score = 1.96  # for confidence 95%
             lowerbound = media-(z_score*standarderr)
             upperbound = media+(z_score*standarderr)
-            ax.plot(media, label=str(superpop))
+            ax.plot(media, color=color_dict[superpop])
             ax.fill_between(range(len(media)), lowerbound,
                             upperbound, alpha=0.10)
 
