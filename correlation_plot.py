@@ -215,7 +215,7 @@ def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
 
 print('start processing')
 original_df = pd.read_csv(sys.argv[1], sep="\t", index_col=False,
-                          na_values=['n'], usecols=['Spacer+PAM', 'Bulges_(highest_CFD)', 'Bulges_(highest_CRISTA)', 'CFD_score_(highest_CFD)', 'CRISTA_score_(highest_CRISTA)'])
+                          na_values=['n'], usecols=['Spacer+PAM', 'Chromosome', 'Bulges_(highest_CFD)', 'Bulges_(highest_CRISTA)', 'CFD_score_(highest_CFD)', 'CRISTA_score_(highest_CRISTA)'])
 
 # select the max number of bulges allowed in targets
 max_bulges = 0
