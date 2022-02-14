@@ -34,7 +34,6 @@ matplotlib.rcParams['ps.fonttype'] = 42
 target_file = open(sys.argv[1], 'r')
 sample_file = open(sys.argv[2], 'r')
 sample_dict = dict()
-pop_dict = dict()
 color_dict = {'AFR': 'tab:orange', 'AMR': 'tab:brown', 'CSA': 'tab:blue',
               'EAS': 'tab:pink', 'EUR': 'tab:red', 'MEA': 'tab:purple', 'OCE': 'tab:green'}
 
@@ -70,73 +69,55 @@ for index, target in enumerate(target_file):
                     continue
 
 
-def printDensityPlot(superpop_dict: dict, superpop: str):
+def printDensityPlot(superpop_dict: dict):
     # create figure and set axis
     # plt.figure()
     fig = plt.figure()
     ax = plt.subplot(111)
-    for pop in superpop_dict:  # for each population in superpopulation
-        andamenti = list()
-        permutationList = list()
-        for sample in superpop_dict[pop]:
-            # append samples to list to permute
-            permutationList.append(sample)
-        print('DOING POP PLOT FOR: ', pop)
-        for permutation in range(0, 100):
-            np.random.shuffle(permutationList)
-            andamento = list()
-            alreadyAddedTargets = set()
-            for sample in permutationList:
-                alreadyAddedTargets = alreadyAddedTargets.union(
-                    superpop_dict[pop][sample])
-                andamento.append(len(alreadyAddedTargets))
-            andamenti.append(andamento)
-        # read values to generate plot
-        andamentiArray = np.array(andamenti)
-        media = np.mean(andamentiArray, axis=0)
-        standarddev = np.std(andamentiArray, axis=0)
-        standarderr = standarddev/np.sqrt(len(list(superpop_dict[pop])))
-        z_score = 1.96  # for confidence 95%
-        lowerbound = media-(z_score*standarderr)
-        upperbound = media+(z_score*standarderr)
-        # allMedie.append(media)
-        ax.plot(media, label=str(pop))
-        ax.fill_between(range(len(media)), lowerbound,
-                        upperbound, alpha=0.10)
+    # for each superpopulation in dict
+    for superpop in superpop_dict:
+        # for each population in superpopulation
+        for pop in superpop_dict[superpop]:
+            andamenti = list()
+            permutationList = list()
+            for sample in superpop_dict[superpop][pop]:
+                # append samples to list to permute
+                permutationList.append(sample)
+            print('DOING POP PLOT FOR: ', pop)
+            for permutation in range(0, 100):
+                np.random.shuffle(permutationList)
+                andamento = list()
+                alreadyAddedTargets = set()
+                for sample in permutationList:
+                    alreadyAddedTargets = alreadyAddedTargets.union(
+                        superpop_dict[pop][sample])
+                    andamento.append(len(alreadyAddedTargets))
+                andamenti.append(andamento)
+            # read values to generate plot
+            andamentiArray = np.array(andamenti)
+            media = np.mean(andamentiArray, axis=0)
+            standarddev = np.std(andamentiArray, axis=0)
+            standarderr = standarddev / \
+                np.sqrt(len(list(superpop_dict[superpop][pop])))
+            z_score = 1.96  # for confidence 95%
+            lowerbound = media-(z_score*standarderr)
+            upperbound = media+(z_score*standarderr)
+            ax.plot(media, label=str(superpop))
+            ax.fill_between(range(len(media)), lowerbound,
+                            upperbound, alpha=0.10)
 
-    plt.title(superpop+'_with diffCFD >=' + str(0.1) +
+    plt.title('_with diffCFD >=' + str(0.1) +
               ' and CI '+str(95)+'%'+' and CFD score >='+str(0.2))
     plt.xlabel('# Individuals')
     plt.ylabel('# Cumulative Targets')
 
-    # legend handles
-    # AFR = mpatches.Patch(color='tab:orange', label="AFR")
-    # AMR = mpatches.Patch(color='tab:brown', label="AMR")
-    # CSA = mpatches.Patch(color='tab:blue', label="CSA")
-    # EAS = mpatches.Patch(color='tab:pink', label="EAS")
-    # EUR = mpatches.Patch(color='tab:red', label="EUR")
-    # MEA = mpatches.Patch(color='tab:purple', label="MEA")
-    # OCE = mpatches.Patch(color='tab:green', label="OCE")
-
-    # move legend outside plot by reducing plot dimensions
-    # box = ax.get_position()
-    # ax.set_position([box.x0, box.y0 + box.height * 0.1,
-    #                  box.width, box.height * 0.9])
-
-    # # # Put a legend below current axis
-    # ax.legend(loc='upper center', fontsize=8, bbox_to_anchor=(
-    #     0.5, -0.05), ncol=ceil(len(list(superpop_dict[pop]))/2))
-
-    # plt.gca().add_artist(plt.legend(fontsize=8, loc='upper center', handles=[
-    #     AFR, AMR, CSA, EAS, EUR, MEA, OCE], title='Super Populations', bbox_to_anchor=(0.5, -0.05), ncol=len(color_dict.keys())))
-
-    # ax.tight_layout()
     plt.legend(fontsize=8)
-    plt.savefig(sys.argv[3]+superpop+'_with_diffCFD_'+str(0.1) +
+    plt.savefig(sys.argv[3]+'_with_diffCFD_'+str(0.1) +
                 'and_CI_95_and_CFD_score_'+str(0.2)+'.pdf')
 
 
-# print(sample_dict)
-for superpop in sample_dict:
-    superpop_dict = sample_dict[superpop]
-    printDensityPlot(superpop_dict, superpop)
+# for superpop in sample_dict:
+#     superpop_dict = sample_dict[superpop]
+#     printDensityPlot(superpop_dict, superpop)
+
+printDensityPlot(sample_dict)
