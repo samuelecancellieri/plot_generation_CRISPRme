@@ -90,7 +90,7 @@ def printDensityPlot(superpop_dict: dict):
                 alreadyAddedTargets = set()
                 for sample in permutationList:
                     alreadyAddedTargets = alreadyAddedTargets.union(
-                        superpop_dict[pop][sample])
+                        superpop_dict[superpop][pop][sample])
                     andamento.append(len(alreadyAddedTargets))
                 andamenti.append(andamento)
             # read values to generate plot
