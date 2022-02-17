@@ -39,7 +39,8 @@ for guide in original_df['Spacer+PAM'].unique():
     guide_df = guide_df.head(1000)
 
     # generate excel sheets
-    guide_df.to_excel(writer, sheet_name=str(guide), na_rep='NA')
+    guide_df.to_excel(writer, sheet_name=str(guide), na_rep='NA', index=False)
 
 # save the writer to excel file
 writer.save()
+writer.close()
