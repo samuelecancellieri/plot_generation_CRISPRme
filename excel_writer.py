@@ -2,6 +2,12 @@ import sys
 import pandas as pd
 
 print('start processing')
+
+if len(sys.argv[:]) < 4:
+    print('some input is missing, please provide input')
+    print('integrated.tsv out_dir sort_criteria')
+    exit(1)
+
 # df with targets
 original_df = pd.read_csv(sys.argv[1], sep="\t", index_col=False,
                           na_values=['n'])
