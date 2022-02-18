@@ -5,7 +5,7 @@ print('start processing')
 
 if len(sys.argv[:]) < 4:
     print('some input is missing, please provide input')
-    print('integrated.tsv out_dir sort_criteria')
+    print('integrated.tsv out_dir sort_criteria(CFD,CRISTA,mmbul)')
     exit(1)
 
 # df with targets
