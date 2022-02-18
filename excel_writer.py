@@ -4,17 +4,7 @@ import pandas as pd
 print('start processing')
 # df with targets
 original_df = pd.read_csv(sys.argv[1], sep="\t", index_col=False,
-                          na_values=['n'], usecols=['Spacer+PAM', 'Chromosome',
-                                                    'Start_coordinate_(fewest_mm+b)',
-                                                    'Aligned_spacer+PAM_(fewest_mm+b)',
-                                                    'Aligned_protospacer+PAM_REF_(fewest_mm+b)',
-                                                    'Aligned_protospacer+PAM_ALT_(fewest_mm+b)',
-                                                    'Mismatches_(fewest_mm+b)',
-                                                    'Bulges_(fewest_mm+b)',
-                                                    'Mismatches+bulges_(fewest_mm+b)',
-                                                    'Annotation_GENCODE',
-                                                    'Annotation_closest_gene_name',
-                                                    'Annotation_ENCODE'])
+                          na_values=['n'])
 # excel writer
 writer = pd.ExcelWriter(sys.argv[2]+'guide_sheets.xlsx')
 # user sort criteria
