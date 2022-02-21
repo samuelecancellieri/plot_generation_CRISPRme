@@ -61,9 +61,9 @@ for guide in original_df['Spacer+PAM'].unique():
 
     # extract top 1000 rows for each guide
     guide_df = guide_df.head(1000)
-    guide_df['Mismatches+bulges_({sort_criteria})_REF'] = guide_df['Aligned_protospacer+PAM_REF_({sort_criteria})'].apply(
+    guide_df['Mismatches+bulges_(fewest_mm+b)_REF'] = guide_df['Aligned_protospacer+PAM_REF_(fewest_mm+b)'].apply(
         lambda x: count_ref_mm(x))
-    guide_df['Mismatches+bulges_({sort_criteria})_REF'] += guide_df['Bulges_({sort_criteria})']
+    guide_df['Mismatches+bulges_(fewest_mm+b)_REF'] += guide_df['Bulges_(fewest_mm+b)']
 
     # generate excel sheets
     guide_df.to_excel(writer, sheet_name=str(guide), na_rep='NA', index=False)
