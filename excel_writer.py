@@ -1,3 +1,4 @@
+from operator import truediv
 import sys
 import pandas as pd
 
@@ -63,6 +64,8 @@ for guide in original_df['Spacer+PAM'].unique():
     guide_df = guide_df.head(1000)
     guide_df.insert(guide_df.columns.get_loc('Mismatches+bulges_(fewest_mm+b)'),
                     'Mismatches+bulges_(fewest_mm+b)_REF', 0)
+    guide_df.rename(columns={
+                    "Mismatches+bulges_(fewest_mm+b)": "Mismatches+bulges_(fewest_mm+b)_ALT"}, inplace=True)
     guide_df['Mismatches+bulges_(fewest_mm+b)_REF'] = guide_df['Aligned_protospacer+PAM_REF_(fewest_mm+b)'].apply(
         lambda x: count_ref_mm(x))
     guide_df['Mismatches+bulges_(fewest_mm+b)_REF'] += guide_df['Bulges_(fewest_mm+b)']
