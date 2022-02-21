@@ -41,11 +41,11 @@ for guide in original_df['Spacer+PAM'].unique():
         guide_df['REF_Mismatches+bulges_(fewest_mm+b)'] = guide_df['Seed_mismatches+bulges_REF_(fewest_mm+b)'] + \
             guide_df['Non_seed_mismatches+bulges_REF_(fewest_mm+b)']
 
-    columns_to_drop = list()
-    for column in list(guide_df.columns):
-        if any(criteria in column for criteria in drop_criteria):
-            columns_to_drop.append(column)
-    guide_df.drop(columns_to_drop, axis=1, inplace=True)
+    # columns_to_drop = list()
+    # for column in list(guide_df.columns):
+    #     if any(criteria in column for criteria in drop_criteria):
+    #         columns_to_drop.append(column)
+    # guide_df.drop(columns_to_drop, axis=1, inplace=True)
 
     # extract top 1000 rows for each guide
     guide_df = guide_df.head(1000)
