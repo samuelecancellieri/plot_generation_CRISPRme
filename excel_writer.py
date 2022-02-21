@@ -26,14 +26,20 @@ for guide in original_df['Spacer+PAM'].unique():
         guide_df.sort_values('CFD_score_(highest_CFD)',
                              ascending=False, inplace=True)
         drop_criteria = ('fewest_mm+b', 'highest_CRISTA')
+        guide_df['REF_Mismatches+bulges_(highest_CFD)'] = int(guide_df['Seed_mismatches+bulges_REF_(highest_CFD)'])+int(
+            guide_df['Non_seed_mismatches+bulges_REF_(highest_CFD)'])
     elif 'CRISTA' in sort_criteria:
         guide_df.sort_values('CRISTA_score_(highest_CRISTA)',
                              ascending=False, inplace=True)
         drop_criteria = ('fewest_mm+b', 'highest_CFD')
+        guide_df['REF_Mismatches+bulges_(highest_CRISTA)'] = int(guide_df['Seed_mismatches+bulges_REF_(highest_CRISTA)'])+int(
+            guide_df['Non_seed_mismatches+bulges_REF_(highest_CRISTA)'])
     elif 'fewest' in sort_criteria:
         guide_df.sort_values('Mismatches+bulges_(fewest_mm+b)',
                              ascending=True, inplace=True)
         drop_criteria = ('highest')
+        guide_df['REF_Mismatches+bulges_(fewest_mm+b)'] = int(guide_df['Seed_mismatches+bulges_REF_(fewest_mm+b)'])+int(
+            guide_df['Non_seed_mismatches+bulges_REF_(fewest_mm+b)'])
 
     columns_to_drop = list()
     for column in list(guide_df.columns):
