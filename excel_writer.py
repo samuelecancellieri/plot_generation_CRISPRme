@@ -20,32 +20,35 @@ for guide in original_df['Spacer+PAM'].unique():
     # filter df for guide
     guide_df = original_df.loc[(original_df['Spacer+PAM'] == guide)]
 
-    drop_criteria = ''
+    drop_criteria = list()
     # sort df using user criteria
     if 'CFD' in sort_criteria:
         guide_df.sort_values('CFD_score_(highest_CFD)',
                              ascending=False, inplace=True)
-        drop_criteria = ('fewest_mm+b', 'highest_CRISTA')
         guide_df['REF_Mismatches+bulges_(highest_CFD)'] = guide_df['Seed_mismatches+bulges_REF_(highest_CFD)'] + \
             guide_df['Non_seed_mismatches+bulges_REF_(highest_CFD)']
+        drop_criteria.append('fewest_mm+b')
+        drop_criteria.append('highest_CRISTA')
     elif 'CRISTA' in sort_criteria:
         guide_df.sort_values('CRISTA_score_(highest_CRISTA)',
                              ascending=False, inplace=True)
-        drop_criteria = ('fewest_mm+b', 'highest_CFD')
         guide_df['REF_Mismatches+bulges_(highest_CRISTA)'] = guide_df['Seed_mismatches+bulges_REF_(highest_CRISTA)'] + \
             guide_df['Non_seed_mismatches+bulges_REF_(highest_CRISTA)']
+        drop_criteria.append('fewest_mm+b')
+        drop_criteria.append('highest_CFD')
     elif 'fewest' in sort_criteria:
         guide_df.sort_values('Mismatches+bulges_(fewest_mm+b)',
                              ascending=True, inplace=True)
-        drop_criteria = ('highest')
         guide_df['REF_Mismatches+bulges_(fewest_mm+b)'] = guide_df['Seed_mismatches+bulges_REF_(fewest_mm+b)'] + \
             guide_df['Non_seed_mismatches+bulges_REF_(fewest_mm+b)']
+        drop_criteria.append('highest_CFD')
+        drop_criteria.append('highest_CRISTA')
 
-    # columns_to_drop = list()
-    # for column in list(guide_df.columns):
-    #     if any(criteria in column for criteria in drop_criteria):
-    #         columns_to_drop.append(column)
-    # guide_df.drop(columns_to_drop, axis=1, inplace=True)
+    columns_to_drop = list()
+    for column in list(guide_df.columns):
+        if any(criteria in column for criteria in drop_criteria):
+            columns_to_drop.append(column)
+    guide_df.drop(columns_to_drop, axis=1, inplace=True)
 
     # extract top 1000 rows for each guide
     guide_df = guide_df.head(1000)
