@@ -1,6 +1,15 @@
 import sys
 import pandas as pd
 
+
+def count_ref_mm(aligned_ref_seq):
+    count_mm = 0
+    for nt in str(aligned_ref_seq):
+        if nt.islower():
+            count_mm += 1
+    return count_mm
+
+
 print('start processing')
 
 if len(sys.argv[:]) < 4:
@@ -15,6 +24,12 @@ original_df = pd.read_csv(sys.argv[1], sep="\t", index_col=False,
 writer = pd.ExcelWriter(sys.argv[2]+'guide_sheets.xlsx')
 # user sort criteria
 sort_criteria = sys.argv[3]
+if sort_criteria == 'CFD':
+    sort_criteria = 'highest_CFD'
+elif sort_criteria == 'CRISTA':
+    sort_criteria = 'highest_CRISTA'
+elif sort_criteria == 'fewest':
+    sort_criteria = 'fewest_mm+b'
 
 for guide in original_df['Spacer+PAM'].unique():
     # filter df for guide
@@ -25,22 +40,16 @@ for guide in original_df['Spacer+PAM'].unique():
     if 'CFD' in sort_criteria:
         guide_df.sort_values('CFD_score_(highest_CFD)',
                              ascending=False, inplace=True)
-        guide_df['REF_Mismatches+bulges_(highest_CFD)'] = guide_df['Seed_mismatches+bulges_REF_(highest_CFD)'] + \
-            guide_df['Non_seed_mismatches+bulges_REF_(highest_CFD)']
         drop_criteria.append('fewest_mm+b')
         drop_criteria.append('highest_CRISTA')
     elif 'CRISTA' in sort_criteria:
         guide_df.sort_values('CRISTA_score_(highest_CRISTA)',
                              ascending=False, inplace=True)
-        guide_df['REF_Mismatches+bulges_(highest_CRISTA)'] = guide_df['Seed_mismatches+bulges_REF_(highest_CRISTA)'] + \
-            guide_df['Non_seed_mismatches+bulges_REF_(highest_CRISTA)']
         drop_criteria.append('fewest_mm+b')
         drop_criteria.append('highest_CFD')
     elif 'fewest' in sort_criteria:
         guide_df.sort_values('Mismatches+bulges_(fewest_mm+b)',
                              ascending=True, inplace=True)
-        guide_df['REF_Mismatches+bulges_(fewest_mm+b)'] = guide_df['Seed_mismatches+bulges_REF_(fewest_mm+b)'] + \
-            guide_df['Non_seed_mismatches+bulges_REF_(fewest_mm+b)']
         drop_criteria.append('highest_CFD')
         drop_criteria.append('highest_CRISTA')
 
@@ -52,6 +61,9 @@ for guide in original_df['Spacer+PAM'].unique():
 
     # extract top 1000 rows for each guide
     guide_df = guide_df.head(1000)
+    guide_df['Mismatches+bulges_({sort_criteria})_REF'] = guide_df['Aligned_protospacer+PAM_REF_({sort_criteria})'].apply(
+        lambda x: count_ref_mm(x))
+    guide_df['Mismatches+bulges_({sort_criteria})_REF'] += guide_df['Bulges_({sort_criteria})']
 
     # generate excel sheets
     guide_df.to_excel(writer, sheet_name=str(guide), na_rep='NA', index=False)
