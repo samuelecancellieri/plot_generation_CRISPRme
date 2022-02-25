@@ -1,3 +1,5 @@
+from email import header
+import fileinput
 import sys
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -12,15 +14,16 @@ matplotlib.rcParams['pdf.fonttype'] = 42
 matplotlib.rcParams['ps.fonttype'] = 42
 plt.style.use('seaborn-poster')
 
-df = pd.read_csv(sys.argv[1], sep="\t",
-                 index_col=False, na_values=['n'], usecols=['Variant_samples_(highest_CFD)'])
+# df = pd.read_csv(sys.argv[1], sep="\t",
+#                  index_col=False, na_values=['n'], usecols=['Variant_samples_(highest_CFD)'])
+file_in = open(sys.argv[1], 'r')
+file_in.readline()  # skip header
 out_folder = sys.argv[2]
 sample_dict = dict()
 
 
-def count_personal_and_private(row: pd.Series):
-    sample_list = str(row['Variant_samples_(highest_CFD)']).strip().split(',')
-    for sample in sample_list:
+def count_personal_and_private(sample_list: list):
+    for sample in sample_list.strip().split(','):
         if sample not in sample_dict.keys():
             # personal,private
             sample_dict[sample] = [0, 0]
@@ -29,7 +32,11 @@ def count_personal_and_private(row: pd.Series):
             sample_dict[sample][1] += 1
 
 
-df.apply(count_personal_and_private, axis=1)
+for line in file_in:
+    split = line.strip().split('\t')
+    # extract samples str from target line
+    count_personal_and_private(split[22])
+
 sample_dict.pop('NA', None)
 
 # list containing ratio for 1000G,HGDP,BOTH
