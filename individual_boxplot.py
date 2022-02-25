@@ -55,10 +55,12 @@ for sample in sample_dict:
         boxplot_values[0].append(ratio)
     boxplot_values[2].append(ratio)
 # print(boxplot_values)
+df_boxplot = pd.DataFrame(boxplot_values, columns=[
+                          '1000G', 'HGDP', '1000G+HGDP'])
 
 plt.figure()
 # plt.boxplot(boxplot_values)
-sns.boxplot(data=boxplot_values)
+sns.boxplot(data=df_boxplot)
 plt.tight_layout()
 plt.savefig(
     out_folder+f"boxplot_1000G_HGDP_both.pdf")
