@@ -35,7 +35,8 @@ def count_personal_and_private(sample_list: list):
 for line in file_in:
     split = line.strip().split('\t')
     # extract samples str from target line
-    print(split[22])
+    # print(split[22])
+    print(sample_dict)
     count_personal_and_private(split[22])
 
 sample_dict.pop('NA', None)
