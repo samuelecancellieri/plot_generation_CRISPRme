@@ -28,7 +28,7 @@ def count_personal_and_private(sample_list: list):
             # personal,private
             sample_dict[sample] = [0, 0]
         sample_dict[sample][0] += 1
-        if len(sample_list) == 1:
+        if len(sample_list.strip().split(',')) == 1:
             sample_dict[sample][1] += 1
 
 
@@ -38,6 +38,7 @@ for line in file_in:
     count_personal_and_private(split[22])
 
 sample_dict.pop('NA', None)
+sample_dict.pop('n', None)
 print(sample_dict)
 # list containing ratio for 1000G,HGDP,BOTH
 boxplot_values = [[], [], []]
