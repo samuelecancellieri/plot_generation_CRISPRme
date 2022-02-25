@@ -23,12 +23,13 @@ sample_dict = dict()
 
 
 def count_personal_and_private(sample_list: list):
-    for sample in sample_list.strip().split(','):
+    sample_list = sample_list.strip().split(',')
+    for sample in sample_list:
         if sample not in sample_dict.keys():
             # personal,private
             sample_dict[sample] = [0, 0]
         sample_dict[sample][0] += 1
-        if len(sample_list.strip().split(',')) == 1:
+        if len(sample_list) == 1:
             sample_dict[sample][1] += 1
 
 
