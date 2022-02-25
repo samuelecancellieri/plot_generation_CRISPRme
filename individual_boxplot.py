@@ -38,7 +38,7 @@ for line in file_in:
     count_personal_and_private(split[22])
 
 sample_dict.pop('NA', None)
-
+print(sample_dict)
 # list containing ratio for 1000G,HGDP,BOTH
 boxplot_values = [[], [], []]
 for sample in sample_dict:
