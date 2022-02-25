@@ -22,8 +22,8 @@ def count_personal_and_private(row: pd.Series):
     sample_list = str(row['Variant_samples_(highest_CFD)']).strip().split(',')
     for sample in sample_list:
         if sample not in sample_dict.keys():
-            # personal,private,ratio
-            sample_dict[sample] = (0, 0, 0)
+            # personal,private
+            sample_dict[sample] = [0, 0]
         sample_dict[sample][0] += 1
         if len(sample_list) == 1:
             sample_dict[sample][1] += 1
@@ -35,14 +35,15 @@ sample_dict.pop('NA', None)
 # list containing ratio for 1000G,HGDP,BOTH
 boxplot_values = [[], [], []]
 for sample in sample_dict:
+    ratio = 0
     if sample_dict[sample][0] != 0:  # if personal is not zero
         # ratio=private/personal
-        sample_dict[sample][2] = sample_dict[sample][1]/sample_dict[sample][0]
-        if 'HGDP' in sample:
-            boxplot_values[1].append(sample_dict[sample][2])
-        else:
-            boxplot_values[0].append(sample_dict[sample][2])
-        boxplot_values[2].append(sample_dict[sample][2])
+        ratio = sample_dict[sample][1]/sample_dict[sample][0]
+    if 'HGDP' in sample:
+        boxplot_values[1].append(ratio)
+    else:
+        boxplot_values[0].append(ratio)
+    boxplot_values[2].append(ratio)
 
 plt.figure()
 plt.boxplot(boxplot_values)
