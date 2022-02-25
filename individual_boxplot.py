@@ -59,6 +59,8 @@ for sample in sample_dict:
 plt.figure()
 # plt.boxplot(boxplot_values)
 sns.boxplot(data=boxplot_values)
+plt.xlabel('Dataset of variant targets')
+plt.ylabel('Ratio of private targets/personal targets')
 plt.tight_layout()
 plt.savefig(
     out_folder+f"boxplot_1000G_HGDP_both.pdf")
