@@ -40,7 +40,7 @@ for line in file_in:
 
 sample_dict.pop('NA', None)
 sample_dict.pop('n', None)
-print(sample_dict)
+# print(sample_dict)
 # list containing ratio for 1000G,HGDP,BOTH
 boxplot_values = [[], [], []]
 for sample in sample_dict:
@@ -53,7 +53,7 @@ for sample in sample_dict:
     else:
         boxplot_values[0].append(ratio)
     boxplot_values[2].append(ratio)
-print(boxplot_values)
+# print(boxplot_values)
 
 plt.figure()
 plt.boxplot(boxplot_values)
