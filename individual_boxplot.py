@@ -4,6 +4,7 @@ import sys
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib
+import seaborn as sns
 import warnings
 # SUPPRESS ALL WARNINGS
 warnings.filterwarnings("ignore")
@@ -56,7 +57,8 @@ for sample in sample_dict:
 # print(boxplot_values)
 
 plt.figure()
-plt.boxplot(boxplot_values)
+# plt.boxplot(boxplot_values)
+sns.boxplot(data=boxplot_values)
 plt.tight_layout()
 plt.savefig(
     out_folder+f"boxplot_1000G_HGDP_both.pdf")
