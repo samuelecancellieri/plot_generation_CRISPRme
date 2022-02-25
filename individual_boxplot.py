@@ -35,6 +35,7 @@ def count_personal_and_private(sample_list: list):
 for line in file_in:
     split = line.strip().split('\t')
     # extract samples str from target line
+    print(split[22])
     count_personal_and_private(split[22])
 
 sample_dict.pop('NA', None)
@@ -51,6 +52,7 @@ for sample in sample_dict:
     else:
         boxplot_values[0].append(ratio)
     boxplot_values[2].append(ratio)
+print(boxplot_values)
 
 plt.figure()
 plt.boxplot(boxplot_values)
