@@ -69,6 +69,8 @@ boxplot_values_single_search = []
 boxplot_values_double_search = []
 count_ratio(boxplot_values_single_search, sample_dict_single)
 count_ratio(boxplot_values_double_search, sample_dict_double)
+boxplot_values_single_search.sort()
+boxplot_values_double_search.sort()
 
 print('mean value single search', mean(boxplot_values_single_search))
 print('mean value double search', mean(boxplot_values_double_search))
