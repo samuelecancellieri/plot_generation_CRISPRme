@@ -31,7 +31,7 @@ def count_personal_and_private(sample_string: str):
     only_HGDP = False
     if 'HGDP' not in sample_string:
         only_1000G = True
-    if re.findall('HG[0-9]|NA[0-9]', sample_string) is Empty:
+    if len(re.findall('HG[0-9]|NA[0-9]', sample_string)) == 0:
         only_HGDP = True
     print(re.findall('HG[0-9]|NA[0-9]', sample_string))
     print('1000G:', only_1000G, 'HGDP:', only_HGDP)
