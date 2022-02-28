@@ -25,15 +25,15 @@ sample_dict = dict()
 
 def count_personal_and_private(sample_string: str):
     sample_list = sample_string.strip().split(',')
-    print(sample_string)
+    # print(sample_string)
     only_1000G = False
     only_HGDP = False
     if 'HGDP' not in sample_string:
         only_1000G = True
     if re.match('HG[0-9]|NA[0-9]', sample_string) is None:
         only_HGDP = True
-    print('re.match:', re.match('HG[0-9]|NA[0-9]', sample_string))
-    print('1000G:', only_1000G, 'HGDP:', only_HGDP)
+    # print('re.match:', re.match('HG[0-9]|NA[0-9]', sample_string))
+    # print('1000G:', only_1000G, 'HGDP:', only_HGDP)
     for sample in sample_list:
         if sample not in sample_dict.keys():
             # personal,private,only
@@ -50,6 +50,8 @@ def count_personal_and_private(sample_string: str):
 for line in file_in:
     split = line.strip().split('\t')
     # extract samples str from target line
+    if str(split[22]) == 'NA':
+        continue
     count_personal_and_private(str(split[22]))
 
 sample_dict.pop('NA', None)
