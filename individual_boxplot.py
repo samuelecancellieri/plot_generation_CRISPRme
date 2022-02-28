@@ -1,7 +1,5 @@
-from queue import Empty
 import sys
 import re
-from traceback import print_tb
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib
@@ -16,105 +14,68 @@ matplotlib.rcParams['pdf.fonttype'] = 42
 matplotlib.rcParams['ps.fonttype'] = 42
 plt.style.use('seaborn-paper')
 
-# df = pd.read_csv(sys.argv[1], sep="\t",
-#                  index_col=False, na_values=['n'], usecols=['Variant_samples_(highest_CFD)'])
-file_in = open(sys.argv[1], 'r')
-file_in.readline()  # skip header
-out_folder = sys.argv[2]
-sample_dict = dict()
+df_single_search = pd.read_csv(sys.argv[1], sep="\t", index_col=False, na_values=[
+                               'n'], usecols=['Variant_samples_(highest_CFD)'])
+df_double_search = pd.read_csv(sys.argv[2], sep="\t", index_col=False, na_values=[
+                               'n'], usecols=['Variant_samples_(highest_CFD)'])
+sample_file = open(sys.argv[3], 'r')
+out_folder = sys.argv[4]
 
 
-def count_personal_and_private(sample_string: str):
+def count_ratio(boxplot_values, sample_dict: dict):
+    for sample in sample_dict:
+        # calculate ratio with shared targets
+        ratio = 0  # shared_ratio
+        if sample_dict[sample][1] != 0:  # if personal is not zero
+            # ratio=private/personal
+            ratio = sample_dict[sample][0]/sample_dict[sample][1]
+        boxplot_values.append(ratio)
+
+
+def count_personal_and_private(sample_string: str, sample_dict: dict):
     sample_list = sample_string.strip().split(',')
-    # print(sample_string)
-    only_1000G = False
-    only_HGDP = False
-    if 'HGDP' not in sample_string:
-        only_1000G = True
-    if (re.search('HG[0-9]|NA[0-9]', sample_string)) is None:
-        only_HGDP = True
-    # print(re.search('HG[0-9]|NA[0-9]', sample_string))
-    # print('1000G:', only_1000G, 'HGDP:', only_HGDP)
     for sample in sample_list:
-        if sample not in sample_dict.keys():
-            # personal,private,only
-            sample_dict[sample] = [0, 0, 0]
-        sample_dict[sample][0] += 1
-        if len(sample_list) == 1:
+        try:
             sample_dict[sample][1] += 1
-        if only_1000G:
-            sample_dict[sample][2] += 1
-        if only_HGDP:
-            sample_dict[sample][2] += 1
+            if len(sample_list) == 1:
+                sample_dict[sample][0] += 1
+        except:
+            continue
 
 
-for line in file_in:
-    split = line.strip().split('\t')
-    # extract samples str from target line
-    if str(split[22]) == 'NA':
+sample_dict = dict()
+for line in sample_file:
+    if '#' in line:
         continue
-    count_personal_and_private(str(split[22]))
+    splitted = line.strip().split('\t')
+    # [private,personal]
+    sample_dict[splitted[0]] = [0, 0]
+# analyze search
+df_single_search['Variant_samples_(highest_CFD)'].apply(
+    lambda x: count_personal_and_private(str(x), sample_dict), axis=1)
+df_double_search['Variant_samples_(highest_CFD)'].apply(
+    lambda x: count_personal_and_private(str(x), sample_dict), axis=1)
 
-sample_dict.pop('NA', None)
-sample_dict.pop('n', None)
-# print(sample_dict)
-# list containing ratio for 1000G_shared,1000G_only,HGDP_shared,HGDP_private
-boxplot_values = [[], [], [], []]
-for sample in sample_dict:
-    # calculate ratio with shared targets
-    ratio = 0  # shared_ratio
-    if sample_dict[sample][0] != 0:  # if personal is not zero
-        # ratio=private/personal
-        ratio = sample_dict[sample][1]/sample_dict[sample][0]
-    if 'HGDP' in sample:
-        boxplot_values[2].append(ratio)
-    else:
-        boxplot_values[0].append(ratio)
-    if ratio >= 1:
-        print(sample_dict[sample][1], sample_dict[sample][0])
-    # calculate ratio with only targets
-    ratio = 0  # only_ratio
-    if sample_dict[sample][2] != 0:  # if only is not zero
-        # ratio=private/only
-        ratio = sample_dict[sample][1]/sample_dict[sample][2]
-    if 'HGDP' in sample:
-        boxplot_values[3].append(ratio)
-    else:
-        boxplot_values[1].append(ratio)
-    if ratio >= 1:
-        print(sample_dict[sample][1], sample_dict[sample][2])
+# list containing lists ratio for private_single_search/personal_single_search
+boxplot_values_single_search = []
+# private_double_search/personal_double_search
+boxplot_values_double_search = []
+count_ratio(boxplot_values_single_search, sample_dict)
+count_ratio(boxplot_values_double_search, sample_dict)
 
-df_1000G = pd.DataFrame(
-    {'1000G+HGDP': boxplot_values[0], '1000G': boxplot_values[1]})
 
-df_hgdp = pd.DataFrame(
-    {'HGDP+1000G': boxplot_values[2], 'HGDP': boxplot_values[3]})
+df_complete = pd.DataFrame(
+    {'1000G': boxplot_values_single_search, '1000G+HGDP': boxplot_values_double_search})
 
-# print(df_1000G)
-# print(df_hgdp)
-
-# 1000G DISTPLOT
+# DISTPLOT
 plt.figure(figsize=(20, 20))
 # plt.boxplot(boxplot_values)
-sns.displot(df_1000G, kind="kde", bw_adjust=2)
+sns.displot(df_complete, kind="kde", bw_adjust=2)
 # sns.boxplot(data=boxplot_values)
 plt.xlabel('Ratio of private/personal targets')
 plt.ylabel('Density')
 plt.tight_layout()
 plt.savefig(
     out_folder+f"1000G_boxplot.pdf")
-plt.clf()
-plt.close('all')
-
-# HGDP DISTPLOT
-plt.figure(figsize=(20, 20))
-# plt.boxplot(boxplot_values)
-sns.displot(df_hgdp, kind="kde", bw_adjust=2)
-# sns.boxplot(data=boxplot_values)
-plt.xlabel('Ratio of private/personal targets')
-plt.ylabel('Density')
-plt.tight_layout()
-plt.savefig(
-    out_folder+f"HGDP_boxplot.pdf")
 plt.clf()
 plt.close('all')
