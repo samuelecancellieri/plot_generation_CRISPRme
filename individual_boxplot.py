@@ -82,8 +82,11 @@ df_1000G = pd.DataFrame(
 df_hgdp = pd.DataFrame(
     {'HGDP_shared': boxplot_values[2], 'HGDP_only': boxplot_values[3]})
 
+print(df_1000G)
+print(df_hgdp)
+
 # 1000G DISTPLOT
-plt.figure()
+# plt.figure()
 # plt.boxplot(boxplot_values)
 sns.displot(df_1000G)
 # sns.boxplot(data=boxplot_values)
@@ -96,7 +99,7 @@ plt.clf()
 plt.close('all')
 
 # HGDP DISTPLOT
-plt.figure()
+# plt.figure()
 # plt.boxplot(boxplot_values)
 sns.displot(df_hgdp)
 # sns.boxplot(data=boxplot_values)
