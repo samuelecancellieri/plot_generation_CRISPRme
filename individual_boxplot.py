@@ -13,7 +13,7 @@ matplotlib.use('Agg')
 # set matplotlib for pdf editing
 matplotlib.rcParams['pdf.fonttype'] = 42
 matplotlib.rcParams['ps.fonttype'] = 42
-plt.style.use('seaborn-poster')
+plt.style.use('seaborn-paper')
 
 # df = pd.read_csv(sys.argv[1], sep="\t",
 #                  index_col=False, na_values=['n'], usecols=['Variant_samples_(highest_CFD)'])
@@ -89,27 +89,27 @@ print(df_1000G)
 print(df_hgdp)
 
 # 1000G DISTPLOT
-# plt.figure()
+plt.figure(figsize=(20, 20))
 # plt.boxplot(boxplot_values)
-sns.displot(df_1000G, kind="kde", bw_adjust=0.5)
+sns.displot(df_1000G, kind="kde", bw_adjust=2)
 # sns.boxplot(data=boxplot_values)
 plt.xlabel('Dataset of variant targets')
 plt.ylabel('Ratio of private targets/personal targets')
-# plt.tight_layout()
+plt.tight_layout()
 plt.savefig(
-    out_folder+f"1000G_boxplot_1000G_HGDP_both.pdf")
+    out_folder+f"1000G_boxplot.pdf")
 plt.clf()
 plt.close('all')
 
 # HGDP DISTPLOT
-# plt.figure()
+plt.figure(figsize=(20, 20))
 # plt.boxplot(boxplot_values)
 sns.displot(df_hgdp, kind="kde", bw_adjust=2)
 # sns.boxplot(data=boxplot_values)
 plt.xlabel('Dataset of variant targets')
 plt.ylabel('Ratio of private targets/personal targets')
-# plt.tight_layout()
+plt.tight_layout()
 plt.savefig(
-    out_folder+f"HGDP_boxplot_1000G_HGDP_both.pdf")
+    out_folder+f"HGDP_boxplot.pdf")
 plt.clf()
 plt.close('all')
