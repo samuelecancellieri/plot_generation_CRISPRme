@@ -43,25 +43,27 @@ def count_personal_and_private(sample_string: str, sample_dict: dict):
             continue
 
 
-sample_dict = dict()
+sample_dict_single = dict()
+sample_dict_double = dict()
 for line in sample_file:
     if '#' in line:
         continue
     splitted = line.strip().split('\t')
     # [private,personal]
-    sample_dict[splitted[0]] = [0, 0]
+    sample_dict_single[splitted[0]] = [0, 0]
+    sample_dict_double[splitted[0]] = [0, 0]
 # analyze search
 df_single_search['Variant_samples_(highest_CFD)'].apply(
-    lambda x: count_personal_and_private(str(x), sample_dict))
+    lambda x: count_personal_and_private(str(x), sample_dict_single))
 df_double_search['Variant_samples_(highest_CFD)'].apply(
-    lambda x: count_personal_and_private(str(x), sample_dict))
+    lambda x: count_personal_and_private(str(x), sample_dict_double))
 
 # list containing lists ratio for private_single_search/personal_single_search
 boxplot_values_single_search = []
 # private_double_search/personal_double_search
 boxplot_values_double_search = []
-count_ratio(boxplot_values_single_search, sample_dict)
-count_ratio(boxplot_values_double_search, sample_dict)
+count_ratio(boxplot_values_single_search, sample_dict_single)
+count_ratio(boxplot_values_double_search, sample_dict_double)
 
 
 df_complete = pd.DataFrame(
