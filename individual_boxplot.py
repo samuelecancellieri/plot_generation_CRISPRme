@@ -32,7 +32,7 @@ def count_personal_and_private(sample_string: str):
     only_HGDP = False
     if 'HGDP' not in sample_string:
         only_1000G = True
-    if 'NA' not in sample_string and (re.match(HG_PATTERN, sample_string) == False):
+    if 'NA' not in sample_string and (re.match(HG_PATTERN, sample_string) is None):
         only_HGDP = True
     print('re.match:', re.match(HG_PATTERN, sample_string))
     print('1000G:', only_1000G, 'HGDP:', only_HGDP)
