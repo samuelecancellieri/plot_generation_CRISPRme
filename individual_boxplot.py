@@ -91,7 +91,7 @@ print(df_hgdp)
 # 1000G DISTPLOT
 # plt.figure()
 # plt.boxplot(boxplot_values)
-sns.displot(df_1000G, kind="kde", bw_adjust=2)
+sns.displot(df_1000G, kind="kde", bw_adjust=0.5)
 # sns.boxplot(data=boxplot_values)
 plt.xlabel('Dataset of variant targets')
 plt.ylabel('Ratio of private targets/personal targets')
