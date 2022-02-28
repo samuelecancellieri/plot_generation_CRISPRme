@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt
 import matplotlib
 import seaborn as sns
 import warnings
+from statistics import mean
+
 # SUPPRESS ALL WARNINGS
 warnings.filterwarnings("ignore")
 # do not use X11
@@ -21,6 +23,8 @@ df_double_search = pd.read_csv(sys.argv[2], sep="\t", index_col=False, na_values
 sample_file = open(sys.argv[3], 'r')
 out_folder = sys.argv[4]
 analyzed_set = sys.argv[5]
+
+print('doing search', analyzed_set)
 
 
 def count_ratio(boxplot_values, sample_dict: dict):
@@ -66,7 +70,8 @@ boxplot_values_double_search = []
 count_ratio(boxplot_values_single_search, sample_dict_single)
 count_ratio(boxplot_values_double_search, sample_dict_double)
 
-
+print('mean value single search', mean(boxplot_values_single_search))
+print('mean value double search', mean(boxplot_values_double_search))
 df_complete = pd.DataFrame(
     {str(analyzed_set): boxplot_values_single_search, '1000G+HGDP': boxplot_values_double_search})
 
