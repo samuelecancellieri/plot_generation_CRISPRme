@@ -20,6 +20,7 @@ df_double_search = pd.read_csv(sys.argv[2], sep="\t", index_col=False, na_values
                                'n'], usecols=['Variant_samples_(highest_CFD)'])
 sample_file = open(sys.argv[3], 'r')
 out_folder = sys.argv[4]
+analyzed_set = sys.argv[5]
 
 
 def count_ratio(boxplot_values, sample_dict: dict):
@@ -67,7 +68,7 @@ count_ratio(boxplot_values_double_search, sample_dict_double)
 
 
 df_complete = pd.DataFrame(
-    {'1000G': boxplot_values_single_search, '1000G+HGDP': boxplot_values_double_search})
+    {str(analyzed_set): boxplot_values_single_search, '1000G+HGDP': boxplot_values_double_search})
 
 # DISTPLOT
 plt.figure(figsize=(20, 20))
@@ -78,6 +79,6 @@ plt.xlabel('Ratio of private/personal targets')
 plt.ylabel('Density')
 plt.tight_layout()
 plt.savefig(
-    out_folder+f"1000G_boxplot.pdf")
+    out_folder+f"{analyzed_set}_boxplot.pdf")
 plt.clf()
 plt.close('all')
