@@ -83,26 +83,26 @@ df_hgdp = pd.DataFrame(
     {'HGDP_shared': boxplot_values[2], 'HGDP_only': boxplot_values[3]})
 
 # 1000G DISTPLOT
-plt.figure(figsize=(10, 10))
+plt.figure()
 # plt.boxplot(boxplot_values)
-sns.displot(df_1000G, kind="kde")
+sns.displot(df_1000G)
 # sns.boxplot(data=boxplot_values)
 plt.xlabel('Dataset of variant targets')
 plt.ylabel('Ratio of private targets/personal targets')
-plt.tight_layout()
+# plt.tight_layout()
 plt.savefig(
     out_folder+f"1000G_boxplot_1000G_HGDP_both.pdf")
 plt.clf()
 plt.close('all')
 
 # HGDP DISTPLOT
-plt.figure(figsize=(10, 10))
+plt.figure()
 # plt.boxplot(boxplot_values)
-sns.displot(df_hgdp, kind="kde")
+sns.displot(df_hgdp)
 # sns.boxplot(data=boxplot_values)
 plt.xlabel('Dataset of variant targets')
 plt.ylabel('Ratio of private targets/personal targets')
-plt.tight_layout()
+# plt.tight_layout()
 plt.savefig(
     out_folder+f"HGDP_boxplot_1000G_HGDP_both.pdf")
 plt.clf()
