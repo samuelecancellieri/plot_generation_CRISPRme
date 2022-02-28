@@ -22,8 +22,6 @@ file_in.readline()  # skip header
 out_folder = sys.argv[2]
 sample_dict = dict()
 
-HG_PATTERN = 'HG[0-9]'
-
 
 def count_personal_and_private(sample_string: str):
     sample_list = sample_string.strip().split(',')
@@ -32,9 +30,9 @@ def count_personal_and_private(sample_string: str):
     only_HGDP = False
     if 'HGDP' not in sample_string:
         only_1000G = True
-    if 'NA' not in sample_string and (re.match(HG_PATTERN, sample_string) is None):
+    if re.match('HG[0-9]|NA[0-9]', sample_string) is None:
         only_HGDP = True
-    # print('re.match:', re.match(HG_PATTERN, sample_string))
+    print('re.match:', re.match('HG[0-9]|NA[0-9]', sample_string))
     # print('1000G:', only_1000G, 'HGDP:', only_HGDP)
     for sample in sample_list:
         if sample not in sample_dict.keys():
