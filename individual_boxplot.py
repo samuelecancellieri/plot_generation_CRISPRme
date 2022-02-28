@@ -26,7 +26,7 @@ sample_dict = dict()
 
 def count_personal_and_private(sample_string: str):
     sample_list = sample_string.strip().split(',')
-    print(sample_string)
+    # print(sample_string)
     only_1000G = False
     only_HGDP = False
     if 'HGDP' not in sample_string:
@@ -90,8 +90,8 @@ df_1000G = pd.DataFrame(
 df_hgdp = pd.DataFrame(
     {'HGDP_shared': boxplot_values[2], 'HGDP_only': boxplot_values[3]})
 
-print(df_1000G)
-print(df_hgdp)
+# print(df_1000G)
+# print(df_hgdp)
 
 # 1000G DISTPLOT
 plt.figure(figsize=(20, 20))
