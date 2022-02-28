@@ -78,7 +78,7 @@ for sample in sample_dict:
 
 
 # 1000G DISTPLOT
-plt.figure(10, 10)
+plt.figure(figsize=(10, 10))
 # plt.boxplot(boxplot_values)
 sns.displot(boxplot_values[0], kind="kde")
 sns.displot(boxplot_values[1], kind="kde")
