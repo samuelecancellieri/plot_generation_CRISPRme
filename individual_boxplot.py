@@ -25,7 +25,7 @@ sample_dict = dict()
 
 def count_personal_and_private(sample_string: str):
     sample_list = sample_string.strip().split(',')
-    # print(sample_list)
+    print(sample_string)
     only_1000G = False
     only_HGDP = False
     if 'HGDP' not in sample_string:
