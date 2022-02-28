@@ -79,12 +79,13 @@ for sample in sample_dict:
 df_1000G = pd.DataFrame(
     {'1000G_shared': boxplot_values[0], '1000G_only': boxplot_values[1]})
 
+df_hgdp = pd.DataFrame(
+    {'HGDP_shared': boxplot_values[2], 'HGDP_only': boxplot_values[3]})
 
 # 1000G DISTPLOT
 plt.figure(figsize=(10, 10))
 # plt.boxplot(boxplot_values)
-sns.displot(boxplot_values[0], kind="kde")
-sns.displot(boxplot_values[1], kind="kde")
+sns.displot(df_1000G, kind="kde")
 # sns.boxplot(data=boxplot_values)
 plt.xlabel('Dataset of variant targets')
 plt.ylabel('Ratio of private targets/personal targets')
@@ -97,8 +98,7 @@ plt.close('all')
 # HGDP DISTPLOT
 plt.figure(figsize=(10, 10))
 # plt.boxplot(boxplot_values)
-sns.displot(boxplot_values[2], kind="kde")
-sns.displot(boxplot_values[3], kind="kde")
+sns.displot(df_hgdp, kind="kde")
 # sns.boxplot(data=boxplot_values)
 plt.xlabel('Dataset of variant targets')
 plt.ylabel('Ratio of private targets/personal targets')
