@@ -76,8 +76,9 @@ for sample in sample_dict:
     else:
         boxplot_values[1].append(ratio)
 
-df_1000G = pd.DataFrame([boxplot_values[0], boxplot_values[1]], columns=[
-                        '1000G_shared', '1000G_only'])
+df_1000G = pd.DataFrame(
+    {'1000G_shared': boxplot_values[0], '1000G_only': boxplot_values[1]})
+
 
 # 1000G DISTPLOT
 plt.figure(figsize=(10, 10))
