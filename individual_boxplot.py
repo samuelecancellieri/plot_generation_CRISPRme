@@ -76,15 +76,31 @@ for sample in sample_dict:
     else:
         boxplot_values[1].append(ratio)
 
-for count, elem in enumerate(boxplot_values):
-    plt.figure()
-    # plt.boxplot(boxplot_values)
-    sns.displot(elem, kind="kde")
-    # sns.boxplot(data=boxplot_values)
-    plt.xlabel('Dataset of variant targets')
-    plt.ylabel('Ratio of private targets/personal targets')
-    plt.tight_layout()
-    plt.savefig(
-        out_folder+f"{count}_boxplot_1000G_HGDP_both.pdf")
-    plt.clf()
-    plt.close('all')
+
+# 1000G DISTPLOT
+plt.figure(10, 10)
+# plt.boxplot(boxplot_values)
+sns.displot(boxplot_values[0], kind="kde")
+sns.displot(boxplot_values[1], kind="kde")
+# sns.boxplot(data=boxplot_values)
+plt.xlabel('Dataset of variant targets')
+plt.ylabel('Ratio of private targets/personal targets')
+plt.tight_layout()
+plt.savefig(
+    out_folder+f"1000G_boxplot_1000G_HGDP_both.pdf")
+plt.clf()
+plt.close('all')
+
+# HGDP DISTPLOT
+plt.figure(10, 10)
+# plt.boxplot(boxplot_values)
+sns.displot(boxplot_values[2], kind="kde")
+sns.displot(boxplot_values[3], kind="kde")
+# sns.boxplot(data=boxplot_values)
+plt.xlabel('Dataset of variant targets')
+plt.ylabel('Ratio of private targets/personal targets')
+plt.tight_layout()
+plt.savefig(
+    out_folder+f"HGDP_boxplot_1000G_HGDP_both.pdf")
+plt.clf()
+plt.close('all')
