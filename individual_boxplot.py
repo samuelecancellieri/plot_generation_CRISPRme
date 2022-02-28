@@ -72,7 +72,7 @@ df_complete = pd.DataFrame(
 # DISTPLOT
 plt.figure(figsize=(20, 20))
 # plt.boxplot(boxplot_values)
-sns.displot(df_complete, kind="kde", bw_adjust=2)
+sns.displot(df_complete, kind="kde")
 # sns.boxplot(data=boxplot_values)
 plt.xlabel('Ratio of private/personal targets')
 plt.ylabel('Density')
