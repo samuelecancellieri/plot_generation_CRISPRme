@@ -69,6 +69,8 @@ for sample in sample_dict:
         boxplot_values[2].append(ratio)
     else:
         boxplot_values[0].append(ratio)
+    if ratio < 0:
+        print(sample_dict[sample][1], sample_dict[sample][0])
     # calculate ratio with only targets
     ratio = 0  # only_ratio
     if sample_dict[sample][2] != 0:  # if only is not zero
@@ -78,6 +80,8 @@ for sample in sample_dict:
         boxplot_values[3].append(ratio)
     else:
         boxplot_values[1].append(ratio)
+    if ratio < 0:
+        print(sample_dict[sample][1], sample_dict[sample][2])
 
 df_1000G = pd.DataFrame(
     {'1000G_shared': boxplot_values[0], '1000G_only': boxplot_values[1]})
