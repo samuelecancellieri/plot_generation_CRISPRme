@@ -1,5 +1,6 @@
 import sys
 import re
+from traceback import print_tb
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib
@@ -27,12 +28,14 @@ HG_PATTERN = 'HG[0-9]'
 def count_personal_and_private(sample_list: str):
     sample_string = sample_list
     sample_list = sample_list.strip().split(',')
+    print(sample_list)
     only_1000G = False
     only_HGDP = False
     if 'HGDP' not in sample_list:
         only_1000G = True
     if 'NA' not in sample_list and (re.match(HG_PATTERN, sample_string) == False):
         only_HGDP = True
+    print('1000G:', only_1000G, 'HGDP:', only_HGDP)
     for sample in sample_list:
         if sample not in sample_dict.keys():
             # personal,private,only
