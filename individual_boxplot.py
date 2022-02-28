@@ -92,7 +92,7 @@ plt.clf()
 plt.close('all')
 
 # HGDP DISTPLOT
-plt.figure(10, 10)
+plt.figure(figsize=(10, 10))
 # plt.boxplot(boxplot_values)
 sns.displot(boxplot_values[2], kind="kde")
 sns.displot(boxplot_values[3], kind="kde")
