@@ -52,9 +52,9 @@ for line in sample_file:
     sample_dict[splitted[0]] = [0, 0]
 # analyze search
 df_single_search['Variant_samples_(highest_CFD)'].apply(
-    lambda x: count_personal_and_private(str(x), sample_dict), axis=1)
+    lambda x: count_personal_and_private(str(x), sample_dict))
 df_double_search['Variant_samples_(highest_CFD)'].apply(
-    lambda x: count_personal_and_private(str(x), sample_dict), axis=1)
+    lambda x: count_personal_and_private(str(x), sample_dict))
 
 # list containing lists ratio for private_single_search/personal_single_search
 boxplot_values_single_search = []
