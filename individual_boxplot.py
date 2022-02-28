@@ -34,6 +34,7 @@ def count_personal_and_private(sample_string: str):
         only_1000G = True
     if 'NA' not in sample_string and (re.match(HG_PATTERN, sample_string) == False):
         only_HGDP = True
+    print('re.match:', re.match(HG_PATTERN, sample_string))
     print('1000G:', only_1000G, 'HGDP:', only_HGDP)
     for sample in sample_list:
         if sample not in sample_dict.keys():
