@@ -85,10 +85,10 @@ for sample in sample_dict:
         print(sample_dict[sample][1], sample_dict[sample][2])
 
 df_1000G = pd.DataFrame(
-    {'1000G_shared': boxplot_values[0], '1000G_only': boxplot_values[1]})
+    {'1000G+HGDP': boxplot_values[0], '1000G': boxplot_values[1]})
 
 df_hgdp = pd.DataFrame(
-    {'HGDP_shared': boxplot_values[2], 'HGDP_only': boxplot_values[3]})
+    {'HGDP+1000G': boxplot_values[2], 'HGDP': boxplot_values[3]})
 
 # print(df_1000G)
 # print(df_hgdp)
