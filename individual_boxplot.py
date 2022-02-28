@@ -71,7 +71,7 @@ for sample in sample_dict:
         boxplot_values[0].append(ratio)
     # calculate ratio with only targets
     ratio = 0  # only_ratio
-    if sample_dict[sample][0] != 0:  # if personal is not zero
+    if sample_dict[sample][2] != 0:  # if only is not zero
         # ratio=private/only
         ratio = sample_dict[sample][1]/sample_dict[sample][2]
     if 'HGDP' in sample:
