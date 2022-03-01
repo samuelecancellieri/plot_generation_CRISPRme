@@ -79,20 +79,29 @@ print('mean value double search', mean(boxplot_values_double_search[0]))
 df_complete = pd.DataFrame(
     {str(analyzed_set): boxplot_values_single_search[0], 'Private': boxplot_values_single_search[1], 'Personal': boxplot_values_single_search[2], '1000G+HGDP': boxplot_values_double_search[0], 'Superpopulation': boxplot_values_single_search[3]})
 print(df_complete)
-# DISTPLOT
-# plt.figure(figsize=(20, 20))
+
+# SCATTERPLOT
+plt.figure()
 color_dict = {'AFR': 'tab:orange', 'AMR': 'tab:brown', 'CSA': 'tab:blue',
               'EAS': 'tab:pink', 'EUR': 'tab:red', 'MEA': 'tab:purple', 'OCE': 'tab:green', 'SAS': 'tab:cyan'}
-# plt.boxplot(boxplot_values)
-# sns.displot(df_complete, kind="kde")
 sns.scatterplot(data=df_complete, x='Private', y='Personal',
                 hue='Superpopulation', rasterized=True, palette=color_dict, alpha=0.5, linewidth=0)
 
-# sns.boxplot(data=boxplot_values)
-# plt.xlabel('Ratio of private/personal targets')
-# plt.ylabel('Density')
+plt.title(str(analyzed_set))
 plt.tight_layout()
 plt.savefig(
     out_folder+f"{analyzed_set}_scatterplot.pdf")
+plt.clf()
+plt.close('all')
+
+plt.figure()
+sns.displot(df_complete[str(analyzed_set)], kind="kde")
+sns.displot(df_complete['1000G+HGDP'], kind="kde")
+plt.title(str(analyzed_set))
+plt.xlabel('Ratio of private/personal targets')
+plt.ylabel('Density')
+plt.tight_layout()
+plt.savefig(
+    out_folder+f"{analyzed_set}_distplot.pdf")
 plt.clf()
 plt.close('all')
