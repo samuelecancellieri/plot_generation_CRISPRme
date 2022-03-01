@@ -81,12 +81,11 @@ df_complete = pd.DataFrame(
 print(df_complete)
 
 # SCATTERPLOT
-plt.figure()
+# plt.figure()
 color_dict = {'AFR': 'tab:orange', 'AMR': 'tab:brown', 'CSA': 'tab:blue',
               'EAS': 'tab:pink', 'EUR': 'tab:red', 'MEA': 'tab:purple', 'OCE': 'tab:green', 'SAS': 'tab:cyan'}
 sns.scatterplot(data=df_complete, x='Private', y='Personal',
                 hue='Superpopulation', rasterized=True, palette=color_dict, alpha=0.5, linewidth=0)
-
 plt.title(str(analyzed_set))
 plt.tight_layout()
 plt.savefig(
@@ -94,9 +93,9 @@ plt.savefig(
 plt.clf()
 plt.close('all')
 
-plt.figure()
-sns.displot(df_complete[str(analyzed_set)], kind="kde")
-sns.displot(df_complete['1000G+HGDP'], kind="kde")
+# plt.figure()
+sns.displot(df_complete[str(analyzed_set), '1000G+HGDP'], kind="kde")
+# sns.displot(df_complete['1000G+HGDP'], kind="kde")
 plt.title(str(analyzed_set))
 plt.xlabel('Ratio of private/personal targets')
 plt.ylabel('Density')
