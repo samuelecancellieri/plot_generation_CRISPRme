@@ -35,7 +35,9 @@ def count_ratio(boxplot_values, sample_dict: dict):
             # ratio=private/personal
             ratio = sample_dict[sample][0]/sample_dict[sample][1]
         boxplot_values[0].append(ratio)
-        boxplot_values[1].append(str(sample_dict[sample][2]))
+        boxplot_values[1].append(sample_dict[sample][0])
+        boxplot_values[2].append(sample_dict[sample][1])
+        boxplot_values[3].append(str(sample_dict[sample][2]))
 
 
 def count_personal_and_private(sample_string: str, sample_dict: dict):
@@ -66,25 +68,25 @@ df_double_search['Variant_samples_(highest_CFD)'].apply(
     lambda x: count_personal_and_private(str(x), sample_dict_double))
 
 # list containing lists ratio for private_single_search/personal_single_search
-boxplot_values_single_search = [[], []]
+boxplot_values_single_search = [[], [], [], []]
 # private_double_search/personal_double_search
-boxplot_values_double_search = [[], []]
+boxplot_values_double_search = [[], [], [], []]
 count_ratio(boxplot_values_single_search, sample_dict_single)
 count_ratio(boxplot_values_double_search, sample_dict_double)
 
 print('mean value single search', mean(boxplot_values_single_search[0]))
 print('mean value double search', mean(boxplot_values_double_search[0]))
 df_complete = pd.DataFrame(
-    {str(analyzed_set): boxplot_values_single_search[0], '1000G+HGDP': boxplot_values_double_search[0], 'Superpopulation': boxplot_values_single_search[1]})
+    {str(analyzed_set): boxplot_values_single_search[0], 'Private': boxplot_values_single_search[1], 'Personal': boxplot_values_single_search[2], '1000G+HGDP': boxplot_values_double_search[0], 'Superpopulation': boxplot_values_single_search[3]})
 print(df_complete)
 # DISTPLOT
 plt.figure(figsize=(20, 20))
-# color_dict = {'AFR': 'tab:orange', 'AMR': 'tab:brown', 'CSA': 'tab:blue',
-#               'EAS': 'tab:pink', 'EUR': 'tab:red', 'MEA': 'tab:purple', 'OCE': 'tab:green'}
+color_dict = {'AFR': 'tab:orange', 'AMR': 'tab:brown', 'CSA': 'tab:blue',
+              'EAS': 'tab:pink', 'EUR': 'tab:red', 'MEA': 'tab:purple', 'OCE': 'tab:green'}
 # plt.boxplot(boxplot_values)
 # sns.displot(df_complete, kind="kde")
-sns.lmplot(data=df_complete, x=str(analyzed_set), y=str(analyzed_set),
-           hue='Superpopulation', fit_reg=False, legend=False)
+sns.scatterplot(data=df_complete, x='Private', y='Personal',
+                hue='Superpopulation', rasterized=True, palette=color_dict, alpha=0.5, legend=False, linewidth=0)
 plt.legend(loc='lower right')
 
 # sns.boxplot(data=boxplot_values)
@@ -92,6 +94,6 @@ plt.legend(loc='lower right')
 # plt.ylabel('Density')
 plt.tight_layout()
 plt.savefig(
-    out_folder+f"{analyzed_set}_boxplot.pdf")
+    out_folder+f"{analyzed_set}_scatterplot.pdf")
 plt.clf()
 plt.close('all')
