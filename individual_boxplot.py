@@ -34,7 +34,8 @@ def count_ratio(boxplot_values, sample_dict: dict):
         if sample_dict[sample][1] != 0:  # if personal is not zero
             # ratio=private/personal
             ratio = sample_dict[sample][0]/sample_dict[sample][1]
-        boxplot_values.append(ratio)
+        boxplot_values[0].append(ratio)
+        boxplot_values[1].append(sample_dict[sample][2])
 
 
 def count_personal_and_private(sample_string: str, sample_dict: dict):
@@ -54,9 +55,9 @@ for line in sample_file:
     if '#' in line:
         continue
     splitted = line.strip().split('\t')
-    # [private,personal]
-    sample_dict_single[splitted[0]] = [0, 0]
-    sample_dict_double[splitted[0]] = [0, 0]
+    #sample_dict[individual] =[private,personal,superpop]
+    sample_dict_single[splitted[0]] = [0, 0, splitted[2]]
+    sample_dict_double[splitted[0]] = [0, 0, splitted[2]]
 # analyze search
 df_single_search['Variant_samples_(highest_CFD)'].apply(
     lambda x: count_personal_and_private(str(x), sample_dict_single))
@@ -64,26 +65,27 @@ df_double_search['Variant_samples_(highest_CFD)'].apply(
     lambda x: count_personal_and_private(str(x), sample_dict_double))
 
 # list containing lists ratio for private_single_search/personal_single_search
-boxplot_values_single_search = []
+boxplot_values_single_search = [[], []]
 # private_double_search/personal_double_search
-boxplot_values_double_search = []
+boxplot_values_double_search = [[], []]
 count_ratio(boxplot_values_single_search, sample_dict_single)
 count_ratio(boxplot_values_double_search, sample_dict_double)
-boxplot_values_single_search.sort()
-boxplot_values_double_search.sort()
 
-print('mean value single search', mean(boxplot_values_single_search))
-print('mean value double search', mean(boxplot_values_double_search))
+print('mean value single search', mean(boxplot_values_single_search[0]))
+print('mean value double search', mean(boxplot_values_double_search[0]))
 df_complete = pd.DataFrame(
-    {str(analyzed_set): boxplot_values_single_search, '1000G+HGDP': boxplot_values_double_search})
+    {str(analyzed_set): boxplot_values_single_search, '1000G+HGDP': boxplot_values_double_search, 'Superpopulation:': boxplot_values_single_search[1]})
 
 # DISTPLOT
 plt.figure(figsize=(20, 20))
 # plt.boxplot(boxplot_values)
-sns.displot(df_complete, kind="kde")
+# sns.displot(df_complete, kind="kde")
+sns.scatterplot(data=df_complete, x=str(analyzed_set), y=str(analyzed_set),
+                hue='Superpopulation', rasterized=True, alpha=0.5, linewidth=0)
+
 # sns.boxplot(data=boxplot_values)
-plt.xlabel('Ratio of private/personal targets')
-plt.ylabel('Density')
+# plt.xlabel('Ratio of private/personal targets')
+# plt.ylabel('Density')
 plt.tight_layout()
 plt.savefig(
     out_folder+f"{analyzed_set}_boxplot.pdf")
