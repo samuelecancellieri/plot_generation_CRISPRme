@@ -75,7 +75,7 @@ count_ratio(boxplot_values_double_search, sample_dict_double)
 print('mean value single search', mean(boxplot_values_single_search[0]))
 print('mean value double search', mean(boxplot_values_double_search[0]))
 df_complete = pd.DataFrame(
-    {str(analyzed_set): boxplot_values_single_search[0], '1000G+HGDP': boxplot_values_double_search[0], 'Superpopulation:': boxplot_values_single_search[1]})
+    {str(analyzed_set): boxplot_values_single_search[0], '1000G+HGDP': boxplot_values_double_search[0], 'Superpopulation': boxplot_values_single_search[1]})
 print(df_complete)
 # DISTPLOT
 plt.figure(figsize=(20, 20))
