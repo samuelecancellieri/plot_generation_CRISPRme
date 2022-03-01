@@ -79,12 +79,13 @@ df_complete = pd.DataFrame(
 print(df_complete)
 # DISTPLOT
 plt.figure(figsize=(20, 20))
-color_dict = {'AFR': 'tab:orange', 'AMR': 'tab:brown', 'CSA': 'tab:blue',
-              'EAS': 'tab:pink', 'EUR': 'tab:red', 'MEA': 'tab:purple', 'OCE': 'tab:green'}
+# color_dict = {'AFR': 'tab:orange', 'AMR': 'tab:brown', 'CSA': 'tab:blue',
+#               'EAS': 'tab:pink', 'EUR': 'tab:red', 'MEA': 'tab:purple', 'OCE': 'tab:green'}
 # plt.boxplot(boxplot_values)
 # sns.displot(df_complete, kind="kde")
-sns.scatterplot(data=df_complete, x=str(analyzed_set), y=str(analyzed_set),
-                hue='Superpopulation', palette=color_dict, rasterized=True, alpha=0.5, linewidth=0)
+sns.lmplot(data=df_complete, x=str(analyzed_set), y=str(analyzed_set),
+           hue='Superpopulation', fit_reg=False, legend=False)
+plt.legend(loc='lower right')
 
 # sns.boxplot(data=boxplot_values)
 # plt.xlabel('Ratio of private/personal targets')
