@@ -58,6 +58,7 @@ for line in sample_file:
     #sample_dict[individual] =[private,personal,superpop]
     sample_dict_single[splitted[0]] = [0, 0, splitted[2]]
     sample_dict_double[splitted[0]] = [0, 0, splitted[2]]
+
 # analyze search
 df_single_search['Variant_samples_(highest_CFD)'].apply(
     lambda x: count_personal_and_private(str(x), sample_dict_single))
@@ -78,10 +79,12 @@ df_complete = pd.DataFrame(
 
 # DISTPLOT
 plt.figure(figsize=(20, 20))
+color_dict = {'AFR': 'tab:orange', 'AMR': 'tab:brown', 'CSA': 'tab:blue',
+              'EAS': 'tab:pink', 'EUR': 'tab:red', 'MEA': 'tab:purple', 'OCE': 'tab:green'}
 # plt.boxplot(boxplot_values)
 # sns.displot(df_complete, kind="kde")
 sns.scatterplot(data=df_complete, x=str(analyzed_set), y=str(analyzed_set),
-                hue='Superpopulation', rasterized=True, alpha=0.5, linewidth=0)
+                hue='Superpopulation', palette=color_dict, rasterized=True, alpha=0.5, linewidth=0)
 
 # sns.boxplot(data=boxplot_values)
 # plt.xlabel('Ratio of private/personal targets')
