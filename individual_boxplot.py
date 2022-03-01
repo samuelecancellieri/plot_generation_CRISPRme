@@ -14,7 +14,7 @@ matplotlib.use('Agg')
 # set matplotlib for pdf editing
 matplotlib.rcParams['pdf.fonttype'] = 42
 matplotlib.rcParams['ps.fonttype'] = 42
-plt.style.use('seaborn-paper')
+sns.set_context("paper")
 
 df_single_search = pd.read_csv(sys.argv[1], sep="\t", index_col=False, na_values=[
                                'n'], usecols=['Variant_samples_(highest_CFD)'])
@@ -80,14 +80,13 @@ df_complete = pd.DataFrame(
     {str(analyzed_set): boxplot_values_single_search[0], 'Private': boxplot_values_single_search[1], 'Personal': boxplot_values_single_search[2], '1000G+HGDP': boxplot_values_double_search[0], 'Superpopulation': boxplot_values_single_search[3]})
 print(df_complete)
 # DISTPLOT
-plt.figure(figsize=(20, 20))
+# plt.figure(figsize=(20, 20))
 color_dict = {'AFR': 'tab:orange', 'AMR': 'tab:brown', 'CSA': 'tab:blue',
               'EAS': 'tab:pink', 'EUR': 'tab:red', 'MEA': 'tab:purple', 'OCE': 'tab:green', 'SAS': 'tab:cyan'}
 # plt.boxplot(boxplot_values)
 # sns.displot(df_complete, kind="kde")
 sns.scatterplot(data=df_complete, x='Private', y='Personal',
-                hue='Superpopulation', rasterized=True, palette=color_dict, alpha=0.5, legend=False, linewidth=0)
-plt.legend(loc='lower right')
+                hue='Superpopulation', rasterized=True, palette=color_dict, alpha=0.5, linewidth=0)
 
 # sns.boxplot(data=boxplot_values)
 # plt.xlabel('Ratio of private/personal targets')
