@@ -76,7 +76,7 @@ print('mean value single search', mean(boxplot_values_single_search[0]))
 print('mean value double search', mean(boxplot_values_double_search[0]))
 df_complete = pd.DataFrame(
     {str(analyzed_set): boxplot_values_single_search[0], '1000G+HGDP': boxplot_values_double_search[0], 'Superpopulation:': boxplot_values_single_search[1]})
-
+print(df_complete)
 # DISTPLOT
 plt.figure(figsize=(20, 20))
 color_dict = {'AFR': 'tab:orange', 'AMR': 'tab:brown', 'CSA': 'tab:blue',
