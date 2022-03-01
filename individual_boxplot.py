@@ -82,7 +82,7 @@ print(df_complete)
 # DISTPLOT
 plt.figure(figsize=(20, 20))
 color_dict = {'AFR': 'tab:orange', 'AMR': 'tab:brown', 'CSA': 'tab:blue',
-              'EAS': 'tab:pink', 'EUR': 'tab:red', 'MEA': 'tab:purple', 'OCE': 'tab:green'}
+              'EAS': 'tab:pink', 'EUR': 'tab:red', 'MEA': 'tab:purple', 'OCE': 'tab:green', 'SAS': 'tab:cyan'}
 # plt.boxplot(boxplot_values)
 # sns.displot(df_complete, kind="kde")
 sns.scatterplot(data=df_complete, x='Private', y='Personal',
