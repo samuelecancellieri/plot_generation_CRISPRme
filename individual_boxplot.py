@@ -33,6 +33,7 @@ def count_ratio(boxplot_values, sample_dict: dict):
         ratio = 0  # shared_ratio
         if sample_dict[sample][1] != 0:  # if personal is not zero
             # ratio=private/personal
+            print(sample)
             ratio = sample_dict[sample][0]/sample_dict[sample][1]
         boxplot_values[0].append(ratio)
         boxplot_values[1].append(sample_dict[sample][0])
