@@ -29,13 +29,12 @@ print('doing search', analyzed_set)
 
 def count_ratio(boxplot_values, sample_dict: dict):
     for sample in sample_dict:
-        # calculate ratio with shared targets
-        ratio = 0  # shared_ratio
-        if sample_dict[sample][1] != 0:  # if personal is not zero
-            # ratio=private/personal
-            ratio = sample_dict[sample][0]/sample_dict[sample][1]
+        # skip sample with 0 personal
         if sample_dict[sample][1] == 0:
             continue
+
+        # calculate ratio with shared targets
+        ratio = sample_dict[sample][0]/sample_dict[sample][1]
         boxplot_values[0].append(ratio)
         boxplot_values[1].append(sample_dict[sample][0])
         boxplot_values[2].append(sample_dict[sample][1])
