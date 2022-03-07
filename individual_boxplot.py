@@ -108,6 +108,7 @@ df = sns.load_dataset('iris')
 print(df.iloc[:, 0:2])
 
 # sns.displot(df_complete[[str(analyzed_set), '1000G+HGDP']])
+print(df_complete[[str(analyzed_set), '1000G+HGDP']])
 ax = sns.violinplot(data=df_complete[[str(analyzed_set), '1000G+HGDP']])
 # for violin in ax.collections[::2]:
 #     violin.set_alpha(0.2)
