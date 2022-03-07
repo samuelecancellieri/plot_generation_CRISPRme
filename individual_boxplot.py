@@ -101,13 +101,14 @@ plt.savefig(
 plt.clf()
 plt.close('all')
 
-# plt.figure()
-# sns.displot(df_complete[[str(analyzed_set), '1000G+HGDP']], kind="kde")
-# sns.displot(df_complete['1000G+HGDP'], kind="kde")
-ax = sns.violinplot(df_complete[[str(analyzed_set), '1000G+HGDP']])
-for violin in ax.collections[::2]:
-    violin.set_alpha(0.2)
-ax = sns.stripplot(df_complete[[str(analyzed_set), '1000G+HGDP']])
+# DISTPLOT
+plt.figure()
+sns.displot(df_complete[[str(analyzed_set), '1000G+HGDP']],
+            hue=df_complete['Superpopulation'])
+# ax = sns.violinplot()
+# for violin in ax.collections[::2]:
+#     violin.set_alpha(0.2)
+# ax = sns.stripplot(df_complete[[str(analyzed_set), '1000G+HGDP']])
 plt.title(str(analyzed_set))
 plt.xlabel('Ratio of private/personal targets')
 plt.ylabel('Density')
