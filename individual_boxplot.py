@@ -103,8 +103,7 @@ plt.close('all')
 
 # DISTPLOT
 plt.figure()
-sns.displot(df_complete[[str(analyzed_set), '1000G+HGDP']],
-            hue=df_complete['Superpopulation'])
+sns.displot(df_complete[[str(analyzed_set), '1000G+HGDP']])
 # ax = sns.violinplot()
 # for violin in ax.collections[::2]:
 #     violin.set_alpha(0.2)
