@@ -105,7 +105,8 @@ plt.close('all')
 plt.figure()
 
 # sns.displot(df_complete[[str(analyzed_set), '1000G+HGDP']])
-ax = sns.violinplot(y=df_complete[str(analyzed_set)])
+ax = sns.violinplot(
+    y=[df_complete[str(analyzed_set)], df_complete['1000G+HGDP']])
 for violin in ax.collections[::2]:
     violin.set_alpha(0.2)
 # ax = sns.stripplot(violin_list)
