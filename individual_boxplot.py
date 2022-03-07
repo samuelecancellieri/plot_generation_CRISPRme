@@ -109,8 +109,8 @@ plt.figure()
 ax = sns.violinplot(data=df_complete[[str(analyzed_set), '1000G+HGDP']])
 for violin in ax.collections[::2]:
     violin.set_alpha(0.2)
-ax = sns.swarmplot(
-    data=df_complete[[str(analyzed_set), '1000G+HGDP']], color='white')
+ax = sns.stripplot(
+    data=df_complete[[str(analyzed_set), '1000G+HGDP']])
 plt.title(str(analyzed_set))
 plt.xlabel('Variant dataset')
 plt.ylabel('Ratio of private/personal targets')
