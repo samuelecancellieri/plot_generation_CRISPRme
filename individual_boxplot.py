@@ -104,11 +104,12 @@ plt.close('all')
 # DISTPLOT
 plt.figure()
 violin_df = df_complete[[str(analyzed_set), '1000G+HGDP']]
+print(violin_df)
 # sns.displot(df_complete[[str(analyzed_set), '1000G+HGDP']])
-ax = sns.violinplot(y=violin_df)
+ax = sns.violinplot(violin_df)
 for violin in ax.collections[::2]:
     violin.set_alpha(0.2)
-ax = sns.stripplot(y=violin_df)
+ax = sns.stripplot(violin_df)
 plt.title(str(analyzed_set))
 plt.xlabel('Ratio of private/personal targets')
 plt.ylabel('Density')
