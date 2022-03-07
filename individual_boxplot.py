@@ -86,13 +86,13 @@ df_complete = pd.DataFrame(
 # plt.figure()
 color_dict = {'AFR': 'tab:orange', 'AMR': 'tab:brown', 'CSA': 'tab:blue',
               'EAS': 'tab:pink', 'EUR': 'tab:red', 'MEA': 'tab:purple', 'OCE': 'tab:green', 'SAS': 'tab:cyan'}
-# sns.scatterplot(data=df_complete, x='Private', y='Personal',
-#                 hue='Superpopulation', rasterized=True, palette=color_dict, alpha=0.5, linewidth=0)
+sns.scatterplot(data=df_complete, x='Private', y='Personal',
+                hue='Superpopulation', rasterized=True, palette=color_dict, alpha=0.5, linewidth=0)
 
-ax = sns.violinplot(x='Private', y='Personal', data=df_complete)
-for violin in ax.collections[::2]:
-    violin.set_alpha(0.2)
-ax = sns.stripplot(x='Private', y='Personal', data=df_complete)
+# ax = sns.violinplot(x='Private', y='Personal', data=df_complete)
+# for violin in ax.collections[::2]:
+#     violin.set_alpha(0.2)
+# ax = sns.stripplot(x='Private', y='Personal', data=df_complete)
 
 plt.title(str(analyzed_set))
 plt.tight_layout()
@@ -102,8 +102,12 @@ plt.clf()
 plt.close('all')
 
 # plt.figure()
-sns.displot(df_complete[[str(analyzed_set), '1000G+HGDP']], kind="kde")
+# sns.displot(df_complete[[str(analyzed_set), '1000G+HGDP']], kind="kde")
 # sns.displot(df_complete['1000G+HGDP'], kind="kde")
+ax = sns.violinplot(df_complete[[str(analyzed_set), '1000G+HGDP']])
+for violin in ax.collections[::2]:
+    violin.set_alpha(0.2)
+ax = sns.stripplot(df_complete[[str(analyzed_set), '1000G+HGDP']])
 plt.title(str(analyzed_set))
 plt.xlabel('Ratio of private/personal targets')
 plt.ylabel('Density')
