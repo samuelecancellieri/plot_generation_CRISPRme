@@ -111,7 +111,7 @@ ax = sns.violinplot(data=df_complete[[str(analyzed_set), '1000G+HGDP Variants']]
 #     violin.set_alpha(0.2)
 # ax = sns.stripplot(
 #     data=df_complete[[str(analyzed_set), '1000G+HGDP']])
-plt.title(str(analyzed_set))
+plt.title(str(analyzed_set).replace('Variants','Individuals'))
 # plt.xlabel('Variant dataset')
 plt.ylabel('Ratio of private/personal targets')
 plt.tight_layout()
