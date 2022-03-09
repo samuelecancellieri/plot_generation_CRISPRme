@@ -20,7 +20,7 @@ if len(sys.argv[:]) < 4:
 
 # df with targets
 original_df = pd.read_csv(sys.argv[1], sep="\t", index_col=False,
-                          na_values=['n'])
+                          na_values=['n'],nrows=200000)
 # excel writer
 writer = pd.ExcelWriter(sys.argv[2]+'guide_sheets.xlsx')
 # user sort criteria
