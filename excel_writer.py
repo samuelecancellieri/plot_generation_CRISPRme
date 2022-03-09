@@ -32,7 +32,7 @@ elif sort_criteria == 'CRISTA':
 elif sort_criteria == 'fewest':
     sort_criteria = 'fewest_mm+b'
 
-for guide in original_df['Spacer+PAM'].unique():
+for guide in sorted(original_df['Spacer+PAM'].unique().tolist()):
     # filter df for guide
     guide_df = original_df.loc[(original_df['Spacer+PAM'] == guide)]
 
