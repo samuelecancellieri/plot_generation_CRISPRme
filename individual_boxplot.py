@@ -22,7 +22,7 @@ df_double_search = pd.read_csv(sys.argv[2], sep="\t", index_col=False, na_values
                                'n'], usecols=['Variant_samples_(highest_CFD)'])
 sample_file = open(sys.argv[3], 'r')
 out_folder = sys.argv[4]
-analyzed_set = sys.argv[5]+' Individuals'
+analyzed_set = sys.argv[5]+' Variants'
 
 print('doing search', analyzed_set)
 
@@ -78,7 +78,7 @@ count_ratio(boxplot_values_double_search, sample_dict_double)
 print('mean value single search', mean(boxplot_values_single_search[0]))
 print('mean value double search', mean(boxplot_values_double_search[0]))
 df_complete = pd.DataFrame(
-    {str(analyzed_set): boxplot_values_single_search[0], 'Private': boxplot_values_single_search[1], 'Personal': boxplot_values_single_search[2], '1000G+HGDP Individuals': boxplot_values_double_search[0], 'Superpopulation': boxplot_values_single_search[3]})
+    {str(analyzed_set): boxplot_values_single_search[0], 'Private': boxplot_values_single_search[1], 'Personal': boxplot_values_single_search[2], '1000G+HGDP Variants': boxplot_values_double_search[0], 'Superpopulation': boxplot_values_single_search[3]})
 # print(df_complete[str(analyzed_set)])
 # print(df_complete['1000G+HGDP'])
 
@@ -106,7 +106,7 @@ plt.figure()
 
 # sns.displot(df_complete[[str(analyzed_set), '1000G+HGDP']])
 # print(df_complete[[str(analyzed_set), '1000G+HGDP']])
-ax = sns.violinplot(data=df_complete[[str(analyzed_set), '1000G+HGDP Individuals']])
+ax = sns.violinplot(data=df_complete[[str(analyzed_set), '1000G+HGDP Variants']])
 # for violin in ax.collections[::2]:
 #     violin.set_alpha(0.2)
 # ax = sns.stripplot(
