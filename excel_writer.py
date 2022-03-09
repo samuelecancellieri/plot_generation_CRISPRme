@@ -22,7 +22,7 @@ if len(sys.argv[:]) < 4:
 original_df = pd.read_csv(sys.argv[1], sep="\t", index_col=False,
                           na_values=['n'],nrows=200000)
 # excel writer
-writer = pd.ExcelWriter(sys.argv[2]+'guide_sheets.xlsx')
+writer = pd.ExcelWriter(sys.argv[2]+str(sys.argv[2].strip().split('/')[1])+'_guide_sheets.xlsx')
 # user sort criteria
 sort_criteria = sys.argv[3]
 if sort_criteria == 'CFD':
