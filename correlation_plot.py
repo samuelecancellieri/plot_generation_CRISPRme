@@ -188,6 +188,7 @@ def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
 
     
     print("scipy version",scipy.__version__)
+    print("numpy version",np.version)
     print("numpy eps float",np.finfo(float))
     
     # pearson corr
