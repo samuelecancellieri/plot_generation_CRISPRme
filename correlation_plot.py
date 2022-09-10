@@ -1,5 +1,6 @@
 from textwrap import fill
 from scipy import stats
+import scipy
 import sys
 import pandas as pd
 import matplotlib
@@ -185,6 +186,10 @@ def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
     plt.clf()
     plt.close('all')
 
+    
+    print("scipy version",scipy.__version__)
+    print("numpy eps float",np.finfo(float))
+    
     # pearson corr
     corr = stats.pearsonr(final_df['CFD_score_(highest_CFD)'],
                           final_df['CRISTA_score_(highest_CRISTA)'])
@@ -200,6 +205,7 @@ def plot_correlation(original_df: pd.DataFrame, max_bulges: int):
     outfile.write(str(corr[0])+'\t'+str(corr[1]))
     outfile.close()
 
+    
     # sperman corr
     corr = stats.spearmanr(final_df['CFD_score_(highest_CFD)'],
                            final_df['CRISTA_score_(highest_CRISTA)'])
