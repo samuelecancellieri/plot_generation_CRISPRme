@@ -1,2 +1,5 @@
 # plot_generation_CRISPRme
- repo to generate CRISPRme plots for paper
+
+this repo contains all the scripts used in the plot generation for CRISPRme (Human genetic diversity alters off-target outcomes of therapeutic gene editing) paper.
+
+the necessary scripts are:
